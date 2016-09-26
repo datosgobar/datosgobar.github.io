@@ -1,0 +1,233 @@
+@import url(normalize.css);
+html {
+  box-sizing: border-box; }
+
+*, *::after, *::before {
+  box-sizing: inherit; }
+
+@-webkit-keyframes rotateClockwise {
+  from {
+    -webkit-transform: rotate(0deg); }
+  to {
+    -webkit-transform: rotate(360deg); } }
+@-moz-keyframes rotateClockwise {
+  from {
+    -moz-transform: rotate(0deg); }
+  to {
+    -moz-transform: rotate(360deg); } }
+@keyframes rotateClockwise {
+  from {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg); }
+  to {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg); } }
+@-webkit-keyframes rotateCounterClockwise {
+  from {
+    -webkit-transform: rotate(0deg); }
+  to {
+    -webkit-transform: rotate(-360deg); } }
+@-moz-keyframes rotateCounterClockwise {
+  from {
+    -moz-transform: rotate(0deg); }
+  to {
+    -moz-transform: rotate(-360deg); } }
+@keyframes rotateCounterClockwise {
+  from {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg); }
+  to {
+    -webkit-transform: rotate(-360deg);
+    -moz-transform: rotate(-360deg);
+    -ms-transform: rotate(-360deg);
+    -o-transform: rotate(-360deg);
+    transform: rotate(-360deg); } }
+div#background-container {
+  position: absolute;
+  width: 80%;
+  padding-top: 80%;
+  left: 10%;
+  top: 50%;
+  margin-top: -40%;
+  margin-right: -40%; }
+  div#background-container svg#background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%; }
+    div#background-container svg#background path {
+      fill: #00B9F1; }
+    div#background-container svg#background circle {
+      fill: none; }
+    div#background-container svg#background g {
+      -webkit-animation-delay: 0s;
+      -moz-animation-delay: 0s;
+      animation-delay: 0s;
+      -webkit-animation-iteration-count: infinite;
+      -moz-animation-iteration-count: infinite;
+      animation-iteration-count: infinite;
+      -webkit-animation-timing-function: linear;
+      -moz-animation-timing-function: linear;
+      animation-timing-function: linear; }
+      div#background-container svg#background g#uno {
+        opacity: 0.2;
+        -webkit-animation-duration: 20s;
+        -moz-animation-duration: 20s;
+        animation-duration: 20s;
+        -webkit-animation-name: rotateCounterClockwise;
+        -moz-animation-name: rotateCounterClockwise;
+        animation-name: rotateCounterClockwise; }
+      div#background-container svg#background g#dos {
+        opacity: 1;
+        -webkit-animation-duration: 50s;
+        -moz-animation-duration: 50s;
+        animation-duration: 50s;
+        -webkit-animation-name: rotateClockwise;
+        -moz-animation-name: rotateClockwise;
+        animation-name: rotateClockwise; }
+      div#background-container svg#background g#tres {
+        opacity: 0.6;
+        -webkit-animation-duration: 50s;
+        -moz-animation-duration: 50s;
+        animation-duration: 50s;
+        -webkit-animation-name: rotateClockwise;
+        -moz-animation-name: rotateClockwise;
+        animation-name: rotateClockwise; }
+      div#background-container svg#background g#cuatro {
+        opacity: 0.2;
+        -webkit-animation-duration: 20s;
+        -moz-animation-duration: 20s;
+        animation-duration: 20s;
+        -webkit-animation-name: rotateCounterClockwise;
+        -moz-animation-name: rotateCounterClockwise;
+        animation-name: rotateCounterClockwise; }
+      div#background-container svg#background g#cinco {
+        opacity: 1;
+        -webkit-animation-duration: 100s;
+        -moz-animation-duration: 100s;
+        animation-duration: 100s;
+        -webkit-animation-name: rotateClockwise;
+        -moz-animation-name: rotateClockwise;
+        animation-name: rotateClockwise; }
+      div#background-container svg#background g#seis {
+        opacity: 0.2;
+        -webkit-animation-duration: 100s;
+        -moz-animation-duration: 100s;
+        animation-duration: 100s;
+        -webkit-animation-name: rotateCounterClockwise;
+        -moz-animation-name: rotateCounterClockwise;
+        animation-name: rotateCounterClockwise; }
+      div#background-container svg#background g#siete {
+        opacity: 0.2;
+        -webkit-animation-duration: 50s;
+        -moz-animation-duration: 50s;
+        animation-duration: 50s;
+        -webkit-animation-name: rotateCounterClockwise;
+        -moz-animation-name: rotateCounterClockwise;
+        animation-name: rotateCounterClockwise; }
+      div#background-container svg#background g#ocho {
+        opacity: 0.4;
+        -webkit-animation-duration: 100s;
+        -moz-animation-duration: 100s;
+        animation-duration: 100s;
+        -webkit-animation-name: rotateCounterClockwise;
+        -moz-animation-name: rotateCounterClockwise;
+        animation-name: rotateCounterClockwise; }
+      div#background-container svg#background g#nuevea {
+        opacity: 0.2;
+        -webkit-animation-duration: 100s;
+        -moz-animation-duration: 100s;
+        animation-duration: 100s;
+        -webkit-animation-name: rotateCounterClockwise;
+        -moz-animation-name: rotateCounterClockwise;
+        animation-name: rotateCounterClockwise; }
+      div#background-container svg#background g#nueveb {
+        opacity: 0.2;
+        -webkit-animation-duration: 100s;
+        -moz-animation-duration: 100s;
+        animation-duration: 100s;
+        -webkit-animation-name: rotateClockwise;
+        -moz-animation-name: rotateClockwise;
+        animation-name: rotateClockwise; }
+      div#background-container svg#background g#trece {
+        opacity: 0.4;
+        -webkit-animation-duration: 100s;
+        -moz-animation-duration: 100s;
+        animation-duration: 100s;
+        -webkit-animation-name: rotateClockwise;
+        -moz-animation-name: rotateClockwise;
+        animation-name: rotateClockwise; }
+      div#background-container svg#background g#once {
+        opacity: 0.2;
+        -webkit-animation-duration: 100s;
+        -moz-animation-duration: 100s;
+        animation-duration: 100s;
+        -webkit-animation-name: rotateClockwise;
+        -moz-animation-name: rotateClockwise;
+        animation-name: rotateClockwise; }
+      div#background-container svg#background g#doce {
+        opacity: 0.2;
+        -webkit-animation-duration: 100s;
+        -moz-animation-duration: 100s;
+        animation-duration: 100s;
+        -webkit-animation-name: rotateClockwise;
+        -moz-animation-name: rotateClockwise;
+        animation-name: rotateClockwise; }
+      div#background-container svg#background g#catorce {
+        opacity: 0.2;
+        -webkit-animation-duration: 50s;
+        -moz-animation-duration: 50s;
+        animation-duration: 50s;
+        -webkit-animation-name: rotateClockwise;
+        -moz-animation-name: rotateClockwise;
+        animation-name: rotateClockwise; }
+      div#background-container svg#background g#quince {
+        opacity: 0.2;
+        -webkit-animation-duration: 100s;
+        -moz-animation-duration: 100s;
+        animation-duration: 100s;
+        -webkit-animation-name: rotateClockwise;
+        -moz-animation-name: rotateClockwise;
+        animation-name: rotateClockwise; }
+      div#background-container svg#background g#diez {
+        opacity: 0.1;
+        -webkit-animation-duration: 206s;
+        -moz-animation-duration: 206s;
+        animation-duration: 206s;
+        -webkit-animation-name: rotateCounterClockwise;
+        -moz-animation-name: rotateCounterClockwise;
+        animation-name: rotateCounterClockwise; }
+      div#background-container svg#background g#dieciseis {
+        opacity: 0.1;
+        -webkit-animation-duration: 206s;
+        -moz-animation-duration: 206s;
+        animation-duration: 206s;
+        -webkit-animation-name: rotateCounterClockwise;
+        -moz-animation-name: rotateCounterClockwise;
+        animation-name: rotateCounterClockwise; }
+
+html, body {
+  margin: 0;
+  padding: 0; }
+
+#title {
+  width: 100%;
+  padding: 50px 0;
+  text-align: center;
+  color: white;
+  background-color: #1e90da;
+  background-image: -webkit-linear-gradient(left, #1e90da, #0072bc);
+  background-image: linear-gradient(to right,#1e90da, #0072bc);
+  overflow: hidden; }
+
+/*# sourceMappingURL=main.css.map */
