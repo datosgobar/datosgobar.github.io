@@ -1,4 +1,6 @@
 @import url(normalize.css);
+@import "https://fonts.googleapis.com/css?family=Roboto:400,500";
+@import "https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css";
 html {
   box-sizing: border-box; }
 
@@ -222,7 +224,13 @@ div#background-container {
 
 html, body {
   margin: 0;
-  padding: 0; }
+  padding: 0;
+  font-family: 'Roboto', sans-serif; }
+
+a {
+  color: #00b9f1; }
+  a:hover {
+    color: #1e90da; }
 
 #title {
   width: 100%;
@@ -239,5 +247,35 @@ html, body {
     top: 0; }
   #title #title-text {
     position: relative; }
+    #title #title-text h1 {
+      font-size: 40px;
+      font-weight: 500;
+      margin: 10px 0; }
+    #title #title-text p {
+      font-size: 20px;
+      margin: 10px 0; }
+
+#team .card {
+  display: inline-block;
+  text-align: center; }
+  #team .card .card-svg {
+    background-image: url("../img/equipo/equipo-marco.svg");
+    background-size: cover;
+    display: inline-block; }
+    #team .card .card-svg img {
+      display: block; }
+  #team .card .name {
+    color: #00b9f1;
+    font-size: 18px;
+    font-weight: 500;
+    margin: 10px 0 0 0; }
+  #team .card .position {
+    color: #767676;
+    margin: 5px 0;
+    font-size: 16px; }
+  #team .card .links {
+    margin: 5px 0; }
+    #team .card .links a {
+      display: inline-block; }
 
 /*# sourceMappingURL=main.css.map */
