@@ -282,4 +282,17 @@ a {
       #team .card .links a {
         display: inline-block; }
 
+#footer {
+  background-color: #00b9f1;
+  padding: 50px 0;
+  color: white;
+  text-align: center;
+  font-size: 24px; }
+  #footer button {
+    font-size: 20px;
+    background: transparent;
+    border: solid 1px white;
+    display: block;
+    margin: 10px auto; }
+
 /*# sourceMappingURL=main.css.map */
