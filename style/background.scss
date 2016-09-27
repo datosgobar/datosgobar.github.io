@@ -16,9 +16,13 @@
   }
 }
 
-div#background-container {
-  position: absolute;
+body.svg-background {
+  @include linear-gradient(to right, $blue-200, $blue-300);
+  
+}
 
+div#background-container {
+  position: fixed;
   $size: 80%;
   width: $size;
   padding-top: $size;
