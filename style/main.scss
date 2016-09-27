@@ -1,8 +1,5 @@
 @import 'bourbon/bourbon';
-@import 'neat/neat';
 @import 'normalize.css';
-@import 'https://fonts.googleapis.com/css?family=Roboto:400,500';
-@import 'https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css';
 @import 'colors'; 
 @import 'background';
 
@@ -43,23 +40,35 @@ a {
       margin: 10px 0;
     }
     p {
-      font-size: 20px;
-      margin: 10px 0;
+      font-size: 22px;
+      max-width: 600px;
+      display: block;
+      margin: 10px auto;
     }
   }
 }
 
 #team {
+  padding: 40px 0;
   .card {
-    display: inline-block;
     text-align: center;
+    padding: 30px 0;
+    height: 400px;
     .card-svg {
       background-image: url('../img/equipo/equipo-marco.svg');
       background-size: cover;
-      display: inline-block;
+      display: block;
+      width: 220px;
+      margin: auto;
       img {
         display: block;
+        width: 100%;
       }
+    }
+    p {
+      display: block;
+      width: 100%;
+      padding: 0 20px;
     }
     .name {
       color: $blue-250;

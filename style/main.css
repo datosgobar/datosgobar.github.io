@@ -1,12 +1,4 @@
 @import url(normalize.css);
-@import "https://fonts.googleapis.com/css?family=Roboto:400,500";
-@import "https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css";
-html {
-  box-sizing: border-box; }
-
-*, *::after, *::before {
-  box-sizing: inherit; }
-
 @-webkit-keyframes rotateClockwise {
   from {
     -webkit-transform: rotate(0deg); }
@@ -252,30 +244,42 @@ a {
       font-weight: 500;
       margin: 10px 0; }
     #title #title-text p {
-      font-size: 20px;
-      margin: 10px 0; }
+      font-size: 22px;
+      max-width: 600px;
+      display: block;
+      margin: 10px auto; }
 
-#team .card {
-  display: inline-block;
-  text-align: center; }
-  #team .card .card-svg {
-    background-image: url("../img/equipo/equipo-marco.svg");
-    background-size: cover;
-    display: inline-block; }
-    #team .card .card-svg img {
-      display: block; }
-  #team .card .name {
-    color: #00b9f1;
-    font-size: 18px;
-    font-weight: 500;
-    margin: 10px 0 0 0; }
-  #team .card .position {
-    color: #767676;
-    margin: 5px 0;
-    font-size: 16px; }
-  #team .card .links {
-    margin: 5px 0; }
-    #team .card .links a {
-      display: inline-block; }
+#team {
+  padding: 40px 0; }
+  #team .card {
+    text-align: center;
+    padding: 30px 0;
+    height: 400px; }
+    #team .card .card-svg {
+      background-image: url("../img/equipo/equipo-marco.svg");
+      background-size: cover;
+      display: block;
+      width: 220px;
+      margin: auto; }
+      #team .card .card-svg img {
+        display: block;
+        width: 100%; }
+    #team .card p {
+      display: block;
+      width: 100%;
+      padding: 0 20px; }
+    #team .card .name {
+      color: #00b9f1;
+      font-size: 18px;
+      font-weight: 500;
+      margin: 10px 0 0 0; }
+    #team .card .position {
+      color: #767676;
+      margin: 5px 0;
+      font-size: 16px; }
+    #team .card .links {
+      margin: 5px 0; }
+      #team .card .links a {
+        display: inline-block; }
 
 /*# sourceMappingURL=main.css.map */
