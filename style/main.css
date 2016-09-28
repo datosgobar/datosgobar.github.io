@@ -227,7 +227,7 @@ a {
 
 #title {
   width: 100%;
-  padding: 50px 0;
+  padding: 80px 0;
   text-align: center;
   color: white;
   overflow: hidden;
@@ -241,11 +241,11 @@ a {
   #title #title-text {
     position: relative; }
     #title #title-text h1 {
-      font-size: 40px;
+      font-size: 50px;
       font-weight: 500;
       margin: 10px 0; }
     #title #title-text p {
-      font-size: 22px;
+      font-size: 20px;
       max-width: 600px;
       display: block;
       margin: 10px auto; }
@@ -285,15 +285,17 @@ a {
 
 #footer {
   background-color: #00b9f1;
-  padding: 50px 0;
+  padding: 80px 0;
   color: white;
   text-align: center;
-  font-size: 24px; }
+  font-size: 30px; }
+  #footer p {
+    margin: 0; }
   #footer button {
     font-size: 20px;
     background: transparent;
     border: solid 1px white;
     display: block;
-    margin: 10px auto; }
+    margin: 20px auto 0 auto; }
 
 /*# sourceMappingURL=main.css.map */
