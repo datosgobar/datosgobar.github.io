@@ -220,7 +220,8 @@ html, body {
   font-family: 'Roboto', sans-serif; }
 
 a {
-  color: #00b9f1; }
+  color: #00b9f1;
+  text-decoration: none !important; }
   a:hover {
     color: #1e90da; }
 
