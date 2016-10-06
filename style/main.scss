@@ -19,118 +19,17 @@ a {
   }
 }
 
-#header {
-  width: 100%;
-  $header-height: 50px;
-  height: $header-height;
-  box-shadow: 0 2px 5px 0px rgba(0,0,0,0.4);
-  position: relative;
-  z-index: 2;
+button.btn {
+  background: $button-blue;
+  color: white;
   font-weight: 500;
-  a {
-    line-height: $header-height;
-    color: $header-blue;
-    display: inline-block;
-    padding: 0 6px;
-    &:hover, &.active {
-      background: $header-blue;
-      color: white;
-    }
-  }
-  i {
-    vertical-align: middle;
+  &:hover {
+    background: $button-hover-blue;
+    color: white;
   }
 }
 
-#title {
-  width: 100%;
-  padding: 80px 0;
-  text-align: center;
-  color: white;
-  overflow: hidden;
-  position: relative;
-
-  iframe {
-    border: none;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-  }
-
-  #title-text {
-    position: relative;
-    h1 {
-      font-size: 50px;
-      font-weight: 500;
-      margin: 10px 0;
-    }
-    p {
-      font-size: 20px;
-      max-width: 600px;
-      display: block;
-      margin: 10px auto;
-    }
-  }
-}
-
-#team {
-  padding: 40px 0;
-  .card {
-    text-align: center;
-    padding: 30px 0;
-    height: 400px;
-    .card-svg {
-      background-image: url('../img/equipo/equipo-marco.svg');
-      background-size: cover;
-      display: block;
-      width: 220px;
-      margin: auto;
-      img {
-        display: block;
-        width: 100%;
-      }
-    }
-    p {
-      display: block;
-      width: 100%;
-      padding: 0 20px;
-    }
-    .name {
-      color: $blue-250;
-      font-size: 18px;
-      font-weight: 500;
-      margin: 10px 0 0 0;
-    }
-    .position {
-      color: $grey-400;
-      margin: 5px 0;
-      font-size: 16px;
-    }
-    .links {
-      margin: 5px 0;
-      a {
-        display: inline-block;
-      }
-    }
-  }
-}
-
-#footer {
-  background-color: $blue-250;
-  padding: 80px 0;
-  color: white;
-  text-align: center;
-  font-size: 30px;
-  p {
-    margin: 0;
-  }
-  button {
-    font-size: 20px;
-    background: transparent;
-    border: solid 1px white;
-    display: block;
-    margin: 20px auto 0 auto;
-  }
-}
+@import 'header';
+@import 'title';
+@import 'cards';
+@import 'footer';
