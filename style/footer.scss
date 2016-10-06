@@ -1,6 +1,16 @@
 #footer {
-  background-color: $blue-250;
-  padding: 80px 0;
+  @include linear-gradient(to right, $blue-200, $blue-300);
+  
+  .background-pattern {
+    background-image: url('../img/tramita-01.svg');
+    background-repeat: repeat repeat;
+    background-size: 300px;
+  }
+
+  #footer-content {
+    padding: 80px 0;
+  }  
+  
   color: white;
   text-align: center;
   font-size: 30px;
@@ -9,8 +19,6 @@
   }
   button {
     font-size: 20px;
-    background: transparent;
-    border: solid 1px white;
     display: block;
     margin: 20px auto 0 auto;
   }
