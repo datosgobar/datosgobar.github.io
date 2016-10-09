@@ -229,7 +229,7 @@ button.btn {
   background: #009dda;
   color: white;
   font-weight: 500; }
-  button.btn:hover {
+  button.btn:hover, button.btn:focus {
     background: #01bdf2;
     color: white; }
 

@@ -23,7 +23,7 @@ button.btn {
   background: $button-blue;
   color: white;
   font-weight: 500;
-  &:hover {
+  &:hover, &:focus {
     background: $button-hover-blue;
     color: white;
   }
