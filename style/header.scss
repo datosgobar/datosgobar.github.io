@@ -10,12 +10,18 @@ $header-height: 72px;
   z-index: 2;
   font-weight: 500;
   background: white;
+  overflow: hidden;
   a, span.anchor {
     line-height: $header-height;
     color: $header-blue;
     display: inline-block;
     padding: 0 10px;
     font-size: 16px;
+
+    @media (max-width: 992px) {
+      font-size: 14px;
+    }
+
     &:hover, &.active {
       background: $header-blue;
       color: white;
