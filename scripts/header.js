@@ -4,12 +4,12 @@ $(function() {
     $(this).addClass('active');
   })
 
+  var joinUsAnchor = $('#join-us-anchor');
+  var teamAnchor = $('#team-anchor');
+
   $(document).on('scroll', function() {
     var currentPosition = $(this).scrollTop();
     var targetPosition = $('.join-us').position().top - 72;
-
-    var joinUsAnchor = $('#join-us-anchor');
-    var teamAnchor = $('#team-anchor');
 
     if(currentPosition >= targetPosition){
       teamAnchor.removeClass('active');
@@ -19,4 +19,9 @@ $(function() {
       joinUsAnchor.removeClass('active');
     }
   })
+
+  if (window.location && window.location.hash && window.location.hash == '#busquedas-laborales') {
+    teamAnchor.removeClass('active');
+    joinUsAnchor.addClass('active');
+  }
 })
