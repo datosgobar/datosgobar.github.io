@@ -1,16 +1,21 @@
+$header-height: 72px;
+
 #header {
   width: 100%;
-  $header-height: 72px;
   height: $header-height;
   box-shadow: 0 2px 5px 0px rgba(0,0,0,0.4);
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
   z-index: 2;
   font-weight: 500;
+  background: white;
   a, span.anchor {
     line-height: $header-height;
     color: $header-blue;
     display: inline-block;
-    padding: 0 6px;
+    padding: 0 10px;
+    font-size: 16px;
     &:hover, &.active {
       background: $header-blue;
       color: white;
@@ -19,4 +24,8 @@
   i {
     vertical-align: middle;
   }
+}
+
+body {
+  padding-top: $header-height;
 }

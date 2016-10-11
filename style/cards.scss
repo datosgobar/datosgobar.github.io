@@ -3,8 +3,14 @@
 }
 
 .join-us {
+  position: relative;
   background: $join-us-grey;
   padding: 60px 0;
+
+  #busquedas-laborales {
+    position: absolute;
+    top: -$header-height;
+  }
 
   h2, h3 {
     color: $join-us-main-blue;
@@ -13,6 +19,10 @@
     margin-top: 0;
     margin-bottom: 0;
     font-size: 40px;
+  }
+
+  h3 {
+    padding-bottom: 30px;
   }
 }
 
@@ -54,6 +64,7 @@
   .links {
     margin: 5px 0;
     a {
+      margin-right: 8px;
       display: inline-block;
     }
   }
