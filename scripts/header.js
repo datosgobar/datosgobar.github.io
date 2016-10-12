@@ -1,7 +1,7 @@
 $(function() {
-  $('.insite-anchor').on('click', function() {
+  $('.insite-anchor').on('click', function(event) {
     $('.insite-anchor').removeClass('active');
-    $(this).addClass('active');
+    $(event.currentTarget).addClass('active');
   })
 
   var joinUsAnchor = $('#join-us-anchor');

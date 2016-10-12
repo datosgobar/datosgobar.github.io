@@ -9,7 +9,7 @@
 
   #busquedas-laborales {
     position: absolute;
-    top: -$header-height;
+    top: -$header-height + 1px;
   }
 
   h2, h3 {
