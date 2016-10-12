@@ -259,7 +259,7 @@ button.btn {
   #header i {
     vertical-align: middle; }
 
-body {
+body.with-header {
   padding-top: 72px; }
 
 #title {

@@ -32,6 +32,6 @@ $header-height: 72px;
   }
 }
 
-body {
+body.with-header {
   padding-top: $header-height;
 }
