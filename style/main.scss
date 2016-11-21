@@ -3,6 +3,13 @@
 @import 'colors'; 
 @import 'background';
 
+/* 
+Pasos para modificar css de la landing:
+1.- Moverme a la carpeta donde está este archivo. 
+2.- Compilar de sass a css con el comando "sass --watch main.scss:main.css"
+3.- Al terminar matar ese proceso en la tarminal con Ctrl+C
+*/
+
 // TODO: chequear tamaños de tipografias para dispositivos moviles
 
 html, body {
