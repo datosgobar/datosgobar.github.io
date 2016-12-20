@@ -1,0 +1,72 @@
+.pad-title-container {
+  @include linear-gradient(to right, $blue-200, $blue-300);
+  color: white;
+  width: 100%;
+  padding: 80px 0;
+  text-align: center;
+  overflow: hidden;
+
+  h1 {
+    font-size: 55px;
+    font-weight: 400;
+    margin: 10px auto;
+    max-width: 940px;
+  }
+
+  p {
+    font-size: 16px;
+    max-width: 600px;
+    display: block;
+    font-weight: 300;
+    margin: 10px auto 45px auto;
+  }
+
+  .search-container {
+    display: block;
+    width: 440px;
+    max-width: 100%;
+    margin: 10px auto;
+    position: relative;
+
+    .search {
+      background: white;
+      border: none;
+      width: 100%;
+      color: $grey-500;
+      box-shadow: none;
+      padding: 5px 50px 5px 10px;
+      font-size: 20px;
+      line-height: 1.2;
+      height: 39px;
+      border-radius: 4px;
+      outline: none;
+
+      @include placeholder {
+        color: $grey-300;
+        font-weight: 300;
+      }
+    }
+
+    button {
+      background: $blue-200;
+      border: none;
+      position: absolute;
+      top: 0;
+      right: -4px;
+      height: 39px;
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+      padding: 2px 8px;
+      &:hover {
+        background: $blue-250;
+      }
+    }
+
+    .search-icon {
+      width: auto;
+      height: 100%;
+      padding: 4px 0;
+      vertical-align: middle;
+    }
+  }
+}

@@ -15,6 +15,7 @@ html, body {
   margin: 0;
   padding: 0;
   font-family: 'Roboto', sans-serif;
+  color: $grey-500;
 }
 
 a {
@@ -39,3 +40,4 @@ button.btn {
 @import 'team/title';
 @import 'team/cards';
 @import 'team/footer';
+@import 'pad/title';
