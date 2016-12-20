@@ -39,6 +39,9 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
     <link rel="stylesheet" href="../style/main.css?v2" type="text/css">
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="../js/jquery.csv.min.js"></script>
+    <script src="../js/pad_home.js"></script>
 
 </head>
 <body class="with-header">
@@ -52,6 +55,9 @@
 
 <div id="header">
     <div id="header-content" class="container">
+        <a href="/pad/">
+            <img src="../img/logo_ministerio.svg" class="header-logo">
+        </a>
 
         <a href="https://medium.com/datos-argentina" target="_blank" class="pull-right">
             <i class="fa fa-medium fa-2x" aria-hidden="true"></i>
@@ -77,6 +83,13 @@
                 <img src="/img/search.svg" class="search-icon">
             </button>
         </div>
+    </div>
+</div>
+
+<div class="pad-home-cards">
+    <div class="container">
+        <h2>Estos son los ministerios que presentaron sus planes de apertura:</h2>
+        <div class="pad-ministerios-list"></div>
     </div>
 </div>
 

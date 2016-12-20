@@ -11,7 +11,14 @@ $header-height: 72px;
   font-weight: 500;
   background: white;
   overflow: hidden;
-  a, span.anchor {
+
+  .header-logo {
+    height: $header-height;
+    display: inline-block;
+    width: auto;
+  }
+
+  a.pull-right, span.anchor {
     line-height: $header-height;
     color: $header-blue;
     display: inline-block;
