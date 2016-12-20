@@ -1,5 +1,4 @@
 @charset "UTF-8";
-@import url(normalize.css);
 @-webkit-keyframes rotateClockwise {
   from {
     -webkit-transform: rotate(0deg); }
@@ -243,7 +242,7 @@ button.btn {
 #header {
   width: 100%;
   height: 72px;
-  box-shadow: 0 2px 5px 0px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.4);
   position: fixed;
   top: 0;
   left: 0;

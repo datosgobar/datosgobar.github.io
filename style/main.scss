@@ -1,6 +1,5 @@
 @import 'bourbon/bourbon';
-@import 'normalize.css';
-@import 'colors'; 
+@import 'colors';
 @import 'background';
 
 /* 
@@ -37,6 +36,6 @@ button.btn {
 }
 
 @import 'header';
-@import 'title';
-@import 'cards';
-@import 'footer';
+@import 'team/title';
+@import 'team/cards';
+@import 'team/footer';

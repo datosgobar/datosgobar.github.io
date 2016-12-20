@@ -2,7 +2,7 @@
   @include linear-gradient(to right, $blue-200, $blue-300);
   
   .background-pattern {
-    background-image: url('../img/tramita-01.svg');
+    background-image: url('../img/tramita-01.svg'); // relative to /style/main.css
     background-repeat: repeat repeat;
     background-size: 300px;
   }
