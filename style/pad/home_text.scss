@@ -1,0 +1,41 @@
+.pad-home-description {
+  overflow: hidden;
+  text-align: center;
+
+  .container {
+    padding: 40px;
+    box-shadow: 0 -2px 4px 0 rgba(150, 150, 150, 0.5);
+
+    .circle {
+      width: 200px;
+      height: 200px;
+      display: block;
+      margin: 0 auto 30px auto;
+      border-radius: 50%;
+      background: $blue-200;
+    }
+
+    h2 {
+      padding: 0 50px;
+      color: $blue-200;
+      font-weight: 400;
+      font-size: 30px;
+      margin-bottom: 30px;
+    }
+
+    p {
+      font-style: italic;
+      font-size: 20px;
+    }
+
+    hr.green {
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      border-bottom: solid 4px $green-200;
+      width: 160px;
+      margin: 20px auto;
+      border-radius: 4px;
+    }
+  }
+}

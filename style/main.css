@@ -479,4 +479,35 @@ body.with-header {
           line-height: 1.2;
           font-weight: 500; }
 
+.pad-home-description {
+  overflow: hidden;
+  text-align: center; }
+  .pad-home-description .container {
+    padding: 40px;
+    box-shadow: 0 -2px 4px 0 rgba(150, 150, 150, 0.5); }
+    .pad-home-description .container .circle {
+      width: 200px;
+      height: 200px;
+      display: block;
+      margin: 0 auto 30px auto;
+      border-radius: 50%;
+      background: #1e90da; }
+    .pad-home-description .container h2 {
+      padding: 0 50px;
+      color: #1e90da;
+      font-weight: 400;
+      font-size: 30px;
+      margin-bottom: 30px; }
+    .pad-home-description .container p {
+      font-style: italic;
+      font-size: 20px; }
+    .pad-home-description .container hr.green {
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      border-bottom: solid 4px #4ecd7a;
+      width: 160px;
+      margin: 20px auto;
+      border-radius: 4px; }
+
 /*# sourceMappingURL=main.css.map */
