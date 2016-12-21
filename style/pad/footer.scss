@@ -1,0 +1,42 @@
+.pad-footer {
+  padding: 60px 0;
+  box-shadow: 0 -2px 4px 0 rgba(220, 220, 220, 0.5);
+
+  .social-links {
+    margin-bottom: 20px;
+
+    a {
+      display: inline-block;
+      padding: 8px;
+      text-align: center;
+      width: 46px;
+      height: 46px;
+      color: $blue-200;
+      border-radius: 4px;
+
+      &:hover {
+        color: white;
+        background: $blue-200;
+      }
+
+      i {
+        display: inline-block;
+        font-size: 28px;
+      }
+    }
+  }
+
+  .pad-footer-logo {
+    max-width: 300px;
+    height: auto;
+  }
+
+  .pad-footer-contact {
+    text-align: right;
+    p {
+      display: inline-block;
+      text-align: left;
+      margin: 0;
+    }
+  }
+}

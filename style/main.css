@@ -240,6 +240,9 @@ button.btn {
     background: #01bdf2;
     color: white; }
 
+.no-padding {
+  padding: 0; }
+
 #header {
   width: 100%;
   height: 72px;
@@ -452,7 +455,8 @@ body.with-header {
     color: #1e90da;
     font-weight: 400;
     font-size: 30px;
-    margin-bottom: 30px; }
+    margin-bottom: 30px;
+    text-align: center; }
   .pad-home-cards .pad-ministerios-list {
     text-align: center; }
     .pad-home-cards .pad-ministerios-list .pad-card {
@@ -509,5 +513,34 @@ body.with-header {
       width: 160px;
       margin: 20px auto;
       border-radius: 4px; }
+
+.pad-footer {
+  padding: 60px 0;
+  box-shadow: 0 -2px 4px 0 rgba(220, 220, 220, 0.5); }
+  .pad-footer .social-links {
+    margin-bottom: 20px; }
+    .pad-footer .social-links a {
+      display: inline-block;
+      padding: 8px;
+      text-align: center;
+      width: 46px;
+      height: 46px;
+      color: #1e90da;
+      border-radius: 4px; }
+      .pad-footer .social-links a:hover {
+        color: white;
+        background: #1e90da; }
+      .pad-footer .social-links a i {
+        display: inline-block;
+        font-size: 28px; }
+  .pad-footer .pad-footer-logo {
+    max-width: 300px;
+    height: auto; }
+  .pad-footer .pad-footer-contact {
+    text-align: right; }
+    .pad-footer .pad-footer-contact p {
+      display: inline-block;
+      text-align: left;
+      margin: 0; }
 
 /*# sourceMappingURL=main.css.map */
