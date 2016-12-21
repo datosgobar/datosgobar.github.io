@@ -1,10 +1,16 @@
 .pad-title-container {
   @include linear-gradient(to right, $blue-200, $blue-300);
   color: white;
+  padding: 0;
   width: 100%;
-  padding: 80px 0;
   text-align: center;
   overflow: hidden;
+
+  .title-background {
+    padding: 80px 0;
+    background-image: url('../img/pad/pad-elementos-pattern-03.svg');
+    background-size: cover;
+  }
 
   h1 {
     font-size: 55px;
