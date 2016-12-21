@@ -3,7 +3,7 @@
   text-align: center;
 
   .container {
-    padding: 40px;
+    padding: 60px;
     box-shadow: 0 -2px 4px 0 rgba(150, 150, 150, 0.5);
 
     .article-image {
@@ -21,12 +21,13 @@
       color: $blue-200;
       font-weight: 400;
       font-size: 30px;
-      margin-bottom: 30px;
+      margin: 40px 0;
     }
 
     p {
       font-style: italic;
       font-size: 20px;
+      margin: 0 0 40px 0;
     }
 
     hr.green {
@@ -35,7 +36,7 @@
       border-right: none;
       border-bottom: solid 4px $green-200;
       width: 160px;
-      margin: 20px auto;
+      margin: 0 auto 60px auto;
       border-radius: 4px;
     }
   }

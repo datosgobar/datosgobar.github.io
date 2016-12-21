@@ -1,11 +1,11 @@
 .pad-home-cards {
   background: $grey-100;
-  padding: 40px 0;
+  padding: 60px 0 40px 0;
   h2 {
     color: $blue-200;
     font-weight: 400;
     font-size: 30px;
-    margin-bottom: 30px;
+    margin: 0 0 40px 0;
     text-align: center;
   }
 
@@ -13,7 +13,7 @@
     text-align: center;
 
     .pad-card {
-      padding: 10px;
+      padding: 0 10px 20px 10px;
       float: none;
       display: inline-block;
 

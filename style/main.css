@@ -390,25 +390,25 @@ body.with-header {
   text-align: center;
   overflow: hidden; }
   .pad-title-container .title-background {
-    padding: 80px 0;
+    padding: 60px 0;
     background-image: url("../img/pad/pad-elementos-pattern-03.svg");
     background-size: cover; }
   .pad-title-container h1 {
     font-size: 55px;
     font-weight: 400;
-    margin: 10px auto;
+    margin: 0 auto 20px auto;
     max-width: 940px; }
   .pad-title-container p {
     font-size: 16px;
     max-width: 600px;
     display: block;
     font-weight: 300;
-    margin: 10px auto 45px auto; }
+    margin: 0 auto 40px auto; }
   .pad-title-container .search-container {
     display: block;
     width: 440px;
     max-width: 100%;
-    margin: 10px auto;
+    margin: 0 auto;
     position: relative; }
     .pad-title-container .search-container .search {
       background: white;
@@ -454,17 +454,17 @@ body.with-header {
 
 .pad-home-cards {
   background: #f5f5f5;
-  padding: 40px 0; }
+  padding: 60px 0 40px 0; }
   .pad-home-cards h2 {
     color: #1e90da;
     font-weight: 400;
     font-size: 30px;
-    margin-bottom: 30px;
+    margin: 0 0 40px 0;
     text-align: center; }
   .pad-home-cards .pad-ministerios-list {
     text-align: center; }
     .pad-home-cards .pad-ministerios-list .pad-card {
-      padding: 10px;
+      padding: 0 10px 20px 10px;
       float: none;
       display: inline-block; }
       .pad-home-cards .pad-ministerios-list .pad-card .pad-card-text-table {
@@ -491,7 +491,7 @@ body.with-header {
   overflow: hidden;
   text-align: center; }
   .pad-home-description .container {
-    padding: 40px;
+    padding: 60px;
     box-shadow: 0 -2px 4px 0 rgba(150, 150, 150, 0.5); }
     .pad-home-description .container .article-image {
       text-align: center; }
@@ -504,17 +504,18 @@ body.with-header {
       color: #1e90da;
       font-weight: 400;
       font-size: 30px;
-      margin-bottom: 30px; }
+      margin: 40px 0; }
     .pad-home-description .container p {
       font-style: italic;
-      font-size: 20px; }
+      font-size: 20px;
+      margin: 0 0 40px 0; }
     .pad-home-description .container hr.green {
       border-top: none;
       border-left: none;
       border-right: none;
       border-bottom: solid 4px #4ecd7a;
       width: 160px;
-      margin: 20px auto;
+      margin: 0 auto 60px auto;
       border-radius: 4px; }
 
 .pad-footer {

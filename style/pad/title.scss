@@ -7,7 +7,7 @@
   overflow: hidden;
 
   .title-background {
-    padding: 80px 0;
+    padding: 60px 0;
     background-image: url('../img/pad/pad-elementos-pattern-03.svg');
     background-size: cover;
   }
@@ -15,7 +15,7 @@
   h1 {
     font-size: 55px;
     font-weight: 400;
-    margin: 10px auto;
+    margin: 0 auto 20px auto;
     max-width: 940px;
   }
 
@@ -24,14 +24,14 @@
     max-width: 600px;
     display: block;
     font-weight: 300;
-    margin: 10px auto 45px auto;
+    margin: 0 auto 40px auto;
   }
 
   .search-container {
     display: block;
     width: 440px;
     max-width: 100%;
-    margin: 10px auto;
+    margin: 0 auto;
     position: relative;
 
     .search {
