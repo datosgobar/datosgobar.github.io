@@ -1,0 +1,21 @@
+$pad-blue: #0695d6;
+$pad-blue-hover: #17b2f8;
+$pad-blue-gradient-from: #00b9f1;
+$pad-blue-gradient-to: #005dbc;
+$pad-background: #fafafa;
+$pad-text-placeholder: #999999;
+$pad-text: #424242;
+$pad-green: #00d57a;
+
+body.pad {
+  color: $pad-text;
+  background: white;
+
+  a {
+    color: $pad-blue;
+    text-decoration: none !important;
+    &:hover {
+      color: $pad-blue-hover;
+    }
+  }
+}

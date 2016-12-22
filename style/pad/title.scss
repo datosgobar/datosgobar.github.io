@@ -1,5 +1,5 @@
 .pad-title-container {
-  @include linear-gradient(to right, $blue-200, $blue-300);
+  @include linear-gradient(to right, $pad-blue-gradient-from, $pad-blue-gradient-to);
   color: white;
   padding: 0;
   width: 100%;
@@ -38,7 +38,7 @@
       background: white;
       border: none;
       width: 100%;
-      color: $grey-500;
+      color: $pad-text;
       box-shadow: none;
       padding: 5px 50px 5px 10px;
       font-size: 20px;
@@ -48,13 +48,13 @@
       outline: none;
 
       @include placeholder {
-        color: $grey-300;
+        color: $pad-text-placeholder;
         font-weight: 300;
       }
     }
 
     button {
-      background: $blue-200;
+      background: $pad-blue;
       border: none;
       position: absolute;
       top: 0;
@@ -64,7 +64,7 @@
       border-bottom-right-radius: 4px;
       padding: 2px 8px;
       &:hover {
-        background: $blue-250;
+        background: $pad-blue-hover;
       }
     }
 

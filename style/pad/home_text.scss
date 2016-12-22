@@ -17,24 +17,28 @@
     }
 
     h2 {
-      padding: 0 50px;
-      color: $blue-200;
+      color: $pad-blue;
       font-weight: 400;
       font-size: 30px;
-      margin: 40px 0;
+      margin: 40px auto;
+      max-width: 800px;
     }
 
     p {
       font-style: italic;
       font-size: 20px;
       margin: 0 0 40px 0;
+      font-weight: 300;
+      strong {
+        font-weight: 500;
+      }
     }
 
     hr.green {
       border-top: none;
       border-left: none;
       border-right: none;
-      border-bottom: solid 4px $green-200;
+      border-bottom: solid 4px $pad-green;
       width: 160px;
       margin: 0 auto 60px auto;
       border-radius: 4px;

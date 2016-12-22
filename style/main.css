@@ -380,10 +380,19 @@ body.with-header {
     font-weight: 400;
     padding: 9px 15px 9px 15px; }
 
+body.pad {
+  color: #424242;
+  background: white; }
+  body.pad a {
+    color: #0695d6;
+    text-decoration: none !important; }
+    body.pad a:hover {
+      color: #17b2f8; }
+
 .pad-title-container {
-  background-color: #1e90da;
-  background-image: -webkit-linear-gradient(left, #1e90da, #0072bc);
-  background-image: linear-gradient(to right,#1e90da, #0072bc);
+  background-color: #00b9f1;
+  background-image: -webkit-linear-gradient(left, #00b9f1, #005dbc);
+  background-image: linear-gradient(to right,#00b9f1, #005dbc);
   color: white;
   padding: 0;
   width: 100%;
@@ -435,7 +444,7 @@ body.with-header {
         color: #999999;
         font-weight: 300; }
     .pad-title-container .search-container button {
-      background: #1e90da;
+      background: #0695d6;
       border: none;
       position: absolute;
       top: 0;
@@ -445,7 +454,7 @@ body.with-header {
       border-bottom-right-radius: 4px;
       padding: 2px 8px; }
       .pad-title-container .search-container button:hover {
-        background: #00b9f1; }
+        background: #17b2f8; }
     .pad-title-container .search-container .search-icon {
       width: auto;
       height: 100%;
@@ -453,14 +462,15 @@ body.with-header {
       vertical-align: middle; }
 
 .pad-home-cards {
-  background: #f5f5f5;
+  background: #fafafa;
   padding: 60px 0 40px 0; }
   .pad-home-cards h2 {
-    color: #1e90da;
+    color: #0695d6;
     font-weight: 400;
     font-size: 30px;
     margin: 0 0 40px 0;
-    text-align: center; }
+    text-align: center;
+    padding: 0 30px; }
   .pad-home-cards .pad-ministerios-list {
     text-align: center; }
     .pad-home-cards .pad-ministerios-list .pad-card {
@@ -468,7 +478,7 @@ body.with-header {
       float: none;
       display: inline-block; }
       .pad-home-cards .pad-ministerios-list .pad-card .pad-card-text-table {
-        color: #1e90da;
+        color: #0695d6;
         background: white;
         display: table;
         width: 100%;
@@ -478,7 +488,7 @@ body.with-header {
         box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
         padding: 5px; }
         .pad-home-cards .pad-ministerios-list .pad-card .pad-card-text-table:hover {
-          background: #1e90da;
+          background: #0695d6;
           color: white; }
         .pad-home-cards .pad-ministerios-list .pad-card .pad-card-text-table .pad-card-text-cell {
           display: table-cell;
@@ -500,20 +510,23 @@ body.with-header {
         width: 200px;
         height: 200px; }
     .pad-home-description .container h2 {
-      padding: 0 50px;
-      color: #1e90da;
+      color: #0695d6;
       font-weight: 400;
       font-size: 30px;
-      margin: 40px 0; }
+      margin: 40px auto;
+      max-width: 800px; }
     .pad-home-description .container p {
       font-style: italic;
       font-size: 20px;
-      margin: 0 0 40px 0; }
+      margin: 0 0 40px 0;
+      font-weight: 300; }
+      .pad-home-description .container p strong {
+        font-weight: 500; }
     .pad-home-description .container hr.green {
       border-top: none;
       border-left: none;
       border-right: none;
-      border-bottom: solid 4px #4ecd7a;
+      border-bottom: solid 4px #00d57a;
       width: 160px;
       margin: 0 auto 60px auto;
       border-radius: 4px; }
@@ -529,11 +542,11 @@ body.with-header {
       text-align: center;
       width: 46px;
       height: 46px;
-      color: #1e90da;
+      color: #0695d6;
       border-radius: 4px; }
       .pad-footer .social-links a:hover {
         color: white;
-        background: #1e90da; }
+        background: #0695d6; }
       .pad-footer .social-links a i {
         display: inline-block;
         font-size: 28px; }
@@ -541,7 +554,10 @@ body.with-header {
     max-width: 300px;
     height: auto; }
   .pad-footer .pad-footer-contact {
-    text-align: right; }
+    text-align: right;
+    color: #999999;
+    font-size: 16px;
+    font-weight: 500; }
     .pad-footer .pad-footer-contact p {
       display: inline-block;
       text-align: left;

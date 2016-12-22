@@ -11,12 +11,12 @@
       text-align: center;
       width: 46px;
       height: 46px;
-      color: $blue-200;
+      color: $pad-blue;
       border-radius: 4px;
 
       &:hover {
         color: white;
-        background: $blue-200;
+        background: $pad-blue;
       }
 
       i {
@@ -33,6 +33,9 @@
 
   .pad-footer-contact {
     text-align: right;
+    color: $pad-text-placeholder;
+    font-size: 16px;
+    font-weight: 500;
     p {
       display: inline-block;
       text-align: left;

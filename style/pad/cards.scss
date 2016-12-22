@@ -1,12 +1,13 @@
 .pad-home-cards {
-  background: $grey-100;
+  background: $pad-background;
   padding: 60px 0 40px 0;
   h2 {
-    color: $blue-200;
+    color: $pad-blue;
     font-weight: 400;
     font-size: 30px;
     margin: 0 0 40px 0;
     text-align: center;
+    padding: 0 30px;
   }
 
   .pad-ministerios-list {
@@ -18,10 +19,10 @@
       display: inline-block;
 
       .pad-card-text-table {
-        color: $blue-200;
+        color: $pad-blue;
         background: white;
         &:hover {
-          background: $blue-200;
+          background: $pad-blue;
           color: white;
 
         }
