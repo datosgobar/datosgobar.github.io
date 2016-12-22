@@ -39,8 +39,10 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
     <link rel="stylesheet" href="../style/main.css?v2" type="text/css">
 
+    <script src="../js/augment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script src="../js/jquery.csv.min.js"></script>
+    <script src="../js/pad.js"></script>
     <script src="../js/pad_home.js"></script>
 
 </head>
@@ -79,7 +81,7 @@
             <h1>Planes de apertura de datos de la Nación Argentina</h1>
             <p>Conocé los planes que ministerios, secretarías y organismos desconcentrados y descentralizados dependientes del Poder Ejecutivo Nacional presentaron a partir del artículo 1º  del decreto 117/2016.</p>
             <div class="search-container">
-                <input type="text" class="search" value="" autocomplete="off" placeholder="¿Qué plan de apertura o dato buscás?">
+                <input type="text" class="search" value="" autocomplete="off" placeholder="¿Qué plan de apertura o dato buscás?" id="pad-search-input">
                 <button>
                     <img src="/img/search.svg" class="search-icon">
                 </button>
@@ -91,7 +93,13 @@
 <div class="pad-home-cards">
     <div class="container no-padding">
         <h2>Mirá los planes de apertura de estos organismos:</h2>
-        <div class="pad-ministerios-list col-xs-8 col-xs-offset-2 col-sm-12 col-sm-offset-0"></div>
+        <div class="pad-ministerios-list col-xs-8 col-xs-offset-2 col-sm-12 col-sm-offset-0">
+            <a href="/pad" class="col-xs-12 col-sm-6 col-md-4 col-lg-3 pad-card template-card hidden">
+                <div class="pad-card-text-table">
+                    <div class="pad-card-text-cell"></div>
+                </div>
+            </a>
+        </div>
     </div>
 </div>
 

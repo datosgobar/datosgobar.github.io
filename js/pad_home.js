@@ -1,10 +1,4 @@
 $(function () {
-    function loadCSV() {
-        return $.get('./plan_de_apertura_2016-2017.csv', {}, function (response) {
-            window.pad = $.csv.toObjects(response);
-        })
-    }
-
     function renderHome() {
         var entities = [];
         for (var i=0; i<window.pad.length; i++) {
@@ -14,38 +8,32 @@ $(function () {
             }
         }
 
-        var cardTemplate = '<a href="/pad" class="col-xs-12 col-sm-6 col-md-4 col-lg-3 pad-card">' +
-            '<div class="pad-card-text-table">' +
-            '<div class="pad-card-text-cell"></div>' +
-            '</div>' +
-            '</a>';
-        var cardsContainer = $('.pad-ministerios-list');
-        var template;
+        var cardTemplate = $('.template-card');
+        function renderCard(cardText) {
+            var template = cardTemplate.clone().removeClass('hidden template-card');
+            template.find('.pad-card-text-cell').text(cardText);
+            template.attr('href', '/pad/datasets.html?' + $.param({organismo: cardText}));
+            return template;
+        }
 
+        var cardsContainer = $('.pad-ministerios-list');
         var presidenciaIndex = entities.indexOf('presidencia');
         if (presidenciaIndex != -1) {
-            entityName = entities[presidenciaIndex];
             entities.splice(presidenciaIndex, 1);
-            template = $(cardTemplate).addClass('main-card');
-            template.find('.pad-card-text-cell').text(entityName);
+            var template = renderCard(entities[presidenciaIndex]).addClass('main-card');
             cardsContainer.append(template);
         }
 
         var jgmIndex = entities.indexOf('jgm');
         if (jgmIndex != -1) {
-            entityName = entities[jgmIndex];
             entities.splice(jgmIndex, 1);
-            template = $(cardTemplate);
-            template.find('.pad-card-text-cell').text(entityName);
+            template = renderCard(entities[jgmIndex]);
             cardsContainer.append(template);
         }
 
         entities.sort();
-
         for (var j=0; j<entities.length; j++) {
-            entityName = entities[j];
-            template = $(cardTemplate);
-            template.find('.pad-card-text-cell').text(entityName);
+            template = renderCard(entities[j]);
             cardsContainer.append(template);
         }
     }
