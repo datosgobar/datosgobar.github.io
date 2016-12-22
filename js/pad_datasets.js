@@ -37,6 +37,16 @@ $(function () {
     }
 
     function renderTitle(results, query) {
+        var searchingText = query.q && query.q.length > 0 && query.q[0];
+        if (searchingText) {
+            $('#pad-search-input').val(query.q[0]);
+        }
+        if (results.length == 0) {
+            var noResultsTitle = 'Oh, no hay información sobre “' + query.q[0] + '”. Intentá con otra palabra.';
+            $('.pad-title-container h2').text(noResultsTitle);
+        } else {
+
+        }
 
     }
 
@@ -54,7 +64,12 @@ $(function () {
         var unfilteredResults = searchByText(query);
         var results = filterResults(unfilteredResults, query);
         renderTitle(results, query);
-        renderFilters(results, query);
-        renderResults(results, query);
+
+        if (results.length > 0) {
+            renderFilters(results, query);
+            renderResults(results, query);
+        } else {
+            $('.pad-no-results-container').removeClass('hidden');
+        }
     });
 });

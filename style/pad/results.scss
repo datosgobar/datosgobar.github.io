@@ -1,0 +1,12 @@
+.pad-no-results-container {
+  .container {
+    padding: 60px 0;
+    box-shadow: 0 -2px 4px 0 rgba(150, 150, 150, 0.5);
+
+    img {
+      max-width: 900px;
+      display: block;
+      margin: 0 auto;
+    }
+  }
+}

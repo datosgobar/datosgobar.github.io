@@ -407,6 +407,11 @@ body.pad {
     font-weight: 400;
     margin: 0 auto 20px auto;
     max-width: 940px; }
+  .pad-title-container h2 {
+    font-size: 30px;
+    font-weight: 400;
+    margin: 0 auto 40px auto;
+    max-width: 940px; }
   .pad-title-container p {
     font-size: 16px;
     max-width: 600px;
@@ -573,5 +578,13 @@ body.pad {
         text-align: right; }
         .pad-footer .pad-footer-contact p {
           text-align: left; } }
+
+.pad-no-results-container .container {
+  padding: 60px 0;
+  box-shadow: 0 -2px 4px 0 rgba(150, 150, 150, 0.5); }
+  .pad-no-results-container .container img {
+    max-width: 900px;
+    display: block;
+    margin: 0 auto; }
 
 /*# sourceMappingURL=main.css.map */

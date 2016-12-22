@@ -19,15 +19,17 @@ $(function () {
         var cardsContainer = $('.pad-ministerios-list');
         var presidenciaIndex = entities.indexOf('presidencia');
         if (presidenciaIndex != -1) {
+            entityName = entities[presidenciaIndex];
             entities.splice(presidenciaIndex, 1);
-            var template = renderCard(entities[presidenciaIndex]).addClass('main-card');
+            var template = renderCard(entityName ).addClass('main-card');
             cardsContainer.append(template);
         }
 
         var jgmIndex = entities.indexOf('jgm');
         if (jgmIndex != -1) {
+            entityName = entities[jgmIndex ];
             entities.splice(jgmIndex, 1);
-            template = renderCard(entities[jgmIndex]);
+            template = renderCard(entityName);
             cardsContainer.append(template);
         }
 
