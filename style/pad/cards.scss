@@ -18,6 +18,12 @@
       float: none;
       display: inline-block;
 
+      &.main-card {
+        display: block;
+        float: none;
+        margin: 0 auto;
+      }
+
       .pad-card-text-table {
         color: $pad-blue;
         background: white;

@@ -477,6 +477,10 @@ body.pad {
       padding: 0 10px 20px 10px;
       float: none;
       display: inline-block; }
+      .pad-home-cards .pad-ministerios-list .pad-card.main-card {
+        display: block;
+        float: none;
+        margin: 0 auto; }
       .pad-home-cards .pad-ministerios-list .pad-card .pad-card-text-table {
         color: #0695d6;
         background: white;
@@ -533,7 +537,11 @@ body.pad {
 
 .pad-footer {
   padding: 60px 0;
-  box-shadow: 0 -2px 4px 0 rgba(220, 220, 220, 0.5); }
+  box-shadow: 0 -2px 4px 0 rgba(220, 220, 220, 0.5);
+  text-align: center; }
+  @media (min-width: 768px) {
+    .pad-footer {
+      text-align: left; } }
   .pad-footer .social-links {
     margin-bottom: 20px; }
     .pad-footer .social-links a {
@@ -554,13 +562,16 @@ body.pad {
     max-width: 300px;
     height: auto; }
   .pad-footer .pad-footer-contact {
-    text-align: right;
     color: #999999;
     font-size: 16px;
     font-weight: 500; }
     .pad-footer .pad-footer-contact p {
       display: inline-block;
-      text-align: left;
       margin: 0; }
+    @media (min-width: 768px) {
+      .pad-footer .pad-footer-contact {
+        text-align: right; }
+        .pad-footer .pad-footer-contact p {
+          text-align: left; } }
 
 /*# sourceMappingURL=main.css.map */

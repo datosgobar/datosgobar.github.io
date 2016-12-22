@@ -1,9 +1,14 @@
 .pad-footer {
   padding: 60px 0;
   box-shadow: 0 -2px 4px 0 rgba(220, 220, 220, 0.5);
+  text-align: center;
+  @include breakpoint-sm {
+    text-align: left;
+  }
 
   .social-links {
     margin-bottom: 20px;
+
 
     a {
       display: inline-block;
@@ -32,14 +37,19 @@
   }
 
   .pad-footer-contact {
-    text-align: right;
     color: $pad-text-placeholder;
     font-size: 16px;
     font-weight: 500;
     p {
       display: inline-block;
-      text-align: left;
       margin: 0;
+    }
+
+    @include breakpoint-sm {
+      text-align: right;
+      p {
+        text-align: left;
+      }
     }
   }
 }
