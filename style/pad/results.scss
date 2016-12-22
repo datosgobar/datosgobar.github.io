@@ -10,3 +10,50 @@
     }
   }
 }
+
+.pad-results-container {
+  .container {
+    box-shadow: 0 -2px 4px 0 rgba(150, 150, 150, 0.5);
+  }
+
+  .pad-filters {
+    padding: 60px 0;
+    background: $pad-filters-background;
+  }
+
+  .pad-results {
+    padding: 60px 0;
+
+    .result {
+      padding: 20px;
+      border-bottom: solid 2px $pad-filters-background;
+
+      .reference {
+        color: $pad-text-placeholder;
+      }
+
+      .dataset-name {
+        margin: 0 0 10px 0;
+        font-size: 30px;
+        font-weight: 400;
+      }
+
+      .dataset-description {
+        font-size: 16px;
+        margin: 0 0 20px 0;
+      }
+
+      .publication-container,
+      .update-container {
+        position: relative;
+        padding: 0 0 0 30px;
+
+        i {
+          position: absolute;
+          top: 2px;
+          left: 8px;
+        }
+      }
+    }
+  }
+}

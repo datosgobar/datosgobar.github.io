@@ -587,4 +587,33 @@ body.pad {
     display: block;
     margin: 0 auto; }
 
+.pad-results-container .container {
+  box-shadow: 0 -2px 4px 0 rgba(150, 150, 150, 0.5); }
+.pad-results-container .pad-filters {
+  padding: 60px 0;
+  background: #f5f5f5; }
+.pad-results-container .pad-results {
+  padding: 60px 0; }
+  .pad-results-container .pad-results .result {
+    padding: 20px;
+    border-bottom: solid 2px #f5f5f5; }
+    .pad-results-container .pad-results .result .reference {
+      color: #999999; }
+    .pad-results-container .pad-results .result .dataset-name {
+      margin: 0 0 10px 0;
+      font-size: 30px;
+      font-weight: 400; }
+    .pad-results-container .pad-results .result .dataset-description {
+      font-size: 16px;
+      margin: 0 0 20px 0; }
+    .pad-results-container .pad-results .result .publication-container,
+    .pad-results-container .pad-results .result .update-container {
+      position: relative;
+      padding: 0 0 0 30px; }
+      .pad-results-container .pad-results .result .publication-container i,
+      .pad-results-container .pad-results .result .update-container i {
+        position: absolute;
+        top: 2px;
+        left: 8px; }
+
 /*# sourceMappingURL=main.css.map */

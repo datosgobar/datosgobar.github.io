@@ -2,7 +2,7 @@ $(function () {
     function renderHome() {
         var entities = [];
         for (var i=0; i<window.pad.length; i++) {
-            var entityName = window.pad[i]['nombre_tarjeta_home'].trim().toLowerCase();
+            var entityName = window.pad[i]['nombre_tarjeta_home'].trim();
             if (entities.indexOf(entityName) == -1) {
                 entities.push(entityName);
             }
@@ -17,7 +17,7 @@ $(function () {
         }
 
         var cardsContainer = $('.pad-ministerios-list');
-        var presidenciaIndex = entities.indexOf('presidencia');
+        var presidenciaIndex = entities.indexOf('Presidencia');
         if (presidenciaIndex != -1) {
             entityName = entities[presidenciaIndex];
             entities.splice(presidenciaIndex, 1);
@@ -25,7 +25,7 @@ $(function () {
             cardsContainer.append(template);
         }
 
-        var jgmIndex = entities.indexOf('jgm');
+        var jgmIndex = entities.indexOf('JGM');
         if (jgmIndex != -1) {
             entityName = entities[jgmIndex ];
             entities.splice(jgmIndex, 1);
