@@ -12,13 +12,65 @@
 }
 
 .pad-results-container {
+
   .container {
+    display: table;
     box-shadow: 0 -2px 4px 0 rgba(150, 150, 150, 0.5);
+    .pad-filters,
+    .pad-results {
+      float: none;
+      display: table-cell;
+      vertical-align: top;
+    }
   }
 
   .pad-filters {
     padding: 60px 0;
     background: $pad-filters-background;
+
+    .filter-title {
+      color: $pad-blue;
+      font-size: 18px;
+      font-weight: 500;
+      padding: 0 20px;
+    }
+
+    .filter-list {
+      a.filter {
+        .filter-text {
+          font-size: 18px;
+          padding: 10px 20px;
+          color: $pad-text;
+          position: relative;
+
+          &:hover {
+            background: $pad-filters-hovers;
+            color: $pad-blue;
+            cursor: pointer;
+          }
+
+          .close-filter {
+            display: none;
+          }
+
+          &.selected {
+            color: white;
+            background: $pad-text-placeholder;
+            padding-right: 30px;
+
+            .close-filter {
+              display: inline-block;
+              position: absolute;
+              top: 50%;
+              right: 20px;
+              width: 24px;
+              height: 24px;
+              margin-top: -12px;
+            }
+          }
+        }
+      }
+    }
   }
 
   .pad-results {
