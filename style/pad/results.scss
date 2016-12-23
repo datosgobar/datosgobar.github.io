@@ -68,6 +68,54 @@
               margin-top: -12px;
             }
           }
+
+        }
+
+        &.checkbox-filter {
+          .fa-checkbox {
+            padding: 1px;
+            border: solid 2px $pad-text;
+            border-radius: 6px;
+            font-size: 15px;
+            text-align: center;
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+            i {
+              vertical-align: super;
+              display: none;
+            }
+          }
+          .filter-text {
+            &:hover {
+              color: $pad-text;
+            }
+
+            &.selected {
+              color: $pad-text;
+              background: transparent;
+              .fa-checkbox {
+                border-color: $pad-blue;
+                background: $pad-blue;
+                i {
+                  color: $pad-filters-background;
+                  display: inline-block;
+                }
+              }
+            }
+          }
+          .filter-text.disabled {
+            color: $pad-filters-disabled;
+            .fa-checkbox {
+              border-color: $pad-filters-disabled;
+            }
+            &:hover {
+              background: transparent;
+              color: $pad-filters-disabled;
+              cursor: default;
+            }
+          }
         }
       }
     }

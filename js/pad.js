@@ -28,14 +28,8 @@ function parseUrlQuery() {
         var pair = item.split("="),
             key = pair[0],
             value = pair[1] && decodeURIComponent(pair[1]);
-        if (typeof query[key] == 'undefined') {
-            query[key] = value
-        } else if (typeof query[key] == 'string') {
-            query[key] = [query[key], value];
-
-        } else {
-            query[key].push(value);
-        }
+        query[key] = query[key] || [];
+        query[key].push(value);
     });
     return query;
 }

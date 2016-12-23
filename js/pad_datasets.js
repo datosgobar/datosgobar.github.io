@@ -16,8 +16,8 @@ $(function () {
 
     function searchByText(query) {
         var results;
-        if (query.q && query.q.length > 0) {
-            var lunrResults = window.searcher.search(query.q);
+        if (query.q && query.q.length > 0 && query.q[0]) {
+            var lunrResults = window.searcher.search(query.q[0]);
             results = [];
             for (var i = 0; i < lunrResults.length; i++) {
                 var lunrResult = lunrResults[i];
@@ -31,25 +31,36 @@ $(function () {
         return results
     }
 
-    function filterResults(unfilteredResults, query) {
+    function firstPassFilterResults(unfilteredResults, query) {
         var filteredResults = unfilteredResults;
         if (query['organismo']) {
             filteredResults = filteredResults.filter(function (dataset) {
                 return dataset['nombre_tarjeta_home'] == query['organismo']
             })
         }
+
+        return filteredResults
+    }
+
+    function secondPassFilterResults(results, query) {
+        var filteredResults = results;
+        if (query['publicacion']) {
+            filteredResults = filteredResults.filter(function (dataset) {
+                return query['publicacion'].indexOf(dataset['fecha']) != -1
+            })
+        }
         return filteredResults
     }
 
     function renderTitle(results, query) {
-        var searchingText = query.q && query.q.length > 0;
+        var searchingText = query.q && query.q.length > 0 && query.q[0];
         var titleEl = $('.pad-title-container h2');
 
         if (searchingText) {
-            $('#pad-search-input').val(query.q);
+            $('#pad-search-input').val(query.q[0]);
         }
         if (results.length == 0) {
-            var noResultsTitle = 'Oh, no hay información sobre “' + query.q + '”. Intentá con otra palabra.';
+            var noResultsTitle = 'Oh, no hay información sobre “' + query.q[0] + '”. Intentá con otra palabra.';
             titleEl.text(noResultsTitle);
         } else {
             if (query.organismo) {
@@ -59,7 +70,7 @@ $(function () {
                 var resultCount = results.length;
                 var title = 'Hay ' + resultCount.toString();
                 title += resultCount > 1 ? ' resultado' : ' resultados';
-                title += ' sobre “{}”.'.replace('{}', query.q);
+                title += ' sobre “{}”.'.replace('{}', query.q[0]);
                 titleEl.text(title);
             } else {
                 titleEl.remove();
@@ -103,32 +114,74 @@ $(function () {
                     entities.actualizacion.push(result['actualizacion'])
                 }
             }
+            entities.organismo.sort();
+            entities.publicacion.sort();
             return entities
         }
 
         var allEntities = collectUniqueEntities(window.pad);
         var resultsEntities = collectUniqueEntities(results);
 
-        var organismsTemplate = $('.organism-filters .filter-example').clone().removeClass('hidden');
-        for (var i=0; i<allEntities.organismo.length; i++) {
-            var template = organismsTemplate.clone();
-            var organism = allEntities.organismo[i];
-            template.find('span').text(organism);
-            var href;
-            if (organism == query.organismo) {
-                href = $.extend({}, query);
-                delete href['organismo'];
-                template.attr('href', '?' + $.param(href));
-                template.find('.filter-text').addClass('selected');
-                $('.organism-filters .filter-list').prepend(template);
-            } else {
-                href = $.extend({}, query, {organismo: organism});
-                template.attr('href', '?' + $.param(href));
-                $('.organism-filters .filter-list').append(template);
+        function renderOrganisms() {
+            var organismsTemplate = $('.organism-filters .filter-example').clone().removeClass('hidden');
+
+            var jgmIndex = allEntities.organismo.indexOf('JGM');
+            if (jgmIndex != -1) {
+                allEntities.organismo.splice(jgmIndex, 1);
+                allEntities.organismo.unshift('JGM');
+            }
+
+            var presidenciaIndex = allEntities.organismo.indexOf('Presidencia');
+            if (presidenciaIndex != -1) {
+                allEntities.organismo.splice(presidenciaIndex, 1);
+                allEntities.organismo.unshift('Presidencia');
+            }
+
+            for (var i = 0; i < allEntities.organismo.length; i++) {
+                var template = organismsTemplate.clone();
+                var organism = allEntities.organismo[i];
+                template.find('span').text(organism);
+                var href;
+                if (organism == query.organismo) {
+                    href = $.extend(true, {}, query);
+                    delete href['organismo'];
+                    template.attr('href', '?' + $.param(href, true));
+                    template.find('.filter-text').addClass('selected');
+                    $('.organism-filters .filter-list').prepend(template);
+                } else {
+                    href = $.extend(true, {}, query, {organismo: organism});
+                    template.attr('href', '?' + $.param(href, true));
+                    $('.organism-filters .filter-list').append(template);
+                }
             }
         }
 
+        function renderPublications() {
+            var publicationTemplate = $('.publication-filters .filter-example').clone().removeClass('hidden');
+            for (var i = 0; i < allEntities.publicacion.length; i++) {
+                var template = publicationTemplate.clone();
+                var publication = allEntities.publicacion[i];
+                template.find('span.text').text(publication);
+                if (resultsEntities.publicacion.indexOf(publication) == -1) {
+                    template.find('.filter-text').addClass('disabled');
+                } else {
+                    var href = $.extend(true, {}, query);
+                    if (href.publicacion && href.publicacion.indexOf(publication) != -1) {
+                        href.publicacion.splice(href.publicacion.indexOf(publication), 1);
+                        template.attr('href', '?' + $.param(href, true));
+                        template.find('.filter-text').addClass('selected');
+                    } else {
+                        href.publicacion = href.publicacion || [];
+                        href.publicacion.push(publication);
+                        template.attr('href', '?' + $.param(href, true));
+                    }
+                }
+                $('.publication-filters .filter-list').append(template);
+            }
+        }
 
+        renderOrganisms();
+        renderPublications();
     }
 
     loadCSV().then(function () {
@@ -136,11 +189,12 @@ $(function () {
 
         var query = parseUrlQuery();
         var unfilteredResults = searchByText(query);
-        var results = filterResults(unfilteredResults, query);
+        var results = firstPassFilterResults(unfilteredResults, query);
         renderTitle(results, query);
 
         if (results.length > 0) {
             renderFilters(results, query);
+            results = secondPassFilterResults(results, query);
             renderResults(results);
         } else {
             $('.pad-no-results-container').removeClass('hidden');
