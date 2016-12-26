@@ -120,7 +120,18 @@ $(function () {
                 }
             }
             entities.organismo.sort();
-            entities.publicacion.sort();
+            var year = /(20\d\d)/;
+            entities.publicacion.sort(function (a, b) {
+                var aYear = year.exec(a)[1];
+                var bYear = year.exec(b)[1];
+                a = aYear + a;
+                b = bYear + b;
+                return a < b  ? -1 : a > b ? 1 : 0;
+            });
+            var originalFrequencies = ['Diaria','Semanal', 'Mensual', 'Trimestral','Semestral', 'Anual', 'Eventual', 'Tiempo real'];
+            entities.actualizacion.sort(function (a, b) {
+                return originalFrequencies.indexOf(a) - originalFrequencies.indexOf(b);
+            });
             return entities
         }
 

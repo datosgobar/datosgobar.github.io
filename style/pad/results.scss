@@ -28,9 +28,18 @@
     padding: 60px 0;
     background: $pad-filters-background;
 
+    .publication-filters,
+    .update-filters {
+      hr {
+        border: none;
+        border-top: solid 1px $pad-text-placeholder;
+        margin: 40px 0 10px 0;
+      }
+    }
+
     .filter-title {
       color: $pad-blue;
-      font-size: 18px;
+      font-size: 20px;
       font-weight: 500;
       padding: 0 20px;
     }
@@ -38,7 +47,7 @@
     .filter-list {
       a.filter {
         .filter-text {
-          font-size: 18px;
+          font-size: 20px;
           padding: 10px 20px;
           color: $pad-text;
           position: relative;
@@ -122,20 +131,26 @@
   }
 
   .pad-results {
-    padding: 60px 0;
+    padding: 60px 20px;
 
     .result {
-      padding: 20px;
+      padding: 20px 0;
       border-bottom: solid 2px $pad-filters-background;
+
+      .organism {
+        font-size: 18px;
+        font-weight: 500;
+        margin: 0;
+      }
 
       .reference {
         color: $pad-text-placeholder;
       }
 
       .dataset-name {
-        margin: 0 0 10px 0;
+        margin: 0;
         font-size: 30px;
-        font-weight: 400;
+        font-weight: 500;
       }
 
       .dataset-description {
@@ -150,8 +165,17 @@
 
         i {
           position: absolute;
+          font-size: 20px;
           top: 2px;
-          left: 8px;
+          left: 4px;
+          color: $pad-text-placeholder;
+        }
+
+        .publication,
+        .update {
+          font-size: 16px;
+          font-weight: 500;
+          margin: 0;
         }
       }
     }

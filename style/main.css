@@ -598,13 +598,18 @@ body.pad {
 .pad-results-container .pad-filters {
   padding: 60px 0;
   background: #f5f5f5; }
+  .pad-results-container .pad-filters .publication-filters hr,
+  .pad-results-container .pad-filters .update-filters hr {
+    border: none;
+    border-top: solid 1px #999999;
+    margin: 40px 0 10px 0; }
   .pad-results-container .pad-filters .filter-title {
     color: #0695d6;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 500;
     padding: 0 20px; }
   .pad-results-container .pad-filters .filter-list a.filter .filter-text {
-    font-size: 18px;
+    font-size: 20px;
     padding: 10px 20px;
     color: #424242;
     position: relative; }
@@ -659,16 +664,20 @@ body.pad {
       color: #cccccc;
       cursor: default; }
 .pad-results-container .pad-results {
-  padding: 60px 0; }
+  padding: 60px 20px; }
   .pad-results-container .pad-results .result {
-    padding: 20px;
+    padding: 20px 0;
     border-bottom: solid 2px #f5f5f5; }
+    .pad-results-container .pad-results .result .organism {
+      font-size: 18px;
+      font-weight: 500;
+      margin: 0; }
     .pad-results-container .pad-results .result .reference {
       color: #999999; }
     .pad-results-container .pad-results .result .dataset-name {
-      margin: 0 0 10px 0;
+      margin: 0;
       font-size: 30px;
-      font-weight: 400; }
+      font-weight: 500; }
     .pad-results-container .pad-results .result .dataset-description {
       font-size: 16px;
       margin: 0 0 20px 0; }
@@ -679,7 +688,16 @@ body.pad {
       .pad-results-container .pad-results .result .publication-container i,
       .pad-results-container .pad-results .result .update-container i {
         position: absolute;
+        font-size: 20px;
         top: 2px;
-        left: 8px; }
+        left: 4px;
+        color: #999999; }
+      .pad-results-container .pad-results .result .publication-container .publication,
+      .pad-results-container .pad-results .result .publication-container .update,
+      .pad-results-container .pad-results .result .update-container .publication,
+      .pad-results-container .pad-results .result .update-container .update {
+        font-size: 16px;
+        font-weight: 500;
+        margin: 0; }
 
 /*# sourceMappingURL=main.css.map */
