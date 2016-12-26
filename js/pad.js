@@ -31,6 +31,9 @@ function parseUrlQuery() {
         query[key] = query[key] || [];
         query[key].push(value);
     });
+    if (query['pagina']) {
+        query['pagina'] = parseInt(query['pagina']);
+    }
     return query;
 }
 

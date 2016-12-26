@@ -112,6 +112,9 @@
                   display: inline-block;
                 }
               }
+              &:hover {
+                background: $pad-filters-hovers;
+              }
             }
           }
           .filter-text.disabled {
@@ -177,6 +180,27 @@
           font-weight: 500;
           margin: 0;
         }
+      }
+    }
+  }
+
+  .results-pagination {
+    padding: 60px 0 0 0;
+    text-align: center;
+
+    span {
+      font-size: 16px;
+      font-weight: 500;
+      padding: 6px 11px;
+      border-radius: 4px;
+      color: $pad-blue;
+      &:hover {
+        background: $pad-filters-background;
+      }
+      &.current,
+      &.current:hover {
+        background: $pad-text-placeholder;
+        color: white;
       }
     }
   }

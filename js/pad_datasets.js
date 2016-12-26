@@ -1,4 +1,6 @@
 $(function () {
+    var perPage = 10;
+
     function initializeLunr() {
         window.searcher = lunr(function () {
             this.field('denominacion', {boost: 10});
@@ -85,7 +87,7 @@ $(function () {
     }
 
     function renderResults(results) {
-        var resultsContainer = $('.pad-results');
+        var resultsContainer = $('.pad-results .results-list');
         $('.pad-results-container').removeClass('hidden');
         var exampleTemplate = $('.example-result').clone().removeClass('hidden example-result');
         for (var i = 0; i < results.length; i++) {
@@ -225,6 +227,55 @@ $(function () {
         renderUpdates();
     }
 
+    function paginate(results, query) {
+        var page = query['pagina'] ? query['pagina'] - 1 : 0;
+        results = results.slice(page*perPage, (page+1)*perPage);
+        return results
+    }
+
+    function renderPagination(results, query) {
+        var maxPages = Math.ceil(results.length / perPage);
+        console.log(maxPages);
+        var currentPage = query['pagina'] || 1;
+        if (maxPages <= 1) {
+            return;
+        }
+        var template = $('.results-pagination .pagination-example').clone().removeClass('pagination-example hidden');
+        function renderPaginationLink(pageNumber, char) {
+            var link = template.clone();
+            var href = $.extend(true, {}, query);
+            href['pagina'] = pageNumber;
+            link.attr('href', '?' + $.param(href, true));
+            link.find('span').text(char);
+            $('.results-pagination').append(link);
+            return link;
+        }
+        if (currentPage > 5) {
+            renderPaginationLink(1, '«');
+        }
+        if (currentPage > 1) {
+            renderPaginationLink(currentPage - 1, '‹');
+        }
+        for (var p=currentPage-4; p<currentPage; p++) {
+            if (p > 0) {
+                renderPaginationLink(p, p);
+            }
+        }
+        renderPaginationLink(currentPage, currentPage).removeAttr('href').find('span').addClass('current');
+        for (var p2=currentPage+1; p2<currentPage+5; p2++) {
+            if (p2 <= maxPages) {
+                renderPaginationLink(p2, p2);
+            }
+        }
+        if (currentPage +1 <= maxPages) {
+            renderPaginationLink(currentPage+1, '›');
+        }
+        if (currentPage +5 <= maxPages) {
+            renderPaginationLink(maxPages, '»');
+        }
+
+    }
+
     loadCSV().then(function () {
         initializeLunr();
 
@@ -236,6 +287,8 @@ $(function () {
         if (results.length > 0) {
             renderFilters(results, query);
             results = secondPassFilterResults(results, query);
+            renderPagination(results, query);
+            results = paginate(results, query);
             renderResults(results);
         } else {
             $('.pad-no-results-container').removeClass('hidden');
