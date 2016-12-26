@@ -660,7 +660,8 @@ body.pad {
       vertical-align: super;
       display: none; }
   .pad-results-container .pad-filters .filter-list a.filter.checkbox-filter .filter-text:hover {
-    color: #424242; }
+    color: #424242;
+    background: transparent; }
   .pad-results-container .pad-filters .filter-list a.filter.checkbox-filter .filter-text.selected {
     color: #424242;
     background: transparent; }
@@ -670,8 +671,6 @@ body.pad {
       .pad-results-container .pad-filters .filter-list a.filter.checkbox-filter .filter-text.selected .fa-checkbox i {
         color: #f5f5f5;
         display: inline-block; }
-    .pad-results-container .pad-filters .filter-list a.filter.checkbox-filter .filter-text.selected:hover {
-      background: #e5e5e5; }
   .pad-results-container .pad-filters .filter-list a.filter.checkbox-filter .filter-text.disabled {
     color: #cccccc; }
     .pad-results-container .pad-filters .filter-list a.filter.checkbox-filter .filter-text.disabled .fa-checkbox {

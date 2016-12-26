@@ -99,6 +99,7 @@
           .filter-text {
             &:hover {
               color: $pad-text;
+              background: transparent;
             }
 
             &.selected {
@@ -111,9 +112,6 @@
                   color: $pad-filters-background;
                   display: inline-block;
                 }
-              }
-              &:hover {
-                background: $pad-filters-hovers;
               }
             }
           }
