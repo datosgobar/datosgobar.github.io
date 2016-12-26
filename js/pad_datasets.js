@@ -49,6 +49,11 @@ $(function () {
                 return query['publicacion'].indexOf(dataset['fecha']) != -1
             })
         }
+        if (query['actualizacion']) {
+            filteredResults = filteredResults.filter(function (dataset) {
+                return query['actualizacion'].indexOf(dataset['actualizacion']) != -1
+            })
+        }
         return filteredResults
     }
 
@@ -82,10 +87,10 @@ $(function () {
     function renderResults(results) {
         var resultsContainer = $('.pad-results');
         $('.pad-results-container').removeClass('hidden');
-        var exampleTemplate = $('.example-result');
+        var exampleTemplate = $('.example-result').clone().removeClass('hidden example-result');
         for (var i = 0; i < results.length; i++) {
             var result = results[i];
-            var template = exampleTemplate.clone().removeClass('hidden');
+            var template = exampleTemplate.clone();
             template.find('.dataset-name').text(result['denominacion']);
             template.find('.dataset-description').text(result['descripcion']);
             template.find('.publication').text(result['fecha']);
@@ -123,7 +128,7 @@ $(function () {
         var resultsEntities = collectUniqueEntities(results);
 
         function renderOrganisms() {
-            var organismsTemplate = $('.organism-filters .filter-example').clone().removeClass('hidden');
+            var organismsTemplate = $('.organism-filters .filter-example').clone().removeClass('filter-example hidden');
 
             var jgmIndex = allEntities.organismo.indexOf('JGM');
             if (jgmIndex != -1) {
@@ -157,7 +162,7 @@ $(function () {
         }
 
         function renderPublications() {
-            var publicationTemplate = $('.publication-filters .filter-example').clone().removeClass('hidden');
+            var publicationTemplate = $('.publication-filters .filter-example').clone().removeClass('filter-example hidden');
             for (var i = 0; i < allEntities.publicacion.length; i++) {
                 var template = publicationTemplate.clone();
                 var publication = allEntities.publicacion[i];
@@ -180,8 +185,33 @@ $(function () {
             }
         }
 
+        function renderUpdates() {
+            var updateTemplate = $('.update-filters .filter-example').clone().removeClass('filter-example hidden');
+            for (var i = 0; i < allEntities.actualizacion.length; i++) {
+                var template = updateTemplate.clone();
+                var update = allEntities.actualizacion[i];
+                template.find('span.text').text(update);
+                if (resultsEntities.actualizacion.indexOf(update) == -1) {
+                    template.find('.filter-text').addClass('disabled');
+                } else {
+                    var href = $.extend(true, {}, query);
+                    if (href.actualizacion && href.actualizacion.indexOf(update) != -1) {
+                        href.actualizacion.splice(href.actualizacion.indexOf(update), 1);
+                        template.attr('href', '?' + $.param(href, true));
+                        template.find('.filter-text').addClass('selected');
+                    } else {
+                        href.actualizacion = href.actualizacion || [];
+                        href.actualizacion.push(update);
+                        template.attr('href', '?' + $.param(href, true));
+                    }
+                }
+                $('.update-filters .filter-list').append(template);
+            }
+        }
+
         renderOrganisms();
         renderPublications();
+        renderUpdates();
     }
 
     loadCSV().then(function () {
