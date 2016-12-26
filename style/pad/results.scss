@@ -1,10 +1,10 @@
 .pad-no-results-container {
   .container {
-    padding: 60px 0;
+    padding: 120px 0;
     box-shadow: 0 -2px 4px 0 rgba(150, 150, 150, 0.5);
 
     img {
-      max-width: 900px;
+      max-width: 750px;
       display: block;
       margin: 0 auto;
     }
@@ -39,7 +39,7 @@
 
     .filter-title {
       color: $pad-blue;
-      font-size: 20px;
+      font-size: 22px;
       font-weight: 500;
       padding: 0 20px;
     }
@@ -47,7 +47,7 @@
     .filter-list {
       a.filter {
         .filter-text {
-          font-size: 20px;
+          font-size: 18px;
           padding: 10px 20px;
           color: $pad-text;
           position: relative;
@@ -151,14 +151,14 @@
       }
 
       .dataset-name {
-        margin: 0;
-        font-size: 30px;
+        font-size: 25px;
         font-weight: 500;
+        margin: 0 0 10px 0;
       }
 
       .dataset-description {
         font-size: 16px;
-        margin: 0 0 20px 0;
+        margin: 0 0 40px 0;
       }
 
       .publication-container,

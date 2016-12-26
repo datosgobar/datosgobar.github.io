@@ -28,6 +28,23 @@ $(function () {
             }
         } else {
             results = window.pad;
+            results.sort(function (a, b) {
+                var aOrganism = a['nombre_tarjeta_home'];
+                var bOrganism = b['nombre_tarjeta_home'];
+                if (aOrganism == 'Presidencia') {
+                    return -1;
+                }
+                if (bOrganism == 'Presidencia') {
+                    return 1;
+                }
+                if (aOrganism == 'JGM') {
+                    return -1;
+                }
+                if (bOrganism == 'JGM') {
+                    return 1;
+                }
+                return aOrganism < bOrganism ? -1 : aOrganism > bOrganism ? 1 : 0;
+            });
         }
 
         return results
@@ -76,7 +93,7 @@ $(function () {
             } else if (searchingText) {
                 var resultCount = results.length;
                 var title = 'Hay ' + resultCount.toString();
-                title += resultCount > 1 ? ' resultado' : ' resultados';
+                title += resultCount > 1 ? ' resultados' : ' resultado';
                 title += ' sobre “{}”.'.replace('{}', query.q[0]);
                 titleEl.text(title);
             } else {

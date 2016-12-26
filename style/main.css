@@ -257,7 +257,8 @@ button.btn {
   #header .header-logo {
     height: 72px;
     display: inline-block;
-    width: auto; }
+    width: 300px;
+    max-width: 100%; }
   #header a.pull-right, #header span.anchor {
     line-height: 72px;
     color: #0695d6;
@@ -407,9 +408,14 @@ body.pad {
   .pad-title-container .breadcrum {
     margin: 10px 0 60px 0;
     text-align: left;
-    color: white; }
+    color: white;
+    font-size: 16px;
+    font-weight: 300; }
     .pad-title-container .breadcrum a, .pad-title-container .breadcrum a:hover {
-      color: white; }
+      color: white;
+      font-weight: 400; }
+    .pad-title-container .breadcrum i {
+      vertical-align: middle; }
   .pad-title-container h1 {
     font-size: 55px;
     font-weight: 400;
@@ -421,8 +427,8 @@ body.pad {
     margin: 0 auto 40px auto;
     max-width: 940px; }
   .pad-title-container p {
-    font-size: 16px;
-    max-width: 600px;
+    font-size: 18px;
+    max-width: 800px;
     display: block;
     font-weight: 300;
     margin: 0 auto 40px auto; }
@@ -439,7 +445,7 @@ body.pad {
       color: #424242;
       box-shadow: none;
       padding: 5px 50px 5px 10px;
-      font-size: 20px;
+      font-size: 18px;
       line-height: 1.2;
       height: 39px;
       border-radius: 4px;
@@ -536,7 +542,8 @@ body.pad {
       font-style: italic;
       font-size: 20px;
       margin: 0 0 40px 0;
-      font-weight: 300; }
+      font-weight: 300;
+      line-height: 1.8; }
       .pad-home-description .container p strong {
         font-weight: 500; }
     .pad-home-description .container hr.green {
@@ -544,7 +551,7 @@ body.pad {
       border-left: none;
       border-right: none;
       border-bottom: solid 4px #00d57a;
-      width: 160px;
+      width: 100px;
       margin: 0 auto 60px auto;
       border-radius: 4px; }
 
@@ -588,10 +595,10 @@ body.pad {
           text-align: left; } }
 
 .pad-no-results-container .container {
-  padding: 60px 0;
+  padding: 120px 0;
   box-shadow: 0 -2px 4px 0 rgba(150, 150, 150, 0.5); }
   .pad-no-results-container .container img {
-    max-width: 900px;
+    max-width: 750px;
     display: block;
     margin: 0 auto; }
 
@@ -613,11 +620,11 @@ body.pad {
     margin: 40px 0 10px 0; }
   .pad-results-container .pad-filters .filter-title {
     color: #0695d6;
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 500;
     padding: 0 20px; }
   .pad-results-container .pad-filters .filter-list a.filter .filter-text {
-    font-size: 20px;
+    font-size: 18px;
     padding: 10px 20px;
     color: #424242;
     position: relative; }
@@ -685,12 +692,12 @@ body.pad {
     .pad-results-container .pad-results .result .reference {
       color: #999999; }
     .pad-results-container .pad-results .result .dataset-name {
-      margin: 0;
-      font-size: 30px;
-      font-weight: 500; }
+      font-size: 25px;
+      font-weight: 500;
+      margin: 0 0 10px 0; }
     .pad-results-container .pad-results .result .dataset-description {
       font-size: 16px;
-      margin: 0 0 20px 0; }
+      margin: 0 0 40px 0; }
     .pad-results-container .pad-results .result .publication-container,
     .pad-results-container .pad-results .result .update-container {
       position: relative;

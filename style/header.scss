@@ -15,7 +15,8 @@ $header-height: 72px;
   .header-logo {
     height: $header-height;
     display: inline-block;
-    width: auto;
+    width: 300px;
+    max-width: 100%;
   }
 
   a.pull-right, span.anchor {

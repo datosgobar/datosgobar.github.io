@@ -29,6 +29,7 @@
       font-size: 20px;
       margin: 0 0 40px 0;
       font-weight: 300;
+      line-height: 1.8;
       strong {
         font-weight: 500;
       }
@@ -39,7 +40,7 @@
       border-left: none;
       border-right: none;
       border-bottom: solid 4px $pad-green;
-      width: 160px;
+      width: 100px;
       margin: 0 auto 60px auto;
       border-radius: 4px;
     }
