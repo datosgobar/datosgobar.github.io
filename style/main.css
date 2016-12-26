@@ -402,6 +402,14 @@ body.pad {
     padding: 60px 0;
     background-image: url("../img/pad/pad-elementos-pattern-03.svg");
     background-size: cover; }
+    .pad-title-container .title-background.no-padding {
+      padding: 0; }
+  .pad-title-container .breadcrum {
+    margin: 10px 0 60px 0;
+    text-align: left;
+    color: white; }
+    .pad-title-container .breadcrum a, .pad-title-container .breadcrum a:hover {
+      color: white; }
   .pad-title-container h1 {
     font-size: 55px;
     font-weight: 400;
@@ -422,8 +430,8 @@ body.pad {
     display: block;
     width: 440px;
     max-width: 100%;
-    margin: 0 auto;
-    position: relative; }
+    position: relative;
+    margin: 0 auto 60px auto; }
     .pad-title-container .search-container .search {
       background: white;
       border: none;
