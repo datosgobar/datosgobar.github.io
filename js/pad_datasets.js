@@ -252,7 +252,6 @@ $(function () {
 
     function renderPagination(results, query) {
         var maxPages = Math.ceil(results.length / perPage);
-        console.log(maxPages);
         var currentPage = query['pagina'] || 1;
         if (maxPages <= 1) {
             return;
