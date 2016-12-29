@@ -1,44 +1,40 @@
-$(function () {
-    function renderHome() {
-        var entities = [];
-        for (var i=0; i<window.pad.length; i++) {
-            var entityName = window.pad[i]['nombre_tarjeta_home'].trim();
-            if (entities.indexOf(entityName) == -1) {
-                entities.push(entityName);
-            }
-        }
+"use strict";
 
-        var cardTemplate = $('.template-card');
-        function renderCard(cardText) {
-            var template = cardTemplate.clone().removeClass('hidden template-card');
-            template.find('.pad-card-text-cell').text(cardText);
-            template.attr('href', '/pad/datasets.html?' + $.param({organismo: cardText}));
-            return template;
-        }
+window.pad.actions.renderCard = function (cardText) {
+    var template = window.pad.variables.cardTemplate.clone();
+    template.find('.pad-card-text-cell').text(cardText);
+    template.attr('href', '/pad/datasets.html?' + $.param({organismo: cardText}));
+    return template;
+};
 
-        var cardsContainer = $('.pad-ministerios-list');
-        var presidenciaIndex = entities.indexOf('Presidencia');
-        if (presidenciaIndex != -1) {
-            entityName = entities[presidenciaIndex];
-            entities.splice(presidenciaIndex, 1);
-            var template = renderCard(entityName ).addClass('main-card');
-            cardsContainer.append(template);
-        }
-
-        var jgmIndex = entities.indexOf('JGM');
-        if (jgmIndex != -1) {
-            entityName = entities[jgmIndex ];
-            entities.splice(jgmIndex, 1);
-            template = renderCard(entityName);
-            cardsContainer.append(template);
-        }
-
-        entities.sort();
-        for (var j=0; j<entities.length; j++) {
-            template = renderCard(entities[j]);
-            cardsContainer.append(template);
+window.pad.actions.collectOrganisms = function () {
+    var entities = [];
+    for (var i = 0; i < window.pad.variables.csv.length; i++) {
+        var entityName = window.pad.variables.csv[i]['nombre_tarjeta_home'].trim();
+        if (entities.indexOf(entityName) == -1) {
+            entities.push(entityName);
         }
     }
+    entities.sort(window.pad.actions.organismSort);
+    window.pad.variables.organisms = entities;
+};
 
-    loadCSV().then(renderHome);
+window.pad.actions.renderHome = function () {
+    window.pad.actions.collectOrganisms();
+    window.pad.variables.cardTemplate = $('.template-card').clone().removeClass('hidden template-card');
+    var cardsContainer = $('.pad-ministerios-list');
+
+    for (var j = 0; j < window.pad.variables.organisms.length; j++) {
+        var organism = window.pad.variables.organisms[j];
+        var template = window.pad.actions.renderCard(organism);
+        if (organism == 'Presidencia') {
+            template.addClass('main-card');
+        }
+        cardsContainer.append(template);
+    }
+};
+
+$(function () {
+    window.pad.actions.loadCSV().then(window.pad.actions.renderHome);
 });
+

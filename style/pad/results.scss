@@ -115,16 +115,16 @@
               }
             }
           }
-          .filter-text.disabled {
+        }
+        .filter-text.disabled {
+          color: $pad-filters-disabled;
+          .fa-checkbox {
+            border-color: $pad-filters-disabled;
+          }
+          &:hover {
+            background: transparent;
             color: $pad-filters-disabled;
-            .fa-checkbox {
-              border-color: $pad-filters-disabled;
-            }
-            &:hover {
-              background: transparent;
-              color: $pad-filters-disabled;
-              cursor: default;
-            }
+            cursor: default;
           }
         }
       }

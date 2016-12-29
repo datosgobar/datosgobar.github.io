@@ -1,311 +1,259 @@
-$(function () {
-    var perPage = 10;
+"use strict";
 
-    function initializeLunr() {
-        window.searcher = lunr(function () {
-            this.field('denominacion', {boost: 10});
-            this.field('descripcion', {boost: 8});
-            this.field('jurisdiccion', {boost: 5});
-            this.field('fecha');
-            this.field('actualizacion');
-            this.ref('id')
+window.pad.variables.perPage = 10;
+
+window.pad.actions.initializeLunr = function () {
+    window.pad.variables.searcher = lunr(function () {
+        this.field('denominacion', {boost: 10});
+        this.field('descripcion', {boost: 8});
+        this.field('jurisdiccion', {boost: 5});
+        this.field('fecha');
+        this.field('actualizacion');
+        this.ref('id')
+    });
+    for (var i = 0; i < window.pad.variables.csv.length; i++) {
+        var sercheable = $.extend({}, window.pad.variables.csv[i], {id: i});
+        window.pad.variables.searcher.add(sercheable);
+    }
+};
+
+window.pad.actions.searchByText = function (query) {
+    query = query || window.pad.variables.query;
+    var results;
+    if (query.q && query.q.length > 0 && query.q[0]) {
+        var lunrResults = window.pad.variables.searcher.search(query.q[0]);
+        results = [];
+        for (var i = 0; i < lunrResults.length; i++) {
+            var lunrResult = lunrResults[i];
+            var resultWithScore = $.extend({}, window.pad.variables.csv[lunrResult.ref], lunrResult);
+            results.push(resultWithScore)
+        }
+    } else {
+        results = $.extend(true, [], window.pad.variables.csv);
+        results.sort(function (a, b) {
+            var aOrganism = a['nombre_tarjeta_home'];
+            var bOrganism = b['nombre_tarjeta_home'];
+            return window.pad.actions.organismSort(aOrganism, bOrganism);
         });
-        for (var i = 0; i < window.pad.length; i++) {
-            var sercheable = $.extend({}, window.pad[i], {id: i});
-            window.searcher.add(sercheable);
-        }
     }
 
-    function searchByText(query) {
-        var results;
-        if (query.q && query.q.length > 0 && query.q[0]) {
-            var lunrResults = window.searcher.search(query.q[0]);
-            results = [];
-            for (var i = 0; i < lunrResults.length; i++) {
-                var lunrResult = lunrResults[i];
-                var resultWithScore = $.extend({}, window.pad[lunrResult.ref], lunrResult);
-                results.push(resultWithScore)
-            }
+    return results;
+};
+
+window.pad.actions.filterResults = function (results, query) {
+    results = results || window.pad.variables.results;
+    query = query || window.pad.variables.query;
+    if (query['organismo']) {
+        results = results.filter(function (dataset) {
+            return dataset['nombre_tarjeta_home'] == query['organismo']
+        })
+    }
+    if (query['publicacion']) {
+        results = results.filter(function (dataset) {
+            return query['publicacion'].indexOf(dataset['fecha']) != -1
+        })
+    }
+    if (query['actualizacion']) {
+        results = results.filter(function (dataset) {
+            return query['actualizacion'].indexOf(dataset['actualizacion']) != -1
+        })
+    }
+    return results;
+};
+
+window.pad.actions.renderTitle = function () {
+    var query = window.pad.variables.query;
+    var searchingText = query.q && query.q.length > 0 && query.q[0];
+    var titleEl = $('.pad-title-container h2');
+
+    if (searchingText) {
+        $('#pad-search-input').val(query.q[0]);
+    }
+    if (window.pad.variables.results.length == 0) {
+        var noResultsTitle = 'Oh, no hay información sobre “' + query.q[0] + '”. Intentá con otra palabra.';
+        titleEl.text(noResultsTitle);
+    } else {
+        if (query.organismo) {
+            var titleText = 'Este es el plan de apertura de <span class="organism">{}</span>.'.replace('{}', query.organismo);
+            titleEl.html(titleText);
+        } else if (searchingText) {
+            var resultCount = window.pad.variables.results.length;
+            var title = 'Hay ' + resultCount.toString();
+            title += resultCount > 1 ? ' resultados' : ' resultado';
+            title += ' sobre “{}”.'.replace('{}', query.q[0]);
+            titleEl.text(title);
         } else {
-            results = window.pad;
-            results.sort(function (a, b) {
-                var aOrganism = a['nombre_tarjeta_home'];
-                var bOrganism = b['nombre_tarjeta_home'];
-                if (aOrganism == 'Presidencia') {
-                    return -1;
-                }
-                if (bOrganism == 'Presidencia') {
-                    return 1;
-                }
-                if (aOrganism == 'JGM') {
-                    return -1;
-                }
-                if (bOrganism == 'JGM') {
-                    return 1;
-                }
-                return aOrganism < bOrganism ? -1 : aOrganism > bOrganism ? 1 : 0;
-            });
+            titleEl.remove();
         }
-
-        return results
     }
 
-    function firstPassFilterResults(unfilteredResults, query) {
-        var filteredResults = unfilteredResults;
-        if (query['organismo']) {
-            filteredResults = filteredResults.filter(function (dataset) {
-                return dataset['nombre_tarjeta_home'] == query['organismo']
-            })
-        }
+};
 
-        return filteredResults
+window.pad.actions.renderPaginationLink = function (pageNumber, char) {
+    window.pad.variables.paginationTemplate = window.pad.variables.paginationTemplate || $('.results-pagination .pagination-example').clone().removeClass('pagination-example hidden');
+    var link = window.pad.variables.paginationTemplate.clone();
+    var href = $.extend(true, {}, window.pad.variables.query);
+    href['pagina'] = pageNumber;
+    link.attr('href', '?' + $.param(href, true));
+    link.find('span').text(char);
+    $('.results-pagination').append(link);
+    return link;
+};
+
+window.pad.actions.renderPagination = function () {
+    var maxPages = Math.ceil(window.pad.variables.results.length / window.pad.variables.perPage);
+    var currentPage = window.pad.variables.query['pagina'] || 1;
+    if (maxPages <= 1) {
+        return;
+    }
+    if (currentPage > 5) {
+        window.pad.actions.renderPaginationLink(1, '«');
+    }
+    if (currentPage > 1) {
+        window.pad.actions.renderPaginationLink(currentPage - 1, '‹');
+    }
+    for (var p = currentPage - 4; p < currentPage; p++) {
+        if (p > 0) {
+            window.pad.actions.renderPaginationLink(p, p);
+        }
+    }
+    window.pad.actions.renderPaginationLink(currentPage, currentPage).removeAttr('href').find('span').addClass('current');
+    for (var p2 = currentPage + 1; p2 < currentPage + 5; p2++) {
+        if (p2 <= maxPages) {
+            window.pad.actions.renderPaginationLink(p2, p2);
+        }
+    }
+    if (currentPage + 1 <= maxPages) {
+        window.pad.actions.renderPaginationLink(currentPage + 1, '›');
+    }
+    if (currentPage + 5 <= maxPages) {
+        window.pad.actions.renderPaginationLink(maxPages, '»');
+    }
+};
+
+
+window.pad.actions.paginateResults = function () {
+    var query = window.pad.variables.query;
+    var page = query['pagina'] ? query['pagina'] - 1 : 0;
+    window.pad.variables.paginatedResults = window.pad.variables.results.slice(page * window.pad.variables.perPage, (page + 1) * window.pad.variables.perPage);
+};
+
+window.pad.actions.collectEntities = function (datasets) {
+    datasets = datasets || window.pad.variables.csv;
+    var entities = {organism: [], publication: [], update: []};
+    for (var i = 0; i < datasets.length; i++) {
+        var result = datasets[i];
+        if (entities.organism.indexOf(result['nombre_tarjeta_home']) == -1) {
+            entities.organism.push(result['nombre_tarjeta_home'])
+        }
+        if (entities.publication.indexOf(result['fecha']) == -1) {
+            entities.publication.push(result['fecha'])
+        }
+        if (entities.update.indexOf(result['actualizacion']) == -1) {
+            entities.update.push(result['actualizacion'])
+        }
+    }
+    entities.organism.sort(window.pad.actions.organismSort);
+    var yearRegex = /(20\d\d)/;
+    entities.publication.sort(function (a, b) {
+        var aYear = yearRegex.exec(a)[1];
+        var bYear = yearRegex.exec(b)[1];
+        a = aYear + a;
+        b = bYear + b;
+        return a < b ? -1 : a > b ? 1 : 0;
+    });
+    var originalFrequencies = ['Diaria', 'Semanal', 'Mensual', 'Trimestral', 'Semestral', 'Anual', 'Eventual', 'Tiempo real'];
+    entities.update.sort(function (a, b) {
+        return originalFrequencies.indexOf(a) - originalFrequencies.indexOf(b);
+    });
+    return entities;
+};
+
+window.pad.actions.renderFilter = function (options) {
+    var filterName = options.filterName;
+    var urlName = options.urlName;
+    var baseTemplate = $('.' + filterName + '-filters .filter-example').clone().removeClass('filter-example hidden');
+
+    var resultsFromOtherFilters = undefined;
+    var entitiesFromOtherFilters = undefined;
+
+    function canSwitchTo(anotherEntitiy) {
+        var baseQuery = $.extend(true, {}, window.pad.variables.query);
+        if (baseQuery[urlName]) {
+            delete baseQuery[urlName];
+        }
+        resultsFromOtherFilters = resultsFromOtherFilters || window.pad.actions.filterResults(window.pad.actions.searchByText(baseQuery), baseQuery);
+        entitiesFromOtherFilters = entitiesFromOtherFilters || window.pad.actions.collectEntities(resultsFromOtherFilters)[filterName];
+        return entitiesFromOtherFilters.indexOf(anotherEntitiy) != -1;
     }
 
-    function secondPassFilterResults(results, query) {
-        var filteredResults = results;
-        if (query['publicacion']) {
-            filteredResults = filteredResults.filter(function (dataset) {
-                return query['publicacion'].indexOf(dataset['fecha']) != -1
-            })
-        }
-        if (query['actualizacion']) {
-            filteredResults = filteredResults.filter(function (dataset) {
-                return query['actualizacion'].indexOf(dataset['actualizacion']) != -1
-            })
-        }
-        return filteredResults
-    }
-
-    function renderTitle(results, query) {
-        var searchingText = query.q && query.q.length > 0 && query.q[0];
-        var titleEl = $('.pad-title-container h2');
-
-        if (searchingText) {
-            $('#pad-search-input').val(query.q[0]);
-        }
-        if (results.length == 0) {
-            var noResultsTitle = 'Oh, no hay información sobre “' + query.q[0] + '”. Intentá con otra palabra.';
-            titleEl.text(noResultsTitle);
-        } else {
-            if (query.organismo) {
-                var titleText = 'Este es el plan de apertura de <span class="organism">{}</span>.'.replace('{}', query.organismo);
-                titleEl.html(titleText);
-            } else if (searchingText) {
-                var resultCount = results.length;
-                var title = 'Hay ' + resultCount.toString();
-                title += resultCount > 1 ? ' resultados' : ' resultado';
-                title += ' sobre “{}”.'.replace('{}', query.q[0]);
-                titleEl.text(title);
+    var container = $('.' + filterName + '-filters .filter-list');
+    for (var i = 0; i < window.pad.variables.entities[filterName].length; i++) {
+        var template = baseTemplate.clone();
+        var entity = window.pad.variables.entities[filterName][i];
+        template.find('span.text').text(entity);
+        var href = $.extend(true, {}, window.pad.variables.query);
+        var selected = href[urlName] && href[urlName].indexOf(entity) > -1;
+        if (selected) {
+            if (href[urlName].length == 1) {
+                delete href[urlName];
             } else {
-                titleEl.remove();
+                var index = href[urlName].indexOf(entity);
+                href[urlName].splice(index, 1);
             }
+            template.attr('href', '?' + $.param(href, true));
+            template.find('.filter-text').addClass('selected');
+        } else if (canSwitchTo(entity)) {
+            href[urlName] = href[urlName] || [];
+            href[urlName].push(entity);
+            template.attr('href', '?' + $.param(href, true));
+        } else {
+            template.find('.filter-text').removeAttr('href').addClass('disabled');
         }
-
-    }
-
-    function renderResults(results) {
-        var resultsContainer = $('.pad-results .results-list');
-        $('.pad-results-container').removeClass('hidden');
-        var exampleTemplate = $('.example-result').clone().removeClass('hidden example-result');
-        for (var i = 0; i < results.length; i++) {
-            var result = results[i];
-            var template = exampleTemplate.clone();
-            template.find('.dataset-name').text(result['denominacion']);
-            template.find('.dataset-description').text(result['descripcion']);
-            template.find('.publication').text(result['fecha']);
-            template.find('.update').text(result['actualizacion']);
-            template.find('.organism').text(result['nombre_tarjeta_home']);
-            resultsContainer.append(template);
+        if (selected && options.prependSelected) {
+            container.prepend(template);
+        } else {
+            container.append(template);
         }
     }
+};
 
-    function renderFilters(results, query) {
-        function collectUniqueEntities(datasetList) {
-            var entities = {
-                organismo: [],
-                publicacion: [],
-                actualizacion: []
-            };
-            for (var i = 0; i < datasetList.length; i++) {
-                var result = datasetList[i];
-                if (entities.organismo.indexOf(result['nombre_tarjeta_home']) == -1) {
-                    entities.organismo.push(result['nombre_tarjeta_home'])
-                }
-                if (entities.publicacion.indexOf(result['fecha']) == -1) {
-                    entities.publicacion.push(result['fecha'])
-                }
-                if (entities.actualizacion.indexOf(result['actualizacion']) == -1) {
-                    entities.actualizacion.push(result['actualizacion'])
-                }
-            }
-            entities.organismo.sort();
-            var year = /(20\d\d)/;
-            entities.publicacion.sort(function (a, b) {
-                var aYear = year.exec(a)[1];
-                var bYear = year.exec(b)[1];
-                a = aYear + a;
-                b = bYear + b;
-                return a < b  ? -1 : a > b ? 1 : 0;
-            });
-            var originalFrequencies = ['Diaria','Semanal', 'Mensual', 'Trimestral','Semestral', 'Anual', 'Eventual', 'Tiempo real'];
-            entities.actualizacion.sort(function (a, b) {
-                return originalFrequencies.indexOf(a) - originalFrequencies.indexOf(b);
-            });
-            return entities
-        }
+window.pad.actions.renderFilters = function () {
+    window.pad.variables.entities = window.pad.actions.collectEntities();
+    window.pad.actions.renderFilter({filterName: 'organism', urlName: 'organismo', prependSelected: true});
+    window.pad.actions.renderFilter({filterName: 'publication', urlName: 'publicacion'});
+    window.pad.actions.renderFilter({filterName: 'update', urlName: 'actualizacion'});
+};
 
-        var allEntities = collectUniqueEntities(window.pad);
-        var resultsEntities = collectUniqueEntities(results);
-
-        function renderOrganisms() {
-            var organismsTemplate = $('.organism-filters .filter-example').clone().removeClass('filter-example hidden');
-
-            var jgmIndex = allEntities.organismo.indexOf('JGM');
-            if (jgmIndex != -1) {
-                allEntities.organismo.splice(jgmIndex, 1);
-                allEntities.organismo.unshift('JGM');
-            }
-
-            var presidenciaIndex = allEntities.organismo.indexOf('Presidencia');
-            if (presidenciaIndex != -1) {
-                allEntities.organismo.splice(presidenciaIndex, 1);
-                allEntities.organismo.unshift('Presidencia');
-            }
-
-            for (var i = 0; i < allEntities.organismo.length; i++) {
-                var template = organismsTemplate.clone();
-                var organism = allEntities.organismo[i];
-                template.find('span').text(organism);
-                var href;
-                if (organism == query.organismo) {
-                    href = $.extend(true, {}, query);
-                    delete href['organismo'];
-                    template.attr('href', '?' + $.param(href, true));
-                    template.find('.filter-text').addClass('selected');
-                    $('.organism-filters .filter-list').prepend(template);
-                } else {
-                    href = $.extend(true, {}, query, {organismo: organism});
-                    template.attr('href', '?' + $.param(href, true));
-                    $('.organism-filters .filter-list').append(template);
-                }
-            }
-        }
-
-        function renderPublications() {
-            var publicationTemplate = $('.publication-filters .filter-example').clone().removeClass('filter-example hidden');
-            for (var i = 0; i < allEntities.publicacion.length; i++) {
-                var template = publicationTemplate.clone();
-                var publication = allEntities.publicacion[i];
-                template.find('span.text').text(publication);
-                if (resultsEntities.publicacion.indexOf(publication) == -1) {
-                    template.find('.filter-text').addClass('disabled');
-                } else {
-                    var href = $.extend(true, {}, query);
-                    if (href.publicacion && href.publicacion.indexOf(publication) != -1) {
-                        href.publicacion.splice(href.publicacion.indexOf(publication), 1);
-                        template.attr('href', '?' + $.param(href, true));
-                        template.find('.filter-text').addClass('selected');
-                    } else {
-                        href.publicacion = href.publicacion || [];
-                        href.publicacion.push(publication);
-                        template.attr('href', '?' + $.param(href, true));
-                    }
-                }
-                $('.publication-filters .filter-list').append(template);
-            }
-        }
-
-        function renderUpdates() {
-            var updateTemplate = $('.update-filters .filter-example').clone().removeClass('filter-example hidden');
-            for (var i = 0; i < allEntities.actualizacion.length; i++) {
-                var template = updateTemplate.clone();
-                var update = allEntities.actualizacion[i];
-                template.find('span.text').text(update);
-                if (resultsEntities.actualizacion.indexOf(update) == -1) {
-                    template.find('.filter-text').addClass('disabled');
-                } else {
-                    var href = $.extend(true, {}, query);
-                    if (href.actualizacion && href.actualizacion.indexOf(update) != -1) {
-                        href.actualizacion.splice(href.actualizacion.indexOf(update), 1);
-                        template.attr('href', '?' + $.param(href, true));
-                        template.find('.filter-text').addClass('selected');
-                    } else {
-                        href.actualizacion = href.actualizacion || [];
-                        href.actualizacion.push(update);
-                        template.attr('href', '?' + $.param(href, true));
-                    }
-                }
-                $('.update-filters .filter-list').append(template);
-            }
-        }
-
-        renderOrganisms();
-        renderPublications();
-        renderUpdates();
+window.pad.actions.renderResults = function () {
+    var resultsContainer = $('.pad-results .results-list');
+    $('.pad-results-container').removeClass('hidden');
+    var exampleTemplate = $('.example-result').clone().removeClass('hidden example-result');
+    for (var i = 0; i < window.pad.variables.paginatedResults.length; i++) {
+        var result = window.pad.variables.paginatedResults[i];
+        var template = exampleTemplate.clone();
+        template.find('.dataset-name').text(result['denominacion']);
+        template.find('.dataset-description').text(result['descripcion']);
+        template.find('.publication').text(result['fecha']);
+        template.find('.update').text(result['actualizacion']);
+        template.find('.organism').text(result['nombre_tarjeta_home']);
+        resultsContainer.append(template);
     }
+};
 
-    function paginate(results, query) {
-        var page = query['pagina'] ? query['pagina'] - 1 : 0;
-        results = results.slice(page*perPage, (page+1)*perPage);
-        return results
-    }
+$(function () {
+    window.pad.actions.loadCSV().then(function () {
+        window.pad.actions.initializeLunr();
+        window.pad.actions.parseUrlQuery();
+        window.pad.variables.results = window.pad.actions.searchByText();
+        window.pad.variables.results = window.pad.actions.filterResults();
+        window.pad.actions.renderTitle();
 
-    function renderPagination(results, query) {
-        var maxPages = Math.ceil(results.length / perPage);
-        var currentPage = query['pagina'] || 1;
-        if (maxPages <= 1) {
-            return;
-        }
-        var template = $('.results-pagination .pagination-example').clone().removeClass('pagination-example hidden');
-        function renderPaginationLink(pageNumber, char) {
-            var link = template.clone();
-            var href = $.extend(true, {}, query);
-            href['pagina'] = pageNumber;
-            link.attr('href', '?' + $.param(href, true));
-            link.find('span').text(char);
-            $('.results-pagination').append(link);
-            return link;
-        }
-        if (currentPage > 5) {
-            renderPaginationLink(1, '«');
-        }
-        if (currentPage > 1) {
-            renderPaginationLink(currentPage - 1, '‹');
-        }
-        for (var p=currentPage-4; p<currentPage; p++) {
-            if (p > 0) {
-                renderPaginationLink(p, p);
-            }
-        }
-        renderPaginationLink(currentPage, currentPage).removeAttr('href').find('span').addClass('current');
-        for (var p2=currentPage+1; p2<currentPage+5; p2++) {
-            if (p2 <= maxPages) {
-                renderPaginationLink(p2, p2);
-            }
-        }
-        if (currentPage +1 <= maxPages) {
-            renderPaginationLink(currentPage+1, '›');
-        }
-        if (currentPage +5 <= maxPages) {
-            renderPaginationLink(maxPages, '»');
-        }
-
-    }
-
-    loadCSV().then(function () {
-        initializeLunr();
-
-        var query = parseUrlQuery();
-        var unfilteredResults = searchByText(query);
-        var results = firstPassFilterResults(unfilteredResults, query);
-        renderTitle(results, query);
-
-        if (results.length > 0) {
-            renderFilters(results, query);
-            results = secondPassFilterResults(results, query);
-            renderPagination(results, query);
-            results = paginate(results, query);
-            renderResults(results);
+        if (window.pad.variables.results.length > 0) {
+            window.pad.actions.renderFilters();
+            window.pad.actions.renderPagination();
+            window.pad.actions.paginateResults();
+            window.pad.actions.renderResults();
         } else {
             $('.pad-no-results-container').removeClass('hidden');
         }
