@@ -69,23 +69,22 @@ window.pad.actions.renderTitle = function () {
     if (searchingText) {
         $('#pad-search-input').val(query.q[0]);
     }
-    if (window.pad.variables.results.length == 0) {
+    if (window.pad.variables.results.length == 0 && query.q) {
         var noResultsTitle = 'Oh, no hay información sobre “' + query.q[0] + '”. Intentá con otra palabra.';
         titleEl.text(noResultsTitle);
+    } else if (window.pad.variables.results.length > 0 && query.organismo) {
+        var titleText = 'Este es el plan de apertura de <span class="organism">{}</span>.'.replace('{}', query.organismo);
+        titleEl.html(titleText);
+    } else if (window.pad.variables.results.length > 0 && searchingText) {
+        var resultCount = window.pad.variables.results.length;
+        var title = 'Hay ' + resultCount.toString();
+        title += resultCount > 1 ? ' resultados' : ' resultado';
+        title += ' sobre “{}”.'.replace('{}', query.q[0]);
+        titleEl.text(title);
     } else {
-        if (query.organismo) {
-            var titleText = 'Este es el plan de apertura de <span class="organism">{}</span>.'.replace('{}', query.organismo);
-            titleEl.html(titleText);
-        } else if (searchingText) {
-            var resultCount = window.pad.variables.results.length;
-            var title = 'Hay ' + resultCount.toString();
-            title += resultCount > 1 ? ' resultados' : ' resultado';
-            title += ' sobre “{}”.'.replace('{}', query.q[0]);
-            titleEl.text(title);
-        } else {
-            titleEl.remove();
-        }
+        titleEl.remove();
     }
+
 
 };
 
@@ -223,6 +222,7 @@ window.pad.actions.renderFilters = function () {
     window.pad.actions.renderFilter({filterName: 'organism', urlName: 'organismo', prependSelected: true});
     window.pad.actions.renderFilter({filterName: 'publication', urlName: 'publicacion'});
     window.pad.actions.renderFilter({filterName: 'update', urlName: 'actualizacion'});
+    $('.reset-filters').toggleClass('hidden', !location.search.length > 0)
 };
 
 window.pad.actions.renderResults = function () {

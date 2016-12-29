@@ -614,7 +614,8 @@ body.pad {
   padding: 60px 0;
   background: #f5f5f5; }
   .pad-results-container .pad-filters .publication-filters hr,
-  .pad-results-container .pad-filters .update-filters hr {
+  .pad-results-container .pad-filters .update-filters hr,
+  .pad-results-container .pad-filters .reset-filters hr {
     border: none;
     border-top: solid 1px #999999;
     margin: 40px 0 10px 0; }
@@ -679,6 +680,22 @@ body.pad {
       background: transparent;
       color: #cccccc;
       cursor: default; }
+  .pad-results-container .pad-filters .reset-filters {
+    text-align: center; }
+    .pad-results-container .pad-filters .reset-filters a {
+      display: inline-block;
+      margin: 20px 0;
+      text-align: center; }
+      .pad-results-container .pad-filters .reset-filters a button {
+        border: none;
+        background: #0695d6;
+        color: white;
+        font-weight: 400;
+        font-size: 16px;
+        padding: 8px 12px;
+        border-radius: 4px; }
+        .pad-results-container .pad-filters .reset-filters a button:hover {
+          background: #17b2f8; }
 .pad-results-container .pad-results {
   padding: 60px 20px; }
   .pad-results-container .pad-results .result {
