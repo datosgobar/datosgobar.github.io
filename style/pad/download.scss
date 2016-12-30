@@ -1,0 +1,38 @@
+.pad-download {
+  @include linear-gradient(to right, $pad-blue-gradient-from, $pad-blue-gradient-to);
+  text-align: center;
+  padding: 60px 0;
+
+  .container {
+    color: white;
+
+    h3 {
+      font-weight: 400;
+      font-size: 30px;
+      margin: 0 0 40px 0;
+    }
+
+    button {
+      border: none;
+      background: $pad-blue-button;
+      font-weight: 400;
+      font-size: 18px;
+      padding: 8px 12px;
+      border-radius: 4px;
+      color: white;
+      &:hover {
+        background: $pad-blue-button-hover;
+      }
+    }
+  }
+
+  &.results-download {
+    h3 {
+      margin: 0;
+    }
+    button {
+      margin-left: 20px;
+      vertical-align: text-bottom;
+    }
+  }
+}

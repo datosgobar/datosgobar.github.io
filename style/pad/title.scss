@@ -7,7 +7,7 @@
   overflow: hidden;
 
   .title-background {
-    padding: 60px 0;
+    padding: 60px 0 0 0;
     background-image: url('../img/pad/pad-elementos-pattern-03.svg');
     background-size: cover;
     &.no-padding {
@@ -79,7 +79,7 @@
     }
 
     button {
-      background: $pad-blue;
+      background: $pad-blue-button;
       border: none;
       position: absolute;
       top: 0;
@@ -89,7 +89,7 @@
       border-bottom-right-radius: 4px;
       padding: 2px 8px;
       &:hover {
-        background: $pad-blue-hover;
+        background: $pad-blue-button-hover;
       }
     }
 

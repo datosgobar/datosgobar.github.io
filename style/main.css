@@ -400,7 +400,7 @@ body.pad {
   text-align: center;
   overflow: hidden; }
   .pad-title-container .title-background {
-    padding: 60px 0;
+    padding: 60px 0 0 0;
     background-image: url("../img/pad/pad-elementos-pattern-03.svg");
     background-size: cover; }
     .pad-title-container .title-background.no-padding {
@@ -463,7 +463,7 @@ body.pad {
         color: #999999;
         font-weight: 300; }
     .pad-title-container .search-container button {
-      background: #0695d6;
+      background: #009dda;
       border: none;
       position: absolute;
       top: 0;
@@ -473,7 +473,7 @@ body.pad {
       border-bottom-right-radius: 4px;
       padding: 2px 8px; }
       .pad-title-container .search-container button:hover {
-        background: #17b2f8; }
+        background: #01bdf2; }
     .pad-title-container .search-container .search-icon {
       width: auto;
       height: 100%;
@@ -604,7 +604,13 @@ body.pad {
 
 .pad-results-container .container {
   display: table;
-  box-shadow: 0 -2px 4px 0 rgba(150, 150, 150, 0.5); }
+  box-shadow: 0 -2px 4px 0 rgba(150, 150, 150, 0.5);
+  width: 100%;
+  padding: 0 20px; }
+  @media (min-width: 1200px) {
+    .pad-results-container .container {
+      width: 1170px;
+      padding: 0; } }
   .pad-results-container .container .pad-filters,
   .pad-results-container .container .pad-results {
     float: none;
@@ -746,5 +752,33 @@ body.pad {
     .pad-results-container .results-pagination span.current, .pad-results-container .results-pagination span.current:hover {
       background: #999999;
       color: white; }
+
+.pad-download {
+  background-color: #00b9f1;
+  background-image: -webkit-linear-gradient(left, #00b9f1, #005dbc);
+  background-image: linear-gradient(to right,#00b9f1, #005dbc);
+  text-align: center;
+  padding: 60px 0; }
+  .pad-download .container {
+    color: white; }
+    .pad-download .container h3 {
+      font-weight: 400;
+      font-size: 30px;
+      margin: 0 0 40px 0; }
+    .pad-download .container button {
+      border: none;
+      background: #009dda;
+      font-weight: 400;
+      font-size: 18px;
+      padding: 8px 12px;
+      border-radius: 4px;
+      color: white; }
+      .pad-download .container button:hover {
+        background: #01bdf2; }
+  .pad-download.results-download h3 {
+    margin: 0; }
+  .pad-download.results-download button {
+    margin-left: 20px;
+    vertical-align: text-bottom; }
 
 /*# sourceMappingURL=main.css.map */

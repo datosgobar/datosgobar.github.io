@@ -16,6 +16,14 @@
   .container {
     display: table;
     box-shadow: 0 -2px 4px 0 rgba(150, 150, 150, 0.5);
+    width: 100%;
+    padding: 0 20px;
+
+    @media (min-width: 1200px) {
+      width: 1170px;
+      padding: 0;
+    }
+
     .pad-filters,
     .pad-results {
       float: none;
