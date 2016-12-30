@@ -202,9 +202,12 @@ window.pad.actions.renderFilter = function (options) {
             }
             template.attr('href', '?' + $.param(href, true));
             template.find('.filter-text').addClass('selected');
-        } else if (canSwitchTo(entity)) {
+        } else if (options.cumulative && canSwitchTo(entity)) {
             href[urlName] = href[urlName] || [];
             href[urlName].push(entity);
+            template.attr('href', '?' + $.param(href, true));
+        } else if (canSwitchTo(entity)) {
+            href[urlName] = [entity];
             template.attr('href', '?' + $.param(href, true));
         } else {
             template.find('.filter-text').removeAttr('href').addClass('disabled');
@@ -220,8 +223,8 @@ window.pad.actions.renderFilter = function (options) {
 window.pad.actions.renderFilters = function () {
     window.pad.variables.entities = window.pad.actions.collectEntities();
     window.pad.actions.renderFilter({filterName: 'organism', urlName: 'organismo', prependSelected: true});
-    window.pad.actions.renderFilter({filterName: 'publication', urlName: 'publicacion'});
-    window.pad.actions.renderFilter({filterName: 'update', urlName: 'actualizacion'});
+    window.pad.actions.renderFilter({filterName: 'publication', urlName: 'publicacion', cumulative: true});
+    window.pad.actions.renderFilter({filterName: 'update', urlName: 'actualizacion', cumulative: true});
     $('.reset-filters').toggleClass('hidden', !location.search.length > 0)
 };
 

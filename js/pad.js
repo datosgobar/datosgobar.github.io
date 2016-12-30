@@ -25,7 +25,7 @@ window.pad = {
 };
 
 window.pad.actions.loadCSV = function () {
-    return $.get('./plan_de_apertura_2016-2017.csv', {}, function (response) {
+    return $.get('./pad.csv', {}, function (response) {
         window.pad.variables.csv = $.csv.toObjects(response);
     })
 };
