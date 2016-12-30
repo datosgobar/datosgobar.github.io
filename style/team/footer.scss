@@ -20,9 +20,19 @@
     margin: 0;
   }
   button {
-    font-size: 20px;
+    font-size: 18px;
     margin: 40px auto 0 auto;
     font-weight: 400;
-    padding: 9px 15px 9px 15px;
+    padding: 10px 15px 10px 15px;
+  }
+  p.txt-contacto {
+    font-size: 20px;
+    max-width: 600px;
+    display: block;
+    margin: 40px auto 0px auto;
+    a {
+    text-decoration: underline !important;
+    color: white;
+    }
   }
 }
