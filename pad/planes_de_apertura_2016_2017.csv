@@ -200,11 +200,9 @@ Las solicitudes permanecen publicadas hasta las 00:00 horas del día siguiente a
 Resolución MJyDDHH Nº 373/2013",Mensual,2º semestre de 2016,Justicia,Justicia
 Sistema de Consulta Nacional de Rebeldías y Capturas (base Co.Na.R.C.).,"La base Co.Na.R.C., creada a partir de la sanción del decreto 346/2009, se conforma con las comunicaciones que los tribunales realizan al Registro Nacional de Reincidencia de toda medida restrictiva a la libertad ambulatoria que se dicta en el marco de una causa penal, en cualquier jurisdicción del país (ámbito federal, nacional, provincial y de la CABA).  La base sólo refleja las órdenes de detención vigentes. ",Mensual,2º semestre de 2016,Justicia,Justicia
 Internos del SPF ,Procesados y condenados alojados en unidades del Servicio Penitenciario Federal (anonimizados los campos que correspondan).,Mensual,2º semestre de 2016,Justicia,Justicia
-"Mapa de Conectividad de Redes de la
-República Argentina","Mapa de redes de telecomunicaciones mostrando la oferta de servicios fijos, moviles y de conectividad de banda ancha, Backbones de fibra optica y los puntos de interconexión en cada localidad o departamento del país.",Trimestral,1º semestre de 2017,Comunicaciones,Comunicaciones
+ºMapa de Conectividad de Redes de la República Argentina,"Mapa de redes de telecomunicaciones mostrando la oferta de servicios fijos, moviles y de conectividad de banda ancha, Backbones de fibra optica y los puntos de interconexión en cada localidad o departamento del país.",Trimestral,1º semestre de 2017,Comunicaciones,Comunicaciones
 Registro de Autorizaciones Satelitales,Listado de autorizaciones satelitales,Trimestral,1º semestre de 2017,Comunicaciones,Comunicaciones
-"Registro de Proveedores Postales y
-Servicios de Mensajería",Listado de prestadores postales y servicios de mensajería autorizados a dar servicios postales en la Republica Argentina,Semanal,2º semestre de 2016,Comunicaciones,Comunicaciones
+Registro de Proveedores Postales y Servicios de Mensajería,Listado de prestadores postales y servicios de mensajería autorizados a dar servicios postales en la Republica Argentina,Semanal,2º semestre de 2016,Comunicaciones,Comunicaciones
 Listado de prestadores de telefonía,"Listado de prestadores de telefonía fija, móvil y de larga distancia autorizados a dar servicio",Semanal,2º semestre de 2016,Comunicaciones,Comunicaciones
 Estadísticas sobre Negociación Colectiva y Conflictividad Laboral,Conjunto de indicadores que reflejan la situación y la evolución de la negociación colectiva y la conflictividad laboral.,Mensual,2º semestre de 2016,Trabajo,Trabajo
 Boletín de estadísticas sobre demografía de empresas y empleo,"Contiene información sobre la demografía de las empresas (aperturas, cierres, continuadoras) y la dinámica del empleo, sobre empresas de rápido crecimiento y supervivencia de las firmas.",Trimestral,2º semestre de 2016,Trabajo,Trabajo
@@ -216,21 +214,20 @@ Empleo cultural,Cantidad de personas empleadas en actividades culturales privada
 Presupuesto publico en cultura a nivel nacional,"Presupuesto ejecutado por el ministerio de cultura y sus organismos descentralizados, así como otros organismos y programas que realizan actividades culturales",Anual,2º semestre de 2016,Cultura,Cultura
 Espacios culturales,"Listado nacional de museos, bibliotecas especializadas, bibliotecas populares, fiestas populares y festivales, librerías, salas de teatro, salas de cine, casas del bicentenario, carreras culturales y puntos de cultura",Anual,2º semestre de 2016,Cultura,Cultura
 Agentes culturales,"Listado nacional de sellos musicales, editoriales de libros, canales de tv abierta, diarios impresos y radios",Anual,2º semestre de 2016,Cultura,Cultura
-Estadísticas Vitales (Serie 5 - DEIS),"Información sobre nacidos vivos, matrimonios, defunciones y defunciones fetales para el total del país y por jurisdicción, incluyendo
-tasas y distribuciones relativas. ",Anual,1º semestre de 2017,Salud,Salud
-Estadísticas de Consultas e Internación en Establecimientos Públicos (Serie 11 - DEIS),Egresos y consultas hospitalarias registradas en el Informe Estadístico de Internación en Establecimientos Públicos,Anual,1º semestre de 2017,Salud,Salud
-Registro Federal de Establecimientos de Salud (REFES),"Registro de establecimientos sanitarios del país del sector público y privado, con y sin internación, que se encuentran funcionando en cada una de las jurisdicciones provinciales según la reglamentación vigente en ellas.",Eventual,1º semestre de 2017,Salud,Salud
-Registro Federal de Profesionales de Salud (REFEPS),Registro oficial de Profesionales de Salud de todo el país de todas las profesiones matriculadas para el ejercicio profesional en salud,Eventual,1º semestre de 2017,Salud,Salud
-Registro Nacional de Investigaciones en Salud (RENIS),Registro oficial y federal de investigaciones en Salud,Eventual,1º semestre de 2017,Salud,Salud
-Registro Federal Farmacias (REFAR) y Registro Federal de Droguerías (REDRO),"Registro oficial de farmacias de atención al público, hospitalarias y droguerías de todo el país registrado por la autoridad jurisdiccional",Eventual,1º semestre de 2017,Salud,Salud
-Legislacion en Salud de la República Argentina (LEGISALUD),"Registro de la legislación sanitaria intenacional,nacional, provincial y municipal vinculadas a todas las temáticas sanitarias agrupadas por tipo de legilsación, jurisdicción y por temática a texto completo",Eventual,1º semestre de 2017,Salud,Salud
-Estadísticas CUS MEDICAMENTOS,"Serie histórica (sin nominalizar) de personas que recibieron medicamentos bajo prescripción del programa CUS MEDICAMENTOS por edad, sexo y provincia",Mensual,1º semestre de 2017,Salud,Salud
-Recetas CUS  MEDICAMENTOS,Serie histórica de medicamentos recetados a través del programa CUS MEDICAMENTOS por provincia,Mensual,1º semestre de 2017,Salud,Salud
-Consultas CUS MEDICAMENTOS,Serie histórica de consultas con médicos u odontólogos en CAPs que reciben botiquines CUS MEDICAMENTOS,Mensual,1º semestre de 2017,Salud,Salud
-Estadísticas Inlcuir Salud,"Distribución por provincia y por ley de otorgamiento de beneficiarios, prestaciones otorgadas, monto de transferencias",Anual,1º semestre de 2017,Salud,Salud
-Estadísticas Nacionales de VIH/Sida,"Estadísticas que surgen de las notificaciones nacionales de infecciones por VIH/Sida desglosadas por provincias. Incluye indicadores de gestión en prevención, diagnóstico y tratamiento ",Anual,1º semestre de 2017,Salud,Salud
-Estadísticas SUMAR,"Estadísticas de distribución de beneficiarios, transferencias y prestaciones",Trimestral,1º semestre de 2017,Salud,Salud
-Boletín Integrado de Vigilancia,"Casos registrados de eventos bajo vigilancia (incluye Chagas, Dengue, Zika, infecciones respiratorias agudas)",Trimestral,1º semestre de 2017,Salud,Salud
+Estadísticas hospitalarias de establecimientos dependientes de Nación,"Cantidad de consultas, egresos, cirugías y camas disponibles en establecimientos nacionales. Diagnóstico por imágenes, cirugías por tipo y otras perstaciones.",Anual,1º semestre de 2017,Salud,Salud
+Registro de personas con CUD (certificado único de desicapacidad),"Distribución por provincia, tipo de discapacidad, etc",Anual,1º semestre de 2017,Salud,Salud
+Registro prestadores servicios de discapacidad,"Registro de prestadores de servicios de discapacidad inscriptos en SNR (por provincia, tipo de prestación)",Eventual,1º semestre de 2017,Salud,Salud
+Registros INCUCAI,"Estadisticas de Pacientes en lista de espera para órganos y tejidos, expresiones de voluntad para la donación, pacientes con ERC",Eventual,1º semestre de 2017,Salud,Salud
+ANMAT - Vademecun Nacional de Medicamentos,"Medicamentos comercializados en la República Argentina. La base incluye laboratorio, presentación, precio sugerido de venta al público",Eventual,1º semestre de 2017,Salud,Salud
+ANMAT - Sistema Nacional de Farmacovigilancia,Notificaciones de reacciones adversas a medicamentos,Eventual,1º semestre de 2017,Salud,Salud
+ANMAT- Registro Nacional de Establecimientos,Establecimientos certificados por autoridades sanitarias jurisdiccionales. Empresas elaboradoras de productos alimenticios o suplementos dietarios.,Eventual,1º semestre de 2017,Salud,Salud
+ANMAT -Sistema de Información Federal para la Gestión del Control de los Alimentos,Consulta de productos inscriptos en el Registro Nacional de Productos Alimenticios. Autorizado por INAL.,Eventual,1º semestre de 2017,Salud,Salud
+ANMAT- Cosméticos,"Listado y localización de productos elaboradores, importadores y exportadores de productos cosméticos",Eventual,1º semestre de 2017,Salud,Salud
+ANMAT - Productos Domisanitarios,"Productos destinados a la limpieza, lavado, odorización, higienización del hogar certificados por ANMAT",Eventual,1º semestre de 2017,Salud,Salud
+Padrón de OOSS Nacionales,"Registro de OOSS, características demográficas de afiliados",Anual,1º semestre de 2017,Salud,Salud
+Financiamiento de OOSS,Transferencias a OOSS del Fondo Solidario de Redistribución (SUR - SUMA - SUMA 70 - SUMARTE - SANO). Fondos aplicados a prestaciones de alto costo y a garantizar un piso de financiamiento por afiliado,Trimestral,1º semestre de 2017,Salud,Salud
+Facturación Hospitales de Autogestión,Facturación y pagos recibidos de Hospitales de Autogestión por prestaciones a afiliados de OOSS,Trimestral,1º semestre de 2017,Salud,Salud
+Padrón de Empresas de Medicina Prepaga,"Registro de Prepagas, cantidad de afiliados directos y desregulados por provincia",Anual,1º semestre de 2017,Salud,Salud
 Municipios - Agenda Presidencial,Municipios que visita el Presidente en actos de Gobierno,Mensual,2º semestre de 2016,Secretaría General,Presidencia
 Dominios de Internet,Descripción de los datos típicos de los dominios de internet en formato según RFC 7482,Semanal,2º semestre de 2016,Secretaría Legal y Técnica,Presidencia
 Normativa,"Boletín Oficial de la República Argentina. Publicación de la normativa, avisos comerciales y judiciales.",Semanal,2º semestre de 2016,Secretaría Legal y Técnica,Presidencia
@@ -269,9 +266,15 @@ Metrología,Registro de operadores en materia de metrología legal.,Anual,2º se
 Estadistica Educativa,"Desagregadas por modalidad, oferta educativa, nivel educativo y sector de gestion segun departamento",Semestral,1º semestre de 2017,Educación,Educación
 Indicadores Educativos,"Información sobre Tasa de Promoción Efectiva, Tasa de Repitencia, Tasa de Abandono Interanual, Porcentaje de Sobreedad, Tasa de Escolarización",Semestral,1º semestre de 2017,Educación,Educación
 Registro de Establecimientos Educativos,Padrón Oficial de Establecimientos Educativos,Eventual,1º semestre de 2017,Educación,Educación
-Empresas de transporte RMBA,"Detalle de empresas de transporte que operan en la Juridicción Nacional, Provincial o Municipal",Trimestral,2º semestre de 2016,Transporte,Transporte
-Líneas de transporte RMBA,"Detalle de líneas de transporte que operan en la Juridicción Nacional, Provincial o Municipal",Trimestral,2º semestre de 2016,Transporte,Transporte
-Cancelaciones por año RMBA,"Histórico de operaciones de viajes por año: 
+Empresas de transporte RMBA,"Detalle de empresas de transporte que operan:
+- Jurisdiccion Nacional
+- Jurisdicción Provincial
+- Jurisdicción Municipal",Trimestral,2º semestre de 2016,Transporte,Transporte
+Líneas de transporte RMBA,"Detalle de líneas de transporte que operan:
+- Jurisdiccion Nacional
+- Jurisdicción Provincial
+- Jurisdicción Municipal",Trimestral,2º semestre de 2016,Transporte,Transporte
+Cancelaciones por año RMBA,"Histórico de operaciones de viajes por año:
 A) Cantidad y detalle por modo.
 B) Cantidad y detalle por empresa. C) Cantidad y detalle de linea.
 D) Cantidad y detalle de linea y tipo de pasaje (normal - atributo social)",Anual,1º semestre de 2017,Transporte,Transporte
@@ -297,3 +300,39 @@ Consulta de Agencias de Viajes Autorizadas,"Listado de todas las Agencias de Tur
 Distinguidos de Calidad,Listado de Organizaciones distinguidas en Calidad de Turismo,Eventual,1º semestre de 2017,Turismo,Turismo
 Llegadas de Turistas No residentes a la Argentina por todas las vías de ingresos,Listado por nacionalidad de Turistas no residentes que llegan a la Argentina.,Trimestral,1º semestre de 2017,Turismo,Turismo
 Turistas residentes que viajan por Argentina,Listado de Turistas residentes que viajan por Argentina.,Trimestral,1º semestre de 2017,Turismo,Turismo
+Registro Nacional de Prestadores,"Registro de Establecimientos y Padrón de Profesionales, ambos con fecha de vencimiento de inscripción",Mensual,1º semestre de 2017,Salud,Salud
+Gestión de Reclamos,Estadísticas de Reclamos y Expedientes en trámite y resueltos. Incluye aquellos derivados de la Defensoría del Pueblo y Asociaciones.,Mensual,1º semestre de 2017,Salud,Salud
+Compras y contrataciones,"Datos correspondientes a Contrataciones, Licitaciones públicas, empresas adjudicadas.",Mensual,1º semestre de 2017,Salud,Salud
+Encuestas de Satisfacción,"Resultados de encuestas realizadas en los Centros de Atención de todo el país, y encuesta Online en WEB.",Semestral,1º semestre de 2017,Salud,Salud
+Red de carga SUBE RMBA,"Puntos de venta de tarjetas SUBE:
+A) Detalle de puntos de venta, ubicación geográfica.
+B) Detalle de puntos de recarga, ubicación geográfica.
+C) Detalle de puntos de recarga automaticos (TAS), ubicación geográfica.
+D) Detalle de puntos de acreditacion de saldo (p/carga virtual), ubicación geográfica.",Trimestral,2º semestre de 2016,Transporte,Transporte
+"Trenes
+Transporte de pasajeros",Detalle pasajeros por línea / ramal,Mensual,1º semestre de 2017,Transporte,Transporte
+"Trenes
+Transporte de pasajeros",Detalle estaciones,Eventual,1º semestre de 2017,Transporte,Transporte
+Puerto Buenos Aires,Cantidad de pasajeros (entrada - salida),Mensual,1º semestre de 2017,Transporte,Transporte
+Aeropuertos,Detalle aeropuertos,Eventual,1º semestre de 2017,Transporte,Transporte
+Aportes,"Detalle de aportes al transporte público de pasajeros por medio:
+A) Colectivos
+(Corta y larga distancia) B) Trenes
+(Concesionados / Estado)",Mensual,1º semestre de 2017,Transporte,Transporte
+"S.I.S.T.A.U.
+Sistema Integrado de Transporte
+Automotor",Subsidios Colectivos,Mensual,1º semestre de 2017,Transporte,Transporte
+Servicio Móvil Marítimo y Aeronáutico,Listado de embarcaciones autorizadas,Semanal,2º semestre de 2016,Comunicaciones,Comunicaciones
+Licencias de radiodifusión,Listado de licencias de radiodifusión,Semanal,2º semestre de 2016,Comunicaciones,Comunicaciones
+Radioaficionados,Listado de radioaficionados autorizados,Semanal,2º semestre de 2016,Comunicaciones,Comunicaciones
+Operadores de Telecomunicaciones,Listado de operadores certificados,Semanal,2º semestre de 2016,Comunicaciones,Comunicaciones
+Equipos inscriptos homologadas,Homologación de equipos inscriptos,Semanal,2º semestre de 2016,Comunicaciones,Comunicaciones
+Empresas inscriptas homologadas,Homologación de empresas inscriptas,Semanal,2º semestre de 2016,Comunicaciones,Comunicaciones
+Servicios de Internet,Servicios de Internet,Semanal,1º semestre de 2017,Comunicaciones,Comunicaciones
+Radioclubes,Listado de radioclubes,Semanal,1º semestre de 2017,Comunicaciones,Comunicaciones
+Estaciones repetidoras,Listado de estaciones repetidoras,Semanal,1º semestre de 2017,Comunicaciones,Comunicaciones
+Señales distintivas,Listado de señales distintivas,Semanal,1º semestre de 2017,Comunicaciones,Comunicaciones
+Numeración geográfica y no geográficas,"Numeración asociada a una zona geográfica en particular, y aquellas cuyo destino puede estar en cualquier parte del territorio nacional",Mensual,1º semestre de 2017,Comunicaciones,Comunicaciones
+Reclamos de Usuarios,"Información georeferenciada de los reclamos por usuarios, prestadoras y tipos de servicios",Mensual,2º semestre de 2017,Comunicaciones,Comunicaciones
+Radiaciones  No Ionizantes (RNI),"Información sobre las mediciones realizadas sobre radiaciones electromagnéticas de los diversos servicios y sistemas
+de comunicaciones radioeléctricos.",Mensual,2º semestre de 2017,Comunicaciones,Comunicaciones
