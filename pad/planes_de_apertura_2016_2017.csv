@@ -1,5 +1,5 @@
 denominacion,descripcion,actualizacion,fecha,jurisdiccion,nombre_tarjeta_home
-Producción de leche a nivel nacional,Millones de litros por año a nivel nacional desde 1970 - 1982 y Mensual a partir de 1983 a la fecha,Mensual,2º semestre de 2016,Agroindustria,Agroindustria
+Producción de leche a nivel nacional,Millones de litros por año a nivel nacional desde 1970 - 1982 y mensual a partir de 1983 a la fecha,Mensual,2º semestre de 2016,Agroindustria,Agroindustria
 Producción de calidad de leche a nivel departamento/partido,Productividad promedio; y promedio de la producción de sólidos útiles y calidad higiénico - sanitaria según departamento/partido (lts/día y %): Enero 2013 a hoy,Mensual,2º semestre de 2016,Agroindustria,Agroindustria
 Destino de la producción de leche,Destino de la producción nacional a producto por mes (millones de litros): desde enero 1983 a la fecha,Trimestral,2º semestre de 2016,Agroindustria,Agroindustria
 Elaboración de Productos Lácteos,Elaboración de productos lácteos (miles de litros y toneladas): Enero 1989 a la fecha,Mensual,2º semestre de 2016,Agroindustria,Agroindustria
@@ -11,8 +11,8 @@ Superficie Forestada,"Superficies forestadas por género, provincia, departament
 Inventario Nacional de Plantaciones Forestales,"Volúmen de Madera estimada por género, provincia, departamento",Eventual,2º semestre de 2016,Agroindustria,Agroindustria
 Extracciones Forestales,"Volúmen de madera extraída de plantaciones forestales, en m3 estimada por provincia por año y por especie",Anual,2º semestre de 2016,Agroindustria,Agroindustria
 Industrias de tableros de fibra y de particulas y de pasta de papel y cartón,"Encuesta en donde se releva:cantidad, capacidad instalada, materia prima utilizada, producción y personal ocupado.",Anual,2º semestre de 2016,Agroindustria,Agroindustria
-Censo de Aserraderos,"Consite en el relevamiento de cantidad, capacidad instalada, materia prima utilizada, producción, personal ocupado. ",Eventual,2º semestre de 2017,Agroindustria,Agroindustria
-Ecuestras de Aserraderos,"Consite en el relevamiento de cantidad, capacidad instalada, materia prima utilizada, producción, personal ocupado. ",Anual,2º semestre de 2017,Agroindustria,Agroindustria
+Censo de Aserraderos,"Consite en el relevamiento de cantidad, capacidad instalada, materia prima utilizada, producción, personal ocupado.",Eventual,2º semestre de 2017,Agroindustria,Agroindustria
+Ecuestras de Aserraderos,"Consite en el relevamiento de cantidad, capacidad instalada, materia prima utilizada, producción, personal ocupado.",Anual,2º semestre de 2017,Agroindustria,Agroindustria
 Precios Forestales,Relevamiento de precios de insumos y productos forestales.,Anual,1º semestre de 2017,Agroindustria,Agroindustria
 Áreas protegidas terrestres y marinas,"Áreas Protegidas de la Argentina creadas y administradas por organismos nacionales, provinciales, municipales, universitarios, privados, ONGs o Fundaciones.",Eventual,2º semestre de 2016,Ambiente,Ambiente
 Registro de Consultores en Estudios de Impacto Ambiental,Nómina de consultores individuales y firmas consultoras que realizan estudios de impacto ambiental,Eventual,1º semestre de 2017,Ambiente,Ambiente
@@ -20,14 +20,13 @@ Registro de usuarios para comercialización de fauna silvestre,"Nómina de comer
 Registro de profesionales en la Dirección de Prevención y Recomposición Ambiental,"Nómina de profesionales habilitados para el aval técnico de las presentaciones de la documentación exigida y para la ejecución de tareas inherentes al proyecto, dirección, construcción y operación de plantas de tratamiento de vertidos",Eventual,1º semestre de 2017,Ambiente,Ambiente
 Operadores de residuos peligrosos,Nómina de personas físicas o jurídicas registrados como operadores de residuos peligrosos,Eventual,1º semestre de 2017,Ambiente,Ambiente
 Transportistas de residuos peligrosos,Nómina de personas físicas o jurídicas registrados como transportistas de residuos peligrosos,Eventual,1º semestre de 2017,Ambiente,Ambiente
-Empadronamiento de establecimientos industriales y especiales,"Nómina de establecimientos industriales y/o especiales que produzcan en forma continua o discontinua vertidos industriales o barros originados por la depuración de aquéllos a conductos cloacales, pluviales o a un curso de agua y que se encuentren radicados en:
-Capital Federal y en partidos de la Provincia de Buenos Aires adheridos.",Eventual,1º semestre de 2017,Ambiente,Ambiente
+Empadronamiento de establecimientos industriales y especiales,"Nómina de establecimientos industriales y/o especiales que produzcan en forma continua o discontinua vertidos industriales o barros originados por la depuración de aquéllos a conductos cloacales, pluviales o a un curso de agua y que se encuentren radicados en: Capital Federal y en partidos de la Provincia de Buenos Aires adheridos.",Eventual,1º semestre de 2017,Ambiente,Ambiente
 Superficie de bosque nativo,Registro histórico correspondiente a la superficie en hectareas cubierta con bosque nativo en el país,Anual,1º semestre de 2017,Ambiente,Ambiente
 Consumo de Hidroclorofluorocarbonados (HCFC),"Expresa el consumo de hidroclorofluorocarbonos (HCFC) en el país, de acuerdo con la ecuación establecida por el Protocolo de Montreal: (Consumo = Producción + Importación – Exportación)",Anual,2º semestre de 2016,Ambiente,Ambiente
-Emisiones totales de gases de efecto invernadero por sector,Expresa a nivel nacional las emisiones totales de los gases efecto invernadero (GEI) que contribuyen al cambio climático global. ,Eventual,2º semestre de 2016,Ambiente,Ambiente
+Emisiones totales de gases de efecto invernadero por sector,Expresa a nivel nacional las emisiones totales de los gases efecto invernadero (GEI) que contribuyen al cambio climático global.,Eventual,2º semestre de 2016,Ambiente,Ambiente
 Generación de residuos sólidos urbanos,Indicador de cantidad de residuos sólidos urbanos (RSU) generados por habitante por día en el transcurso de un año,Eventual,2º semestre de 2016,Ambiente,Ambiente
 Composición de los Residuos Sólidos Urbanos (RSU) Promedio en Argentina,Muestra en porcentajes como están compuestos los RSU,Eventual,2º semestre de 2016,Ambiente,Ambiente
-"Monto asignado al financiamiento de los Planes de Manejo Sustentable, Conservación y Proyectos de Formulación para bosque nativo",Muestra la distribución del monto Anualasignado por tipo de plan,Anual,2º semestre de 2016,Ambiente,Ambiente
+"Monto asignado al financiamiento de los Planes de Manejo Sustentable, Conservación y Proyectos de Formulación para bosque nativo",Muestra la distribución del monto anual asignado por tipo de plan,Anual,2º semestre de 2016,Ambiente,Ambiente
 Especies por categoría de riesgos,Especies por categoría de riesgos,Eventual,2º semestre de 2016,Ambiente,Ambiente
 CITES,"Especies de aves, flora, mamiferos, reptiles de Argentina en la Convención sobre el Comercio Internacional de las Especies Amenazadas de Fauna y Flora Silvestres (CITES)",Eventual,1º semestre de 2017,Ambiente,Ambiente
 Cantidad de incendios forestales,"Cantidad de incendios forestales por año y causa, según jurisdicción",Anual,2º semestre de 2016,Ambiente,Ambiente
@@ -35,43 +34,41 @@ Biomasa forestal,"Biomasa forestal, incluyendo cantidad de carbono en millones d
 Superficie de bosque afectada por incendios,"Superficie afectada por incendios forestales por año y tipo de vegetación, según jurisdicción. En hectáreas",Anual,2º semestre de 2016,Ambiente,Ambiente
 Extracción de madera,"Rollos extraídos con destino industrial, postes, leña y otros productos, según especie. En metros cúbicos",Anual,1º semestre de 2017,Ambiente,Ambiente
 Extracción de productos forestales no madereros,"Extracción de productos forestales no madereros, por uso. En toneladas",Anual,2º semestre de 2016,Ambiente,Ambiente
-Importación y exportación de productos forestales ,Exportación e importación de productos forestales. En toneladas,Anual,2º semestre de 2016,Ambiente,Ambiente
+Importación y exportación de productos forestales,Exportación e importación de productos forestales. En toneladas,Anual,2º semestre de 2016,Ambiente,Ambiente
 Sitios Ramsar de la República Argentina,"Listado de Sitios Ramsar, humedales en estado de conservación y uso sostenible, de la República Argentina",Eventual,2º semestre de 2016,Ambiente,Ambiente
-Consumo de las sustancias agotadoras de ozono en la República Argentina,Consumo (producción más las importaciones menos las exportaciones de sustancias)  de sustancias agotadoras de ozono en la República Argentina,Anual,1º semestre de 2017,Ambiente,Ambiente
-Liberaciones de Dioxinas y Furanos,Liberaciones Anuales (g EQT/a),Eventual,2º semestre de 2016,Ambiente,Ambiente
+Consumo de las sustancias agotadoras de ozono en la República Argentina,Consumo (producción más las importaciones menos las exportaciones de sustancias) de sustancias agotadoras de ozono en la República Argentina,Anual,1º semestre de 2017,Ambiente,Ambiente
+Liberaciones de Dioxinas y Furanos,Liberaciones anuales (g EQT/a),Eventual,2º semestre de 2016,Ambiente,Ambiente
 Archivo Histórico de la Cancilleria Argentina,"Clasificación del Archivo-Secciones: Documentación original producida por el Ministerio de Relaciones Exteriores y Culto (1810- 2009) relativa a Asuntos Políticos, Económicos, Administrativos, Consulares y de Culto. Material producido por la Representaciones Diplomáticas y Consulares argentinas en el exterior. Fondos personales donados. Documentación desclasificada en el marco de los trabajos de la Comisión de Relevamiento para la Recuperación de la Memoria Histórica.",Semestral,2º semestre de 2016,Relaciones Exteriores,Relaciones Exteriores
-Estadísticas del Instituto del Servicio Exterior de la Nación ,"Cantidad de inscriptos al concurso e ingresantes al Instituto del Servicio Exterior de la Nación desde 2006 al 2016: cantidad por universidad, procedencia, carrera y género",Anual,2º semestre de 2016,Relaciones Exteriores,Relaciones Exteriores
-Promoción comercial y desarrollo de inversiones ,"Ficha país Argentina (Trade Net): Directorio de Exportadores, listado de Importadores, Oportunidades Comerciales, Licitaciones Internacionales, Información sobre Mercados Externos, Guía de Negocios, Ferias y Exportaciones.",Anual,2º semestre de 2016,Relaciones Exteriores,Relaciones Exteriores
-Registro de Institutos de Vida Consagrada,"Registro de Institutos de Vida Consagrada, incluyendo nombre, resolución, fecha y registro ",Semestral,2º semestre de 2016,Relaciones Exteriores,Relaciones Exteriores
-Registro Nacional de Cultos ,"Registro Nacional de Cultos, incluyendo nombre de la entidad, número de inscripción, provincia, ciudad, dirección. Información sobre trámites ",Semestral,2º semestre de 2016,Relaciones Exteriores,Relaciones Exteriores
+Estadísticas del Instituto del Servicio Exterior de la Nación,"Cantidad de inscriptos al concurso e ingresantes al Instituto del Servicio Exterior de la Nación desde 2006 al 2016: cantidad por universidad, procedencia, carrera y género",Anual,2º semestre de 2016,Relaciones Exteriores,Relaciones Exteriores
+Promoción comercial y desarrollo de inversiones,"Ficha país Argentina (Trade Net): Directorio de Exportadores, listado de Importadores, Oportunidades Comerciales, Licitaciones Internacionales, Información sobre Mercados Externos, Guía de Negocios, Ferias y Exportaciones.",Anual,2º semestre de 2016,Relaciones Exteriores,Relaciones Exteriores
+Registro de Institutos de Vida Consagrada,"Registro de Institutos de Vida Consagrada, incluyendo nombre, resolución, fecha y registro",Semestral,2º semestre de 2016,Relaciones Exteriores,Relaciones Exteriores
+Registro Nacional de Cultos,"Registro Nacional de Cultos, incluyendo nombre de la entidad, número de inscripción, provincia, ciudad, dirección. Información sobre trámites",Semestral,2º semestre de 2016,Relaciones Exteriores,Relaciones Exteriores
 Comisión Cascos Blancos,1994/2016: Cantidad de Misiones de Asistencia Humanitaria (detalle por región). Entrega de Ayuda Humanitaria. Cantidad de Misiones de Capacitación. Cantidad de Voluntarios desplazados en misiones. Países donde Cascos Blancos actúo. Envíos de insumos humanitarios en el 1er semestre de 2016.,Anual,2º semestre de 2016,Relaciones Exteriores,Relaciones Exteriores
 Representraciones extranjeras en Argentina,Listado de representaciones extranjeras en la Argentina,Eventual,2º semestre de 2016,Relaciones Exteriores,Relaciones Exteriores
 Representaciones Argentinas en el exterior,Listado de representaciones argentinas en el extranjero,Eventual,2º semestre de 2016,Relaciones Exteriores,Relaciones Exteriores
 Organismos Internacionales,Listado de Organismos Internacionales con sede en la Argentina,Eventual,2º semestre de 2016,Relaciones Exteriores,Relaciones Exteriores
 Directorio Telefónico,Directorio telefónico de emergencias consulares argentinos en el exterior.,Eventual,2º semestre de 2016,Relaciones Exteriores,Relaciones Exteriores
-"Proyectos de ciencia, tecnología e innovación","Proyectos de ciencia, tecnología e innovación, incluyendo montos totales aprobados y financiados, fecha de inicio, provincia de ejecución,  región de ejecución, tipo de proyecto, gran área del conocimiento  (para proyectos de I+D) y tipo de institución de ejecución.",Anual,2º semestre de 2016,Ciencia y Tecnología,Ciencia y Tecnología
-"Empresas de ejecución de proyectos de ciencia, tecnología e innovación","Empresas de ejecución de proyectos de ciencia, tecnología e innovación, cantidad de proyectos, tipo de proyectos,  provincia argentina y fecha de inicio.",Anual,2º semestre de 2016,Ciencia y Tecnología,Ciencia y Tecnología
-Equipamiento  científico-tecnológico,Equipamiento  científico-tecnológico según tipo de institución y provincia de localización.,Anual,2º semestre de 2016,Ciencia y Tecnología,Ciencia y Tecnología
-"Instituciones del Sistema Nacional de
-Ciencia y Tecnología Argentino","Instituciones del Sistema Nacional de Ciencia y Tecnología Argentino según tipo de institución, provincia de localización, tipo de recursos humanos, máximo nivel educativo alcanzado, disciplina de experticia.",Anual,2º semestre de 2016,Ciencia y Tecnología,Ciencia y Tecnología
-Recursos humanos en Ciencia y Tecnología,"Recursos humanos en Ciencia y Tecnología por provincia, máximo nivel educativo alcanzado, género, rangos de edad, tipo de personal de I+D y gran área del conocimiento  de la formación de grado,  tipo de institución de trabajo,  categoría en CONICET y categoría en el Programa de Incentivos a
-los Docentes Investigadores.",Anual,2º semestre de 2016,Ciencia y Tecnología,Ciencia y Tecnología
+"Proyectos de ciencia, tecnología e innovación","Proyectos de ciencia, tecnología e innovación, incluyendo montos totales aprobados y financiados, fecha de inicio, provincia de ejecución, región de ejecución, tipo de proyecto, gran área del conocimiento (para proyectos de I+D) y tipo de institución de ejecución.",Anual,2º semestre de 2016,Ciencia y Tecnología,Ciencia y Tecnología
+"Empresas de ejecución de proyectos de ciencia, tecnología e innovación","Empresas de ejecución de proyectos de ciencia, tecnología e innovación, cantidad de proyectos, tipo de proyectos, provincia argentina y fecha de inicio.",Anual,2º semestre de 2016,Ciencia y Tecnología,Ciencia y Tecnología
+Equipamiento científico-tecnológico,Equipamiento científico-tecnológico según tipo de institución y provincia de localización.,Anual,2º semestre de 2016,Ciencia y Tecnología,Ciencia y Tecnología
+Instituciones del Sistema Nacional de Ciencia y Tecnología Argentino,"Instituciones del Sistema Nacional de Ciencia y Tecnología Argentino según tipo de institución, provincia de localización, tipo de recursos humanos, máximo nivel educativo alcanzado, disciplina de experticia.",Anual,2º semestre de 2016,Ciencia y Tecnología,Ciencia y Tecnología
+Recursos humanos en Ciencia y Tecnología,"Recursos humanos en Ciencia y Tecnología por provincia, máximo nivel educativo alcanzado, género, rangos de edad, tipo de personal de I+D y gran área del conocimiento de la formación de grado, tipo de institución de trabajo, categoría en CONICET y categoría en el Programa de Incentivos a los Docentes Investigadores.",Anual,2º semestre de 2016,Ciencia y Tecnología,Ciencia y Tecnología
 Asistencia Directa por Situaciones Especiales (DADSE),Ayuda Directa a personas para adquirir medicación de alto costo y/o elementos de tecnología biomédica.,Semestral,2º semestre de 2016,Desarrollo Social,Desarrollo Social
-Prohuerta  ,"En el marco del Plan Nacional de Seguridad Alimentaria y Nutricional,  listado de huertas comunitarias, escolares y familiares como fuente de alimentos y/o ingresos para personas en situación de vulnerabilidad social. ",Semestral,2º semestre de 2016,Desarrollo Social,Desarrollo Social
+Prohuerta,"En el marco del Plan Nacional de Seguridad Alimentaria y Nutricional, listado de huertas comunitarias, escolares y familiares como fuente de alimentos y/o ingresos para personas en situación de vulnerabilidad social.",Semestral,2º semestre de 2016,Desarrollo Social,Desarrollo Social
 Fortalecimiento institucional a Organizaciones de la Sociedad Civil,Cantidad de proyectos sociales de Fortalecimiento Institucional a Organizaciones de la Sociedad Civil.,Anual,1º semestre de 2017,Desarrollo Social,Desarrollo Social
-Espacios de Primera Infancia ,"Cantidad de Espacios de Primera Infancia  en el marco del Plan Nacional de Primera Infancia para la atención integral, contención y estimulación temprana de niños y niñas. ",Anual,1º semestre de 2017,Desarrollo Social,Desarrollo Social
+Espacios de Primera Infancia,"Cantidad de Espacios de Primera Infancia en el marco del Plan Nacional de Primera Infancia para la atención integral, contención y estimulación temprana de niños y niñas.",Anual,1º semestre de 2017,Desarrollo Social,Desarrollo Social
 Asistencia ante emergencias climáticas o catástrofes,Informe de las asistencias por emergencias climáticas y catástrofes naturales o accidentales.,Anual,1º semestre de 2017,Desarrollo Social,Desarrollo Social
-Plan Creer y Crear,"En el marco del Plan Nacional de Economía Social, cantidad de proyectos de fortalecimiento institucional, productivo y de servicios, a fin de consolidar los emprendimientos de la economía social regional. ",Anual,1º semestre de 2017,Desarrollo Social,Desarrollo Social
-Comisión Nacional del Microcrédito (CONAMI) ,"Información de los microcréditos otorgados a una baja tasa de interés, destinados para proyectos productivos, comerciales o de servicios que necesiten insumos y maquinaria para fortalecer su actividad. Emprendedores y Organizaciones ejecutoras alcanzadas.",Semestral,2º semestre de 2016,Desarrollo Social,Desarrollo Social
-Centros de Referencia (CDR),Cantidad de delegaciones del Ministerio de Desarrollo Social en territorio federal. ,Anual,1º semestre de 2017,Desarrollo Social,Desarrollo Social
-Monotributo Social ,"Cantidad de titulares y adherentes alcanzados por el Monotributo Social, categoria tributaria que permite ingresar al sistema previsional a las personas en situación de vulnerabilidad social. Brinda la posibilidad de emitir facturas, acceder a una obra social. ",Anual,1º semestre de 2017,Desarrollo Social,Desarrollo Social
-Formación de  Cuidadores Domiciliarios - DINAPAM,Listado de capacitaciones y certificaciones a miembros de la comunidad sin empleo para que puedan cuidar y brindar atención primaria a adultos mayores o enfermos crónicos. ,Anual,1º semestre de 2017,Desarrollo Social,Desarrollo Social
+Plan Creer y Crear,"En el marco del Plan Nacional de Economía Social, cantidad de proyectos de fortalecimiento institucional, productivo y de servicios, a fin de consolidar los emprendimientos de la economía social regional.",Anual,1º semestre de 2017,Desarrollo Social,Desarrollo Social
+Comisión Nacional del Microcrédito (CONAMI),"Información de los microcréditos otorgados a una baja tasa de interés, destinados para proyectos productivos, comerciales o de servicios que necesiten insumos y maquinaria para fortalecer su actividad. Emprendedores y Organizaciones ejecutoras alcanzadas.",Semestral,2º semestre de 2016,Desarrollo Social,Desarrollo Social
+Centros de Referencia (CDR),Cantidad de delegaciones del Ministerio de Desarrollo Social en territorio federal.,Anual,1º semestre de 2017,Desarrollo Social,Desarrollo Social
+Monotributo Social,"Cantidad de titulares y adherentes alcanzados por el Monotributo Social, categoria tributaria que permite ingresar al sistema previsional a las personas en situación de vulnerabilidad social. Brinda la posibilidad de emitir facturas, acceder a una obra social.",Anual,1º semestre de 2017,Desarrollo Social,Desarrollo Social
+Formación de Cuidadores Domiciliarios - DINAPAM,Listado de capacitaciones y certificaciones a miembros de la comunidad sin empleo para que puedan cuidar y brindar atención primaria a adultos mayores o enfermos crónicos.,Anual,1º semestre de 2017,Desarrollo Social,Desarrollo Social
 Obras de energía eléctrica y de gas natural,"Seguimiento, grado de avance y descripción de obras de energía eléctrica y de gas natural.",Eventual,2º semestre de 2016,Energía y Minería,Energía y Minería
-Balance Energético Nacional ,"Oferta, transformación y demanda de energía eléctrica",Anual,2º semestre de 2016,Energía y Minería,Energía y Minería
+Balance Energético Nacional,"Oferta, transformación y demanda de energía eléctrica",Anual,2º semestre de 2016,Energía y Minería,Energía y Minería
 Factor de emisión de la red eléctrica,Factores de emisión de GEI asociados a la generación eléctrica.,Anual,2º semestre de 2016,Energía y Minería,Energía y Minería
 Cantidad de usuarios,Cantidad de usuarios por tipo y por distribuidora,Anual,2º semestre de 2017,Energía y Minería,Energía y Minería
 Demanda máxima de potencia,Demanda máxima de potencia del Sistema Interconectado Nacional,Anual,1º semestre de 2017,Energía y Minería,Energía y Minería
-Grandes usuarios del MEM ,Demandas de grandes usuarios por jurisdicción y sector,Anual,2º semestre de 2017,Energía y Minería,Energía y Minería
+Grandes usuarios del MEM,Demandas de grandes usuarios por jurisdicción y sector,Anual,2º semestre de 2017,Energía y Minería,Energía y Minería
 Distribución de energía eléctrica,Distribución por provincia y por distribuidora,Anual,2º semestre de 2017,Energía y Minería,Energía y Minería
 Redes de distribución,Capa geográfica de redes de media distribución por distribuidora,Eventual,2º semestre de 2016,Energía y Minería,Energía y Minería
 Consumos eléctrico de Edificios públicos,Consumo de Edificios públicos por periodos en Media y Alta Tensión,Mensual,2º semestre de 2017,Energía y Minería,Energía y Minería
@@ -85,12 +82,12 @@ Capacidad Instalada y Generación de Energía Eléctrica de Fuentes Renovables,"
 Listado de Centrales de Generación de Fuentes Renovables Operativas,"Nombre del Proyecto, Tecnología, Empresa, Capacidad, Ubicación, Estado de Trámite de Autorización como Agente MEM.",Trimestral,2º semestre de 2016,Energía y Minería,Energía y Minería
 Listado de Proyectos de EERR,"Nombre del Proyecto, Tecnología, Empresa, Capcacidad, Ubicación, Estado de Trámite de Autorización como Agente MEM.",Mensual,2º semestre de 2016,Energía y Minería,Energía y Minería
 Mapa de Recurso Eólico,Mapa de distribución territorial de recurso eólico,Anual,2º semestre de 2017,Energía y Minería,Energía y Minería
-Mapa de Recurso Solar ,Mapa de distribución territorial de recurso solar,Anual,1º semestre de 2017,Energía y Minería,Energía y Minería
+Mapa de Recurso Solar,Mapa de distribución territorial de recurso solar,Anual,1º semestre de 2017,Energía y Minería,Energía y Minería
 Mapas de Recursos Biomásicos,Mapa de distribución territorial de recurso biomásico,Anual,1º semestre de 2017,Energía y Minería,Energía y Minería
 PERMER (Proyecto de Energías Renovales para Mercados Rurales),Listado de cantidad de instalaciones realizadas por provincia.,Trimestral,2º semestre de 2016,Energía y Minería,Energía y Minería
 Puntos de Interés Geotérmico,Ubicación geográfica de puntos de interés geotérmico,Eventual,2º semestre de 2016,Energía y Minería,Energía y Minería
 Autoproductores,Generación eléctrica por parte de autoproductores,Anual,2º semestre de 2017,Energía y Minería,Energía y Minería
-Centrales eléctricas,Ubicación geográfica de centrales eléctricas por tipo ,Eventual,2º semestre de 2016,Energía y Minería,Energía y Minería
+Centrales eléctricas,Ubicación geográfica de centrales eléctricas por tipo,Eventual,2º semestre de 2016,Energía y Minería,Energía y Minería
 Consumo de combustibles,Consumo de combustibles para generación eléctrica,Anual,2º semestre de 2017,Energía y Minería,Energía y Minería
 Generación eléctrica,Serie de generación eléctrica asociada a redes,Anual,2º semestre de 2017,Energía y Minería,Energía y Minería
 Potencia instalada,Potencia instalada de generación eléctrica por tipo y por región,Anual,2º semestre de 2017,Energía y Minería,Energía y Minería
@@ -103,22 +100,22 @@ Estadísticas de Biocombustibles,"Producción, ventas al mercado interno y expor
 "Plantas de biocombustibles, Plantas refinadoras y productoras de Aceite Vegetal","Ubicación geográfica de plantas de biocombustibles, plantas refinadoras y productoras de aceite vegetal",Eventual,1º semestre de 2017,Energía y Minería,Energía y Minería
 Precios de Biodiesel,Precios de venta del Biodiesel al mercado interno.,Mensual,2º semestre de 2016,Energía y Minería,Energía y Minería
 Precios de Bioetanol,Precios de venta del Bioetanol al mercado interno.,Mensual,2º semestre de 2016,Energía y Minería,Energía y Minería
-Entregas de gas natural por tipo de usuario,"Gas natural Entregado y Nro. Usuarios, por Tipo de Usuario.  (ENARGAS)",Mensual,2º semestre de 2016,Energía y Minería,Energía y Minería
-"Gas natural Entregado, por Area de Licencia", (ENARGAS),Mensual,2º semestre de 2016,Energía y Minería,Energía y Minería
-Precios de GNC,Precios de GNC al Público.  (ENARGAS),Mensual,2º semestre de 2016,Energía y Minería,Energía y Minería
-Vehículos habilitados para GNC,Cantidad de Vehículos habilitados clasificados por provincia y tipo de vehículo.  (ENARGAS),Mensual,2º semestre de 2016,Energía y Minería,Energía y Minería
+Entregas de gas natural por tipo de usuario,"Gas natural Entregado y Nro. Usuarios, por Tipo de Usuario. (ENARGAS)",Mensual,2º semestre de 2016,Energía y Minería,Energía y Minería
+"Gas natural Entregado, por Area de Licencia",(ENARGAS),Mensual,2º semestre de 2016,Energía y Minería,Energía y Minería
+Precios de GNC,Precios de GNC al Público. (ENARGAS),Mensual,2º semestre de 2016,Energía y Minería,Energía y Minería
+Vehículos habilitados para GNC,Cantidad de Vehículos habilitados clasificados por provincia y tipo de vehículo. (ENARGAS),Mensual,2º semestre de 2016,Energía y Minería,Energía y Minería
 Áreas de concesión de distribuidoras,Polígonos descriptivos de las áreas de concesión por distribuidora.,Eventual,1º semestre de 2017,Energía y Minería,Energía y Minería
 Cantidad de usuarios de gas de red por segmento de calle,Capa geográfica con cantidad de usuarios conectados a la red de gas natural por cuadra.,Eventual,1º semestre de 2017,Energía y Minería,Energía y Minería
 Demanda de grandes usuarios de gas natural,"Gas natural Entregado a Grandes Usuarios industriales, por Rama de actividad, provincia y Subzona Tarifaria. (ENARGAS)",Mensual,2º semestre de 2016,Energía y Minería,Energía y Minería
-Demanda industrial de gas natural por rama,"Gas natural Entregado a Grandes Usuarios industriales, por Distribuidora y Rama de actividad.  (ENARGAS)",Mensual,2º semestre de 2016,Energía y Minería,Energía y Minería
-"Gas natural Entregado y Nro. Usuarios, por Distribuidora y Tipo de Servicio", (ENARGAS),Mensual,2º semestre de 2016,Energía y Minería,Energía y Minería
-"Gas natural Entregado y Nro. Usuarios, por Distribuidora y Tipo de Usuario", (ENARGAS),Mensual,2º semestre de 2016,Energía y Minería,Energía y Minería
-"Gas natural Entregado y Nro. Usuarios, por Subzona Tarifaria y Tipo de Servicio", (ENARGAS),Mensual,2º semestre de 2016,Energía y Minería,Energía y Minería
-"Gas natural Entregado y Nro. Usuarios, por Subzona Tarifaria y Tipo de Usuario", (ENARGAS),Mensual,2º semestre de 2016,Energía y Minería,Energía y Minería
-"Gas natural Entregado y Nro. Usuarios, por Tipo de Servicio y Provincia", (ENARGAS),Mensual,2º semestre de 2016,Energía y Minería,Energía y Minería
-"Gas natural Entregado y Nro. Usuarios, por Tipo de Servicio y Subzona Tarifaria", (ENARGAS),Mensual,2º semestre de 2016,Energía y Minería,Energía y Minería
-"Gas natural Entregado y Nro. Usuarios, por Tipo de Usuario,  Provincia y subzona tarifaria", (ENARGAS),Mensual,2º semestre de 2016,Energía y Minería,Energía y Minería
-"Uso de la Capacidad Contratada, por Distribuidora",Uso de la capacidad de transporte de gas natural por distribuidora.  (ENARGAS),Mensual,2º semestre de 2016,Energía y Minería,Energía y Minería
+Demanda industrial de gas natural por rama,"Gas natural Entregado a Grandes Usuarios industriales, por Distribuidora y Rama de actividad. (ENARGAS)",Mensual,2º semestre de 2016,Energía y Minería,Energía y Minería
+"Gas natural Entregado y Nro. Usuarios, por Distribuidora y Tipo de Servicio",(ENARGAS),Mensual,2º semestre de 2016,Energía y Minería,Energía y Minería
+"Gas natural Entregado y Nro. Usuarios, por Distribuidora y Tipo de Usuario",(ENARGAS),Mensual,2º semestre de 2016,Energía y Minería,Energía y Minería
+"Gas natural Entregado y Nro. Usuarios, por Subzona Tarifaria y Tipo de Servicio",(ENARGAS),Mensual,2º semestre de 2016,Energía y Minería,Energía y Minería
+"Gas natural Entregado y Nro. Usuarios, por Subzona Tarifaria y Tipo de Usuario",(ENARGAS),Mensual,2º semestre de 2016,Energía y Minería,Energía y Minería
+"Gas natural Entregado y Nro. Usuarios, por Tipo de Servicio y Provincia",(ENARGAS),Mensual,2º semestre de 2016,Energía y Minería,Energía y Minería
+"Gas natural Entregado y Nro. Usuarios, por Tipo de Servicio y Subzona Tarifaria",(ENARGAS),Mensual,2º semestre de 2016,Energía y Minería,Energía y Minería
+"Gas natural Entregado y Nro. Usuarios, por Tipo de Usuario, Provincia y subzona tarifaria",(ENARGAS),Mensual,2º semestre de 2016,Energía y Minería,Energía y Minería
+"Uso de la Capacidad Contratada, por Distribuidora",Uso de la capacidad de transporte de gas natural por distribuidora. (ENARGAS),Mensual,2º semestre de 2016,Energía y Minería,Energía y Minería
 Concesiones y lotes de Explotación,Capas geográficas de concesiones de explotación,Eventual,1º semestre de 2017,Energía y Minería,Energía y Minería
 Conformación de consorcios del upstream,Conformación de consorcios por permiso y concesión de exploración y explotación de hidrocarburos,Mensual,1º semestre de 2017,Energía y Minería,Energía y Minería
 Cuencas sedimentarias,Capas geográficas de Cuencas sedimentarias de la República Argentina,Eventual,1º semestre de 2017,Energía y Minería,Energía y Minería
@@ -137,10 +134,10 @@ Precios de Comercio Exterior,Precios de comercio exterior de hidrocarburos.,Mens
 Precios de Escalante,Precios históricos del crudo tipo escalante,Mensual,2º semestre de 2016,Energía y Minería,Energía y Minería
 Precios de petróleo Crudo por tipo,Precio del crudo por tipo en US$/m3 y WTI en US$/m3 y US$/bbl,Mensual,1º semestre de 2017,Energía y Minería,Energía y Minería
 "Precios de Petróleo Crudo, Gas Natural, GLP, Gasolina y Condensado (Regalías)",Precios computados para el cálculo de regalías de hidrocarburos a las provincias o al estado nacional,Mensual,1º semestre de 2017,Energía y Minería,Energía y Minería
-"Producción computable para regalías de crudo, condensado, gasolina gas natural y  en m3 y en USD","Producción computable para el cálculo de regalías de crudo, condensado y gasolina estabilizada",Mensual,2º semestre de 2017,Energía y Minería,Energía y Minería
+"Producción computable para regalías de crudo, condensado, gasolina gas natural y en m3 y en USD","Producción computable para el cálculo de regalías de crudo, condensado y gasolina estabilizada",Mensual,2º semestre de 2017,Energía y Minería,Energía y Minería
 Producción de GLP,Producción de GLP Condensado y Gasolina Estabilizada - Producción de GLP,Mensual,1º semestre de 2017,Energía y Minería,Energía y Minería
 Producción de petróleo gas por yacimiento,"Producción de petróleo y gas natural desagregada por yacimiento, provincia, cuenca y concesión",Mensual,1º semestre de 2017,Energía y Minería,Energía y Minería
-"Producción Mensual de petróleo, gas y agua por pozo",Producción de Hidrocarburos por Pozo y Formación Productiva,Mensual,2º semestre de 2017,Energía y Minería,Energía y Minería
+"Producción mensual de petróleo, gas y agua por pozo",Producción de Hidrocarburos por Pozo y Formación Productiva,Mensual,2º semestre de 2017,Energía y Minería,Energía y Minería
 Pronósticos de producción de hidrocarburos,Pronósticos de producción de petróleo y gas natural,Mensual,2º semestre de 2017,Energía y Minería,Energía y Minería
 Puntos de Venteo Declarados,Ubicación geográfica de puntos de venteo declarados de gas natural,Eventual,1º semestre de 2017,Energía y Minería,Energía y Minería
 Registro de incidentes ambientales en producción de hidrocarburos,Incidentes ambientales asociados a la exploración y explotación de hidrocarburos,Anual,2º semestre de 2017,Energía y Minería,Energía y Minería
@@ -155,8 +152,8 @@ Registro de envases de GLP,Registro de envases circulantes de GLP en todo el pa�
 Comercialización de derivados,Comercialización de productos derivados del petróleo,Mensual,1º semestre de 2017,Energía y Minería,Energía y Minería
 "Compra, Venta y Transferencias de Combustible",Estadísticas por empresa y por provincia de comercialización de combustibles,Mensual,1º semestre de 2017,Energía y Minería,Energía y Minería
 Estaciones de servicio,Ubicación geográfica de estaciones de servicio en todo el país,Eventual,2º semestre de 2017,Energía y Minería,Energía y Minería
-Precios de venta de combustible en Tiempo real,Precio vigente de ventas de combustibles por estación de servicio. Tiempo real sujeto a restricciones de carga (horas).,Tiempo real,1º semestre de 2017,Energía y Minería,Energía y Minería
-Precios en planta ,Precios de Combustibles Líquidos en Planta (Canales de comercializacion y Reventa a estaciones de servicio),Mensual,1º semestre de 2017,Energía y Minería,Energía y Minería
+Precios de venta de combustible en tiempo real,Precio vigente de ventas de combustibles por estación de servicio. Tiempo real sujeto a restricciones de carga (horas).,Tiempo real,1º semestre de 2017,Energía y Minería,Energía y Minería
+Precios en planta,Precios de Combustibles Líquidos en Planta (Canales de comercializacion y Reventa a estaciones de servicio),Mensual,1º semestre de 2017,Energía y Minería,Energía y Minería
 Precios y volumenes de Gas Licuado de Petroleo,Estadísticas por empresa y por provincia de comercialización GLP,Mensual,1º semestre de 2017,Energía y Minería,Energía y Minería
 Precios y volumenes en Estaciones de servicio de derivados,Estadísticas de venta de Estaciones de Servicio de combustibles,Mensual,1º semestre de 2017,Energía y Minería,Energía y Minería
 Precios y volumenes mayoristas de derivados,Estadísticas mayoristas y en planta de combustibles,Mensual,2º semestre de 2017,Energía y Minería,Energía y Minería
@@ -175,10 +172,10 @@ Gas natural importado y Exportado,Gas natural exportado por destino.,Mensual,2º
 Gas natural Recibido de Productores,"Gas natural Recibido de Productores, por Cuenca",Mensual,2º semestre de 2016,Energía y Minería,Energía y Minería
 Balanza comercial minera,Balanza comercial de sustancias minerales y productos derivados totales,Anual,1º semestre de 2017,Energía y Minería,Energía y Minería
 Comercio exterior minero por rubro,Importaciones y exportaciones de sustancias minerales y productos derivados por rubro de producción minera.,Anual,2º semestre de 2016,Energía y Minería,Energía y Minería
-Exportaciones mineras por provincia,Exportaciones de sustancias minerales y productos derivados por provincia. ,Anual,2º semestre de 2016,Energía y Minería,Energía y Minería
+Exportaciones mineras por provincia,Exportaciones de sustancias minerales y productos derivados por provincia.,Anual,2º semestre de 2016,Energía y Minería,Energía y Minería
 Participación de las exportaciones mineras en el total nacional,Participación de importaciones de sustancias minerales y productos derivados por rubro de producción minera.,Anual,2º semestre de 2016,Energía y Minería,Energía y Minería
 Productos mineros exportados,Exportación de sustancias minerales y productos derivados. Principales productos por rubros (en U$S FOB).,Anual,2º semestre de 2016,Energía y Minería,Energía y Minería
-Informes del Jefe de Gabinete al Congreso de la Nación,"Estadística del intercambio en los informes Mensuales del Jefe de Gabinete de Ministros de la Nación al Congreso. Cantidad de preguntas, Ministerios que responden, duración de la sesión, porcentajes de preguntas respondidas (total y por jurisdicción), legisladores y bloques intervinientes. Adicional: datos de los pedidos de informes individuales que los legisladores realizan al Poder Ejecutivo.",Mensual,2º semestre de 2016,Jefatura de Gabinete,JGM
+Informes del Jefe de Gabinete al Congreso de la Nación,"Estadística del intercambio en los informes mensuales del Jefe de Gabinete de Ministros de la Nación al Congreso. Cantidad de preguntas, Ministerios que responden, duración de la sesión, porcentajes de preguntas respondidas (total y por jurisdicción), legisladores y bloques intervinientes. Adicional: datos de los pedidos de informes individuales que los legisladores realizan al Poder Ejecutivo.",Mensual,2º semestre de 2016,Jefatura de Gabinete,JGM
 Catálogo BACUA,"Catálogo del Banco Audiovisual de Contenidos Uiversales Argentinos. Disponible para consulta por categoria, codigo, productor, director, guinista y sinopsis",Eventual,1º semestre de 2017,Jefatura de Gabinete,JGM
 Inmuebles del Estado Nacional,Datos correspondientes a los Inmuebles de Propiedad del Estado Nacional,Semestral,1º semestre de 2017,Jefatura de Gabinete,JGM
 Cesiones de uso y alquileres de inmuebles del Estado Nacional,"Concesiones y cesiones de uso de inmuebles del Estado Nacional a organismos, ONG y privados.",Semestral,1º semestre de 2017,Jefatura de Gabinete,JGM
@@ -192,14 +189,10 @@ Registro Nacional de Información de Personas Menores Extraviadas,"Datos sobre p
 "Unidad de Registro, Sistematizaciòn y Seguimiento de Hechos de Violencia Institucional","El registro analiza las formas de expresión de la violencia institucional sobre la base de las presentaciones, denuncias e informaciones recibidas en el ámbito de la Secretaría de Derechos Humanos. Este objetivo general se concretiza al identificar, describir y analizar los hechos y/o situaciones que involucren violaciones a los derechos humanos por parte de funcionarios/as pertenecientes a las fuerzas de seguridad, fuerzas armadas, personal penitenciario y efectores de salud en contextos de restricción de libertad y/o autonomía.",Trimestral,2º semestre de 2016,Justicia,Justicia
 "Base de datos de la Unidad de Registro, Sistematización y Seguimiento de Femicidios y Homicidios Agravados por el Género.","Esta base registra los femicidios y homicidios agravados por el género desde el año 2012 a la fecha. Se nutre de diversas fuentes: articulos de prensa escrita, denuncias policiales y judiciales, denuncias realizadas ante la Secretaría de Derechos Humanos.",Trimestral,2º semestre de 2016,Justicia,Justicia
 Registro Unificado de VÍctimas del Terrorismo de Estado,"El objetivo del Registro es la construcción de una matriz de datos de alcance nacional en permanente estado de actualización sobre las víctimas del accionar represivo ilegal del Estado argentino y, en cumplimiento de lo dispuesto por la Ley 26.691, de los centros clandestinos de detención y otros lugares de reclusión utilizados por la fuerza represiva estatal, entre otras tareas de investigación.",Eventual,2º semestre de 2016,Justicia,Justicia
-Solicitudes de Autorización de Tenencia de Armas de Fuego,"Listado de Solicitudes de Autorización de Tenencia de Armas de Fuego comprendidas en el ""Procedimiento de Participación Ciudadana por Oposición para la Autorización de Tenencia o Portación de Armas de Fuego"".
-Las solicitudes permanecen publicadas hasta las 00:00 horas del día siguiente al vencimiento de la publicación.
-Resolución MJyDDHH Nº 373/2013",Mensual,2º semestre de 2016,Justicia,Justicia
-Solicitudes de Autorización de Portación de Armas de Fuego,"Listado de Solicitudes de Autorización de Portación de Armas de Fuego comprendidas en el ""Procedimiento de Participación Ciudadana por Oposición para la Autorización de Tenencia o Portación de Armas de Fuego"".
-Las solicitudes permanecen publicadas hasta las 00:00 horas del día siguiente al vencimiento de la publicación.
-Resolución MJyDDHH Nº 373/2013",Mensual,2º semestre de 2016,Justicia,Justicia
-Sistema de Consulta Nacional de Rebeldías y Capturas (base Co.Na.R.C.).,"La base Co.Na.R.C., creada a partir de la sanción del decreto 346/2009, se conforma con las comunicaciones que los tribunales realizan al Registro Nacional de Reincidencia de toda medida restrictiva a la libertad ambulatoria que se dicta en el marco de una causa penal, en cualquier jurisdicción del país (ámbito federal, nacional, provincial y de la CABA).  La base sólo refleja las órdenes de detención vigentes. ",Mensual,2º semestre de 2016,Justicia,Justicia
-Internos del SPF ,Procesados y condenados alojados en unidades del Servicio Penitenciario Federal (anonimizados los campos que correspondan).,Mensual,2º semestre de 2016,Justicia,Justicia
+Solicitudes de Autorización de Tenencia de Armas de Fuego,"Listado de Solicitudes de Autorización de Tenencia de Armas de Fuego comprendidas en el ""Procedimiento de Participación Ciudadana por Oposición para la Autorización de Tenencia o Portación de Armas de Fuego"". Las solicitudes permanecen publicadas hasta las 00:00 horas del día siguiente al vencimiento de la publicación. Resolución MJyDDHH Nº 373/2013",Mensual,2º semestre de 2016,Justicia,Justicia
+Solicitudes de Autorización de Portación de Armas de Fuego,"Listado de Solicitudes de Autorización de Portación de Armas de Fuego comprendidas en el ""Procedimiento de Participación Ciudadana por Oposición para la Autorización de Tenencia o Portación de Armas de Fuego"". Las solicitudes permanecen publicadas hasta las 00:00 horas del día siguiente al vencimiento de la publicación. Resolución MJyDDHH Nº 373/2013",Mensual,2º semestre de 2016,Justicia,Justicia
+Sistema de Consulta Nacional de Rebeldías y Capturas (base Co.Na.R.C.).,"La base Co.Na.R.C., creada a partir de la sanción del decreto 346/2009, se conforma con las comunicaciones que los tribunales realizan al Registro Nacional de Reincidencia de toda medida restrictiva a la libertad ambulatoria que se dicta en el marco de una causa penal, en cualquier jurisdicción del país (ámbito federal, nacional, provincial y de la CABA).  La base sólo refleja las órdenes de detención vigentes.",Mensual,2º semestre de 2016,Justicia,Justicia
+Internos del SPF,Procesados y condenados alojados en unidades del Servicio Penitenciario Federal (anonimizados los campos que correspondan).,Mensual,2º semestre de 2016,Justicia,Justicia
 Mapa de Conectividad de Redes de la República Argentina,"Mapa de redes de telecomunicaciones mostrando la oferta de servicios fijos, moviles y de conectividad de banda ancha, Backbones de fibra optica y los puntos de interconexión en cada localidad o departamento del país.",Trimestral,1º semestre de 2017,Comunicaciones,Comunicaciones
 Registro de Autorizaciones Satelitales,Listado de autorizaciones satelitales,Trimestral,1º semestre de 2017,Comunicaciones,Comunicaciones
 Registro de Proveedores Postales y Servicios de Mensajería,Listado de prestadores postales y servicios de mensajería autorizados a dar servicios postales en la Republica Argentina,Semanal,2º semestre de 2016,Comunicaciones,Comunicaciones
@@ -207,9 +200,9 @@ Listado de prestadores de telefonía,"Listado de prestadores de telefonía fija,
 Estadísticas sobre Negociación Colectiva y Conflictividad Laboral,Conjunto de indicadores que reflejan la situación y la evolución de la negociación colectiva y la conflictividad laboral.,Mensual,2º semestre de 2016,Trabajo,Trabajo
 Boletín de estadísticas sobre demografía de empresas y empleo,"Contiene información sobre la demografía de las empresas (aperturas, cierres, continuadoras) y la dinámica del empleo, sobre empresas de rápido crecimiento y supervivencia de las firmas.",Trimestral,2º semestre de 2016,Trabajo,Trabajo
 Datos sobre el total de trabajadores registrados,"Describe la situación y evolución del total de trabajadores registrados (asalariados, trabajadores en casas particulares, autónomos y monotributistas)",Mensual,2º semestre de 2016,Trabajo,Trabajo
-Datos resultantes del  Plan Nacional de Regularización del Trabajo (PNRT),"Describe: (i) cantidad de inspecciones realizadas, (ii) cantidad de trabajadores relevados, (iii) tasa de no registro y (iv) tasa de regularización.",Semestral,2º semestre de 2016,Trabajo,Trabajo
-Boletín de estadísticas de Seguridad Social,"Conjunto de estadísticas de las distintas ramas de la seguridad social: jubilaciones y pensiones, asignaciones familiares, seguro por desempleo y riesgos del trabajo. ",Trimestral,2º semestre de 2016,Trabajo,Trabajo
-PBI cultural,Valor agregado de las actividades culturales ,Anual,2º semestre de 2016,Cultura,Cultura
+Datos resultantes del Plan Nacional de Regularización del Trabajo (PNRT),"Describe: (i) cantidad de inspecciones realizadas, (ii) cantidad de trabajadores relevados, (iii) tasa de no registro y (iv) tasa de regularización.",Semestral,2º semestre de 2016,Trabajo,Trabajo
+Boletín de estadísticas de Seguridad Social,"Conjunto de estadísticas de las distintas ramas de la seguridad social: jubilaciones y pensiones, asignaciones familiares, seguro por desempleo y riesgos del trabajo.",Trimestral,2º semestre de 2016,Trabajo,Trabajo
+PBI cultural,Valor agregado de las actividades culturales,Anual,2º semestre de 2016,Cultura,Cultura
 Empleo cultural,Cantidad de personas empleadas en actividades culturales privadas y en el sector público,Anual,2º semestre de 2016,Cultura,Cultura
 Presupuesto publico en cultura a nivel nacional,"Presupuesto ejecutado por el ministerio de cultura y sus organismos descentralizados, así como otros organismos y programas que realizan actividades culturales",Anual,2º semestre de 2016,Cultura,Cultura
 Espacios culturales,"Listado nacional de museos, bibliotecas especializadas, bibliotecas populares, fiestas populares y festivales, librerías, salas de teatro, salas de cine, casas del bicentenario, carreras culturales y puntos de cultura",Anual,2º semestre de 2016,Cultura,Cultura
@@ -232,62 +225,39 @@ Municipios - Agenda Presidencial,Municipios que visita el Presidente en actos de
 Dominios de Internet,Descripción de los datos típicos de los dominios de internet en formato según RFC 7482,Semanal,2º semestre de 2016,Secretaría Legal y Técnica,Presidencia
 Normativa,"Boletín Oficial de la República Argentina. Publicación de la normativa, avisos comerciales y judiciales.",Semanal,2º semestre de 2016,Secretaría Legal y Técnica,Presidencia
 Base de Instrumentos para el Desarrollo Productivo (BIDP),"Registo de subsidios e incentivos que brinda el Estado Nacional para fines productivos a través de sus organismos (excluye programas sociales). Incluye un Padrón de Políticas, con la descripción de cada política de apoyo productivo, y un Padrón de Beneficiarios, con información de los beneficios percibidos por las empresas beneficiarias de los programas.",Mensual,2º semestre de 2016,Producción,Producción
-"Banco de Proyectos de
-Inversión Pública","Registro de los proyectos de inversión de todos los organismos del Sector
-Publico Nacional. Creado por ley 24,354 del año 1994. Todos los organismos del SPN tienen obligación de registrar sus proyectos en este Banco, lo hacen en forma directa a través de un aplicativo que se conecta con el Servidor administrado por la Dirección Nacional de Inversión Pública, y próximamente en un nuevo sistema informático en entorno Web. Los principales campos de cada proyecto se publican en Internet en la Web del Ministerio.",Diaria,2º semestre de 2016,Producción,Producción
+Banco de Proyectos de Inversión Pública,"Registro de los proyectos de inversión de todos los organismos del Sector Publico Nacional. Creado por ley 24,354 del año 1994. Todos los organismos del SPN tienen obligación de registrar sus proyectos en este Banco, lo hacen en forma directa a través de un aplicativo que se conecta con el Servidor administrado por la Dirección Nacional de Inversión Pública, y próximamente en un nuevo sistema informático en entorno Web. Los principales campos de cada proyecto se publican en Internet en la Web del Ministerio.",Diaria,2º semestre de 2016,Producción,Producción
 Registro Industrial de la Nacion,El Registro Industrial de la Nación (RIN) tiene un rol fundamental en la recopilación de información cuantitativa y cualitativa sobre las industrias que desarrollan actividades en el Territorio Nacional.,Anual,1º semestre de 2017,Producción,Producción
-"Registro de Armas
-Quimicas","El registro incluye las personas físicas y jurídicas que produzcan, comercialicen, importen o exporten sustancias químicas listadas por la Convención o sustancias químicas",Anual,1º semestre de 2017,Producción,Producción
-"Registro de Expertos
-Pymes","Base de datos en el marco del programa ""Expertos Pymes"" cuyo objetivo es brindar a las empresas la posibilidad de contratar expertos en asesoramiento técnico y organizacional.",Anual,1º semestre de 2017,Producción,Producción
-"Registro de
-Incubadoras","Registro de personas jurídicas (mixtas, públicas o privadas) o entidades que ofrecen servicios de incubación de empresas.",Anual,1º semestre de 2017,Producción,Producción
+Registro de Armas Quimicas,"El registro incluye las personas físicas y jurídicas que produzcan, comercialicen, importen o exporten sustancias químicas listadas por la Convención o sustancias químicas",Anual,1º semestre de 2017,Producción,Producción
+Registro de Expertos Pymes,"Base de datos en el marco del programa ""Expertos Pymes"" cuyo objetivo es brindar a las empresas la posibilidad de contratar expertos en asesoramiento técnico y organizacional.",Anual,1º semestre de 2017,Producción,Producción
+Registro de Incubadoras,"Registro de personas jurídicas (mixtas, públicas o privadas) o entidades que ofrecen servicios de incubación de empresas.",Anual,1º semestre de 2017,Producción,Producción
 Registro Pyme,"Registro de micro, pequeñas y medianas empresas",Eventual,1º semestre de 2017,Producción,Producción
-"Ciudades para
-Emprender","Registro de Ciudades para Emprender, cuyo objetivo es impulsar la creación de nuevas empresas atendiendo a la vocación territorial y a la planificación económica estratégica y la generación de capacidades emprendedoras locales.",Anual,1º semestre de 2017,Producción,Producción
-"Registro de
-Aceleradoras","Incluye información sobre aceleradoras que permitan el financiamiento y desarrollo de empresas innovadoras, de alto impacto y con mercados globales",Anual,1º semestre de 2017,Producción,Producción
+Ciudades para Emprender,"Registro de Ciudades para Emprender, cuyo objetivo es impulsar la creación de nuevas empresas atendiendo a la vocación territorial y a la planificación económica estratégica y la generación de capacidades emprendedoras locales.",Anual,1º semestre de 2017,Producción,Producción
+Registro de Aceleradoras,"Incluye información sobre aceleradoras que permitan el financiamiento y desarrollo de empresas innovadoras, de alto impacto y con mercados globales",Anual,1º semestre de 2017,Producción,Producción
 Registro del Programa Desarrollo de Proveedores,Registro de Proveedores para sectores estrategicos,Anual,1º semestre de 2017,Producción,Producción
 "Registro de fabricantes e importadores de vehículos, fabricantes e importadores de autopartes",Registro del sector automotriz,Anual,1º semestre de 2017,Producción,Producción
 "Fabricantes e importadores de bicicletas, registro de fabricantes e importadores de cámaras y cubiertas.",proveedores e importadores de bicicletas,Anual,1º semestre de 2017,Producción,Producción
 Registro Nacional de laboratorios de ensayos de autopartes y vehículos completos.,Registro del sector automotriz,Anual,1º semestre de 2017,Producción,Producción
-"Registro de Bienes de
-Capital",Registro de las empresas que fabrican bienes de capital,Anual,2º semestre de 2017,Producción,Producción
+Registro de Bienes de Capital,Registro de las empresas que fabrican bienes de capital,Anual,2º semestre de 2017,Producción,Producción
 Registro Nacional de Productores de Software y Servicios Informáticos.,"Registro correspondiente al Régimen de Promoción de la Industria del Software (Ley 25.922), que prevé beneficios para la industria del software y servicios informáticos.",Anual,2º semestre de 2017,Producción,Producción
-"Plan Nacional de
-Diseño","Registro abierto de agencias, diseñadores y empresas que participan del programa",Anual,1º semestre de 2017,Producción,Producción
+Plan Nacional de Diseño,"Registro abierto de agencias, diseñadores y empresas que participan del programa",Anual,1º semestre de 2017,Producción,Producción
 COPREC,Registro de los reclamos del ciudadano en materia de defensa del consumidor como así también consultas respecto a los programas de precios de gobierno.,Anual,2º semestre de 2017,Producción,Producción
 Tribunal arbitral,Registro de árbitros de consumidores y de cámaras empresariales.,Anual,2º semestre de 2017,Producción,Producción
 Asociaciones de consumidores,Registro nacional de asociaciones de consumidores,Anual,2º semestre de 2017,Producción,Producción
-"Registro Nacional de
-Infractores","Registro según art. 49 del Anexo I al Decreto N 1798/94 reglamentario de la
-Ley 24.240",Anual,2º semestre de 2017,Producción,Producción
+Registro Nacional de Infractores,Registro según art. 49 del Anexo I al Decreto N 1798/94 reglamentario de la Ley 24.240,Anual,2º semestre de 2017,Producción,Producción
 Metrología,Registro de operadores en materia de metrología legal.,Anual,2º semestre de 2017,Producción,Producción
 Estadistica Educativa,"Desagregadas por modalidad, oferta educativa, nivel educativo y sector de gestion segun departamento",Semestral,1º semestre de 2017,Educación,Educación
-Indicadores Educativos,"Información sobre Tasa de Promoción Efectiva, Tasa de Repitencia, Tasa de Abandono InterAnual, Porcentaje de Sobreedad, Tasa de Escolarización",Semestral,1º semestre de 2017,Educación,Educación
+Indicadores Educativos,"Información sobre Tasa de Promoción Efectiva, Tasa de Repitencia, Tasa de Abandono Interanual, Porcentaje de Sobreedad, Tasa de Escolarización",Semestral,1º semestre de 2017,Educación,Educación
 Registro de Establecimientos Educativos,Padrón Oficial de Establecimientos Educativos,Eventual,1º semestre de 2017,Educación,Educación
-Empresas de transporte RMBA,"Detalle de empresas de transporte que operan:
-- Jurisdiccion Nacional
-- Jurisdicción Provincial
-- Jurisdicción Municipal",Trimestral,2º semestre de 2016,Transporte,Transporte
-Líneas de transporte RMBA,"Detalle de líneas de transporte que operan:
-- Jurisdiccion Nacional
-- Jurisdicción Provincial
-- Jurisdicción Municipal",Trimestral,2º semestre de 2016,Transporte,Transporte
-Cancelaciones por año RMBA,"Histórico de operaciones de viajes por año:
-A) Cantidad y detalle por modo.
-B) Cantidad y detalle por empresa. C) Cantidad y detalle de linea.
-D) Cantidad y detalle de linea y tipo de pasaje (normal - atributo social)",Anual,1º semestre de 2017,Transporte,Transporte
-Cancelaciones mes RMBA,"Histórico de operaciones de viajes por mes:
-A) Cantidad y detalle por modo.
-B) Cantidad y detalle por empresa. C) Cantidad y detalle de linea.
-D) Cantidad y detalle de linea y tipo de pasaje (normal - atributo social)",Trimestral,2º semestre de 2016,Transporte,Transporte
+Empresas de transporte RMBA,Detalle de empresas de transporte que operan: - Jurisdiccion Nacional - Jurisdicción Provincial - Jurisdicción Municipal,Trimestral,2º semestre de 2016,Transporte,Transporte
+Líneas de transporte RMBA,Detalle de líneas de transporte que operan: - Jurisdiccion Nacional - Jurisdicción Provincial - Jurisdicción Municipal,Trimestral,2º semestre de 2016,Transporte,Transporte
+Cancelaciones por año RMBA,Histórico de operaciones de viajes por año: A) Cantidad y detalle por modo. B) Cantidad y detalle por empresa. C) Cantidad y detalle de linea. D) Cantidad y detalle de linea y tipo de pasaje (normal - atributo social),Anual,1º semestre de 2017,Transporte,Transporte
+Cancelaciones mes RMBA,Histórico de operaciones de viajes por mes: A) Cantidad y detalle por modo. B) Cantidad y detalle por empresa. C) Cantidad y detalle de linea. D) Cantidad y detalle de linea y tipo de pasaje (normal - atributo social),Trimestral,2º semestre de 2016,Transporte,Transporte
 Informes estadísticos y Protocolos.,Confección de estadísticas en base a la información recolectada por distintas fuentes como así también confección de protocolos para su posterior utilización por las fuerzas.,Eventual,1º semestre de 2017,Seguridad,Seguridad
 DNFyC (Marte)/BECAS,"Contempla normativa de todos los programas de becas, los registros de todos los becarios, rendición de cuenta de las universidades, notas firmadas por el Director Nacional",Eventual,1º semestre de 2017,Seguridad,Seguridad
 Sistema Nacional de Información Criminal (Total de hechos delictuosos y SAT Propiedad),Información a nivel nacional y provincial sobre presuntos hechos delictuosos registrados en sede policial (mesodatos).,Anual,1º semestre de 2017,Seguridad,Seguridad
 "Sistema Nacional de Información Criminal (Sistema de Alerta Temprana -SAT- de homicidios dolosos consumados y en grado de tentativa, homicidios culposos en accidentes de tránsito consumados y suicidios consumados).",Información a nivel nacional y provincial sobre presuntos hechos delictuosos registrados en sede policial (microdatos).,Anual,1º semestre de 2017,Seguridad,Seguridad
 Observatorio Legislativo de Seguridad Ciudadana,Página web que tiene como objetivo erigirse como una herramienta de consulta para todos aquellos interesados en la normativa vinculada a la seguridad.,Eventual,1º semestre de 2017,Seguridad,Seguridad
-Asignación Salarial de las Autoridades Superiores del Poder Ejecutivo Nacional,Asignación salarial Mensual (bruta)* de las Autoridades Superiores del Poder Ejecutivo Nacional.,Mensual,2º semestre de 2016,Modernización,Modernización
+Asignación Salarial de las Autoridades Superiores del Poder Ejecutivo Nacional,Asignación salarial mensual (bruta)* de las Autoridades Superiores del Poder Ejecutivo Nacional.,Mensual,2º semestre de 2016,Modernización,Modernización
 Estructura Orgánica y Autoridades del Poder Ejecutivo Nacional,"Estructura y autoridades de la Administración Centralizada del Estado Nacional, tomando como fuente de información el Boletín Oficial y los respectivos Decretos de designación de cargos en la Administración Pública Nacional.",Eventual,2º semestre de 2016,Modernización,Modernización
 Sistema de Contrataciones Electrónicas,"Datos correspondiente al Sistema de Contrataciones Electrónicas, incluyendo las contrataciones de bienes y servicios, el Sistema de Información de Proveedores (SIPRO) y el Catálogo de Bienes y Servicios (SIByS)",Eventual,2º semestre de 2016,Modernización,Modernización
 Registro Central de Personas Contratadas,"Nómina del personal contratado por el Poder Ejecutivo Nacional correspondiente a la Administración Central y Descentralizada, detallando información sobre el personal contratado, la modalidad del contrato, así como la jurisdicción y organismo contratante.",Trimestral,2º semestre de 2016,Modernización,Modernización
@@ -304,24 +274,13 @@ Registro Nacional de Prestadores,"Registro de Establecimientos y Padrón de Prof
 Gestión de Reclamos,Estadísticas de Reclamos y Expedientes en trámite y resueltos. Incluye aquellos derivados de la Defensoría del Pueblo y Asociaciones.,Mensual,1º semestre de 2017,Salud,Salud
 Compras y contrataciones,"Datos correspondientes a Contrataciones, Licitaciones públicas, empresas adjudicadas.",Mensual,1º semestre de 2017,Salud,Salud
 Encuestas de Satisfacción,"Resultados de encuestas realizadas en los Centros de Atención de todo el país, y encuesta Online en WEB.",Semestral,1º semestre de 2017,Salud,Salud
-Red de carga SUBE RMBA,"Puntos de venta de tarjetas SUBE:
-A) Detalle de puntos de venta, ubicación geográfica.
-B) Detalle de puntos de recarga, ubicación geográfica.
-C) Detalle de puntos de recarga automaticos (TAS), ubicación geográfica.
-D) Detalle de puntos de acreditacion de saldo (p/carga virtual), ubicación geográfica.",Trimestral,2º semestre de 2016,Transporte,Transporte
-"Trenes
-Transporte de pasajeros",Detalle pasajeros por línea / ramal,Mensual,1º semestre de 2017,Transporte,Transporte
-"Trenes
-Transporte de pasajeros",Detalle estaciones,Eventual,1º semestre de 2017,Transporte,Transporte
+Red de carga SUBE RMBA,"Puntos de venta de tarjetas SUBE: A) Detalle de puntos de venta, ubicación geográfica. B) Detalle de puntos de recarga, ubicación geográfica. C) Detalle de puntos de recarga automaticos (TAS), ubicación geográfica. D) Detalle de puntos de acreditacion de saldo (p/carga virtual), ubicación geográfica.",Trimestral,2º semestre de 2016,Transporte,Transporte
+Trenes Transporte de pasajeros,Detalle pasajeros por línea / ramal,Mensual,1º semestre de 2017,Transporte,Transporte
+Trenes Transporte de pasajeros,Detalle estaciones,Eventual,1º semestre de 2017,Transporte,Transporte
 Puerto Buenos Aires,Cantidad de pasajeros (entrada - salida),Mensual,1º semestre de 2017,Transporte,Transporte
 Aeropuertos,Detalle aeropuertos,Eventual,1º semestre de 2017,Transporte,Transporte
-Aportes,"Detalle de aportes al transporte público de pasajeros por medio:
-A) Colectivos
-(Corta y larga distancia) B) Trenes
-(Concesionados / Estado)",Mensual,1º semestre de 2017,Transporte,Transporte
-"S.I.S.T.A.U.
-Sistema Integrado de Transporte
-Automotor",Subsidios Colectivos,Mensual,1º semestre de 2017,Transporte,Transporte
+Aportes,Detalle de aportes al transporte público de pasajeros por medio: A) Colectivos (Corta y larga distancia) B) Trenes (Concesionados / Estado),Mensual,1º semestre de 2017,Transporte,Transporte
+S.I.S.T.A.U. Sistema Integrado de Transporte Automotor,Subsidios Colectivos,Mensual,1º semestre de 2017,Transporte,Transporte
 Servicio Móvil Marítimo y Aeronáutico,Listado de embarcaciones autorizadas,Semanal,2º semestre de 2016,Comunicaciones,Comunicaciones
 Licencias de radiodifusión,Listado de licencias de radiodifusión,Semanal,2º semestre de 2016,Comunicaciones,Comunicaciones
 Radioaficionados,Listado de radioaficionados autorizados,Semanal,2º semestre de 2016,Comunicaciones,Comunicaciones
@@ -334,15 +293,57 @@ Estaciones repetidoras,Listado de estaciones repetidoras,Semanal,1º semestre de
 Señales distintivas,Listado de señales distintivas,Semanal,1º semestre de 2017,Comunicaciones,Comunicaciones
 Numeración geográfica y no geográficas,"Numeración asociada a una zona geográfica en particular, y aquellas cuyo destino puede estar en cualquier parte del territorio nacional",Mensual,1º semestre de 2017,Comunicaciones,Comunicaciones
 Reclamos de Usuarios,"Información georeferenciada de los reclamos por usuarios, prestadoras y tipos de servicios",Mensual,2º semestre de 2017,Comunicaciones,Comunicaciones
-Radiaciones  No Ionizantes (RNI),"Información sobre las mediciones realizadas sobre radiaciones electromagnéticas de los diversos servicios y sistemas
-de comunicaciones radioeléctricos.",Mensual,2º semestre de 2017,Comunicaciones,Comunicaciones
+Radiaciones No Ionizantes (RNI),Información sobre las mediciones realizadas sobre radiaciones electromagnéticas de los diversos servicios y sistemas de comunicaciones radioeléctricos.,Mensual,2º semestre de 2017,Comunicaciones,Comunicaciones
 Solicitudes de Acceso a la Información,Registro de solicitudes efectuadas en el marco de la normativa de acceso a la informacion,Semestral,2º semestre de 2016,Interior,Interior
 Audiencias de Gestión de Intereses,Registro de audiencias efectuadas en el marco del decreto 1172/2003,Eventual,2º semestre de 2016,Interior,Interior
 Base de datos Hidrologica Integrada,"Base de datos diferenciado por red hidrologica, cuenca, rio, parametros y/o Provincia",Semestral,1º semestre de 2017,Interior,Interior
-Datos de Municipios,"Información sobre autoridades, ubicacion geografica, datos institucionales y contacto",Eventual,1º semestre de 2017,Interior,Interior
-Datos e información Electoral,"Resultados historicos de Elecciones Nacionales: Cantidad de electores, votos válidos, en blanco y nulos de todos los distritos.",Anual,2º semestre de 2016,Interior,Interior
-Sistema de Información Geográfica,Sistema de Información Geográfica desarrollado por la Subsecretaría de Planificación Territorial del Ministerio del Interior,Semestral,1º semestre de 2017,Interior,Interior
-Plan Estrategico Territorial,Descripción de los planes comprendidos en el PET,Eventual,1º semestre de 2017,Interior,Interior
-Atlas de indicadores de desarrollo territoriales,Visualización de fenómenos y procesos de desarrollo que caracterizan al territorio argentino,Eventual,1º semestre de 2017,Interior,Interior
-Sistema de Identificación y Ponderación de Proyectos Estrategicos,Datos sobre proyectos y planes del SIPPE,Eventual,1º semestre de 2017,Interior,Interior
-Estadisticas MIgratorias,Información sobre movimientos migratorios en el Pais,Semestral,1º semestre de 2017,Interior,Interior
+Datos de Municipios,"Información sobre autoridades, ubicacion geografica, datos institucionales y contacto",Eventual,1º semestre de 2017,Defensa,Defensa
+Datos e información Electoral,"Resultados historicos de Elecciones Nacionales: Cantidad de electores, votos válidos, en blanco y nulos de todos los distritos.",Anual,2º semestre de 2016,Defensa,Defensa
+Sistema de Información Geográfica,Sistema de Información Geográfica desarrollado por la Subsecretaría de Planificación Territorial del Ministerio del Interior,Semestral,1º semestre de 2017,Defensa,Defensa
+Plan Estrategico Territorial,Descripción de los planes comprendidos en el PET,Eventual,1º semestre de 2017,Defensa,Defensa
+Atlas de indicadores de desarrollo territoriales,Visualización de fenómenos y procesos de desarrollo que caracterizan al territorio argentino,Eventual,1º semestre de 2017,Defensa,Defensa
+Sistema de Identificación y Ponderación de Proyectos Estrategicos,Datos sobre proyectos y planes del SIPPE,Eventual,1º semestre de 2017,Defensa,Defensa
+Estadisticas MIgratorias,Información sobre movimientos migratorios en el Pais,Semestral,1º semestre de 2017,Defensa,Defensa
+Inventario de Archivos Abiertos de las FFAA,Documentos digitalizados vinculados a hallazgos que nos acercan al conocimiento de nuestra historia que se encuentran en los Archivos Generales de las FF.AA.,Eventual,2º semestre de 2016,Defensa,Defensa
+Registro Público de Veteranos de Guerra de Malvinas,"Altas, Bajas y Modificaciones del Registro Público de Veteranos de Guerra de Malvinas.",Mensual,2º semestre de 2016,Defensa,Defensa
+Operaciones de Paz,Información relativa a las misiones de Paz desplegadas por el Ministerio de Defensa.,Semestral,1º semestre de 2017,Defensa,Defensa
+Agregadurias Militares,Información de los miembros destinados de las Agregadurías Militares.,Anual,1º semestre de 2017,Defensa,Defensa
+Formación,Estadístcas de los institutos de educación de todos los niveles que funcionan bajo la orbita de las FFAA.,Anual,1º semestre de 2017,Defensa,Defensa
+Apoyo a la Comunidad,Información de los apoyos a la comunidad brindados por las FFAA ante desastres naturales o sociales.,Semestral,1º semestre de 2017,Defensa,Defensa
+Información con persepectiva de genero,Información sobre la integración de las mujeres a las FF.AA. Información institucional de las políticas de genero llevadas a cabo en el ambito del MINDEF.,Anual,1º semestre de 2017,Defensa,Defensa
+Cuestión Antartica,Información de las actividades antárticas del sistema de defensa.,Anual,1º semestre de 2017,Defensa,Defensa
+Ejercicios Combinados,Información de los Ejercicios combinados realizados con las FF.AA. de otros países.,Anual,1º semestre de 2017,Defensa,Defensa
+Listado de Productos Comercializables (Fabricaciones Militares),"Unidades de Negocios, Bienes y Servicios comercializados, especificaciones técnicas",Mensual,2º semestre de 2016,Defensa,Defensa
+Fototeca departamento de Hidrografía,Catálogo de Fotografías,Mensual,1º semestre de 2017,Defensa,Defensa
+Cartas electrónicas,Catálogo de Cartas Electrónicas,Eventual,1º semestre de 2017,Defensa,Defensa
+Faros Argentinos,"Listad de Faros, nombre posición latitud-longitud",Eventual,1º semestre de 2017,Defensa,Defensa
+Balizas,"Lista de las Balizas, Nombre Posición-Latitiud-Longitud",Eventual,1º semestre de 2017,Defensa,Defensa
+Tablas de Marea,Planilla de predicciones de pleamares y bajamares,Anual,1º semestre de 2017,Defensa,Defensa
+Datos de Horarios de Marea,"Día, hora, estación, dato de marea",Diaria,1º semestre de 2017,Defensa,Defensa
+Estaciones Meteorológicas,Planilla de ubicación de las estaciones mareográficas,Anual,1º semestre de 2017,Defensa,Defensa
+Tabla de Predicción de Corrientes,Planilla de predicciones de corrientes de Marea,Anual,1º semestre de 2017,Defensa,Defensa
+Pronósticos de Marea,Planilla de Pronóstico de Marea para el Río de la Plata,Diaria,1º semestre de 2017,Defensa,Defensa
+Pronósticos de Olas,Planilla de Pronóstico de Olas para el Río de la Plata,Diaria,1º semestre de 2017,Defensa,Defensa
+Informes de Campañas,"Listado de los informes de campañas. Nombre, actividades desarrolladas, zona de trabajo, fecha.",Semestral,1º semestre de 2017,Defensa,Defensa
+Calidades de Fondo,Caracterizacion geologica del fondo marino según analisis de muestras obtenidas.,Semestral,1º semestre de 2017,Defensa,Defensa
+Datos Fisico-químicos de agua de mar,"Tabla que contiene información periódica del agua de mar. Oxígeno disuelto, nutrientes, turbidez, nivel de clorofila, contaminantes, temperatura, corrientes, mareas, olas y datos meteorológicos",Semestral,1º semestre de 2017,Defensa,Defensa
+Efemerides,Indica las horas de salida y puesta de sol y luna para cada dia del año y cada lugar.,Diaria,1º semestre de 2017,Defensa,Defensa
+Convenios firmados por el IGN,Convenios firmados desde 1980,Mensual,2º semestre de 2016,Defensa,Defensa
+Archivos de la Red Argentina de Monitoreo Satelital Permantente,Información disponible de todas las bases que integran el RAMSAC,Tiempo real,2º semestre de 2016,Defensa,Defensa
+Información del RAMSAC - NTRIP,Información sobre el posicionamiento en tiempo real,Tiempo real,2º semestre de 2016,Defensa,Defensa
+Mapa fisico y politico de la Argentina y de las Provincias,"Archivos vectoriales correspondientes a diferentes objetos geograficos tales como actividades humanas, centros poblados, coberturas del suelo, cuerpos de agua, cursos de agua, curvas de nivel, departamentos, tejidos urbanos, islas, limites politico-administrativos, provincias, puentes, puntos geograficos destacados, red vial, infraestructura rural, infraestructura de transporte, coberturas hojas escala",Eventual,2º semestre de 2016,Defensa,Defensa
+Archivos transferencia de tiempo,Información para diseminar y comparar la escala de tiempo GPS y tiempo atómico.,Eventual,2º semestre de 2016,Defensa,Defensa
+Red Argentina de Gravedad Absoluta,Gravedad de los puntos RAGA,Eventual,2º semestre de 2016,Defensa,Defensa
+Red Gravimétrica de Primer Orden (BACARA),Valores de gravedad finales que surgen de un ajuste por minimos cuadrados,Eventual,1º semestre de 2017,Defensa,Defensa
+Normas de uso de abreviaturas,Listado que normaliza las abreviaturas usadas por el IGN,Eventual,2º semestre de 2016,Defensa,Defensa
+Prónostico del Tiempo,"Pronóstico de temperatura, viento y precipitación para varias localidades del país.",Diaria,1º semestre de 2017,Defensa,Defensa
+Dato meteorológico de todas las estaciones de superficie del país (GTS),Sistema coordinado de telecomunicación global que permite conocer los datos de las estaciones meteorológicas de todo el país.,Diaria,1º semestre de 2017,Defensa,Defensa
+Registro de Temperatura,Temperaturas máximas y mínimas diarias registradas durante el último año.,Anual,1º semestre de 2017,Defensa,Defensa
+Mapa de Estaciones,"Ubicación de las estaciones meteorológicas, su código OACI, latitud y longitud",Eventual,1º semestre de 2017,Defensa,Defensa
+Datos de Radiación,Datos que se obtienen mediante la medición de la radiación solar y su interacción con la atmósfera,Eventual,2º semestre de 2016,Defensa,Defensa
+Alertas,Advertencias sobre fenómenos meteorológicos significativos que pueden poner en riesgo la vida de la población.,Eventual,2º semestre de 2016,Defensa,Defensa
+Estado del Tiempo,Último registro de las variable meterológicas medidas en la red del SMN,Tiempo real,2º semestre de 2016,Defensa,Defensa
+Imágenes Satelitales,Imagenes obtenidas a través de satelites geoestacionarios y satelites de órbita polar.,Eventual,2º semestre de 2016,Defensa,Defensa
+Imágenes de Radar,imágenes provenientes de los radares situados en diferentes provincias.,Tiempo real,2º semestre de 2016,Defensa,Defensa
+Estadística Climática Básica,"Valores medios y/o extremos a nivel mensual y anual de algúnos parámetros (temperatura máxima, media y mínima, humedad, presión al nivel del mar, heliofanía, viento, precipitación, número de días con cielo cubierto, con cielo claro y con lluvia) calculados a partir de series históricas de los períodos 2001-2010.",Anual,2º semestre de 2016,Defensa,Defensa
+Vigilancia del clima,"Mapas y gráficos integrados en distintas escalas temporales de temperatura media, máxima y mínima y frecuencia de temperaturas extremas, precipitación días con precipitación, índices de sequías, heliofanía, y anomalías de dichos parámetros.",Eventual,2º semestre de 2016,Defensa,Defensa
