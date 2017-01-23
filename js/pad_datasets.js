@@ -4,15 +4,20 @@ window.pad.variables.perPage = 10;
 
 window.pad.actions.initializeLunr = function () {
     window.pad.variables.searcher = lunr(function () {
-        this.field('denominacion', {boost: 10});
-        this.field('descripcion', {boost: 8});
-        this.field('jurisdiccion', {boost: 5});
-        this.field('fecha');
-        this.field('actualizacion');
+        this.field('denominacion_ascii', {boost: 10});
+        this.field('descripcion_ascii', {boost: 8});
+        this.field('jurisdiccion_ascii', {boost: 5});
+        this.field('fecha_ascii');
+        this.field('actualizacion_ascii');
         this.ref('id')
     });
     for (var i = 0; i < window.pad.variables.csv.length; i++) {
         var sercheable = $.extend({}, window.pad.variables.csv[i], {id: i});
+        sercheable['denominacion_ascii'] = replaceDiacritics(sercheable['denominacion']);
+        sercheable['descripcion_ascii'] = replaceDiacritics(sercheable['descripcion']);
+        sercheable['jurisdiccion_ascii'] = replaceDiacritics(sercheable['jurisdiccion']);
+        sercheable['fecha_ascii'] = replaceDiacritics(sercheable['fecha']);
+        sercheable['actualizacion_ascii'] = replaceDiacritics(sercheable['actualizacion']);
         window.pad.variables.searcher.add(sercheable);
     }
 };
@@ -21,7 +26,7 @@ window.pad.actions.searchByText = function (query) {
     query = query || window.pad.variables.query;
     var results;
     if (query.q && query.q.length > 0 && query.q[0]) {
-        var lunrResults = window.pad.variables.searcher.search(query.q[0]);
+        var lunrResults = window.pad.variables.searcher.search(replaceDiacritics(query.q[0]));
         results = [];
         for (var i = 0; i < lunrResults.length; i++) {
             var lunrResult = lunrResults[i];
