@@ -50,7 +50,7 @@ window.pad.actions.filterResults = function (results, query) {
     query = query || window.pad.variables.query;
     if (query['organismo']) {
         results = results.filter(function (dataset) {
-            return dataset['nombre_tarjeta_home'] == query['organismo']
+            return dataset['nombre_tarjeta_home'].toLowerCase() == query['organismo'][0].toLowerCase()
         })
     }
     if (query['publicacion']) {
@@ -197,7 +197,7 @@ window.pad.actions.renderFilter = function (options) {
         var entity = window.pad.variables.entities[filterName][i];
         template.find('span.text').text(entity);
         var href = $.extend(true, {}, window.pad.variables.query);
-        var selected = href[urlName] && href[urlName].indexOf(entity) > -1;
+        var selected = href[urlName] && (href[urlName].indexOf(entity) > -1 || href[urlName].indexOf(entity.toLowerCase()) > -1);
         if (selected) {
             if (href[urlName].length == 1) {
                 delete href[urlName];
