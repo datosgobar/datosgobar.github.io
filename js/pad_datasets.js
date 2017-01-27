@@ -9,6 +9,7 @@ window.pad.actions.initializeLunr = function () {
         this.field('jurisdiccion_ascii', {boost: 5});
         this.field('fecha_ascii');
         this.field('actualizacion_ascii');
+        this.field('nombre_tarjeta_home_ascii', {boost: 5});
         this.ref('id')
     });
     for (var i = 0; i < window.pad.variables.csv.length; i++) {
@@ -18,6 +19,7 @@ window.pad.actions.initializeLunr = function () {
         sercheable['jurisdiccion_ascii'] = replaceDiacritics(sercheable['jurisdiccion']);
         sercheable['fecha_ascii'] = replaceDiacritics(sercheable['fecha']);
         sercheable['actualizacion_ascii'] = replaceDiacritics(sercheable['actualizacion']);
+        sercheable['nombre_tarjeta_home_ascii'] = replaceDiacritics(sercheable['nombre_tarjeta_home']);
         window.pad.variables.searcher.add(sercheable);
     }
 };
