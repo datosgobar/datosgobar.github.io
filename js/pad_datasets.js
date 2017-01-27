@@ -199,6 +199,7 @@ window.pad.actions.renderFilter = function (options) {
         var entity = window.pad.variables.entities[filterName][i];
         template.find('span.text').text(entity);
         var href = $.extend(true, {}, window.pad.variables.query);
+        href['pagina'] = undefined;
         var selected = href[urlName] && (href[urlName].indexOf(entity) > -1 || href[urlName].indexOf(entity.toLowerCase()) > -1);
         if (selected) {
             if (href[urlName].length == 1) {
