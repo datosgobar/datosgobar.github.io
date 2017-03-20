@@ -259,16 +259,16 @@ button.btn {
     display: inline-block;
     width: 300px;
     max-width: 100%; }
-  #header a.pull-right, #header span.anchor {
+  #header a.pull-right, #header a.insite-anchor, #header span.anchor {
     line-height: 72px;
     color: #0695d6;
     display: inline-block;
     padding: 0 10px;
     font-size: 16px; }
     @media (max-width: 992px) {
-      #header a.pull-right, #header span.anchor {
+      #header a.pull-right, #header a.insite-anchor, #header span.anchor {
         font-size: 14px; } }
-    #header a.pull-right:hover, #header a.pull-right.active, #header span.anchor:hover, #header span.anchor.active {
+    #header a.pull-right:hover, #header a.pull-right.active, #header a.insite-anchor:hover, #header a.insite-anchor.active, #header span.anchor:hover, #header span.anchor.active {
       background: #0695d6;
       color: white; }
   #header i {
@@ -322,6 +322,9 @@ body.with-header {
     font-size: 40px; }
   .join-us h3 {
     padding-bottom: 30px; }
+  .join-us .card {
+    height: auto;
+    padding-bottom: 0; }
 
 .card {
   text-align: center;

@@ -19,7 +19,7 @@ $header-height: 72px;
     max-width: 100%;
   }
 
-  a.pull-right, span.anchor {
+  a.pull-right, a.insite-anchor, span.anchor {
     line-height: $header-height;
     color: $header-blue;
     display: inline-block;
