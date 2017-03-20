@@ -28,6 +28,9 @@
   .card {
       height: auto;
       padding-bottom: 0;
+      .links a {
+          margin: 0;
+      }
   }
 }
 

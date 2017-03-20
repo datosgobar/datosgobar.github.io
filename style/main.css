@@ -325,6 +325,8 @@ body.with-header {
   .join-us .card {
     height: auto;
     padding-bottom: 0; }
+    .join-us .card .links a {
+      margin: 0; }
 
 .card {
   text-align: center;
