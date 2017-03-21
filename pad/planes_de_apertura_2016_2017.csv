@@ -1,6 +1,6 @@
 denominacion,descripcion,actualizacion,fecha,jurisdiccion,nombre_tarjeta_home
 Producción de leche a nivel nacional,Millones de litros por año a nivel nacional desde 1970 - 1982 y mensual a partir de 1983 a la fecha,Mensual,2º semestre de 2016,Agroindustria,Agroindustria
-Producción de calidad de leche a nivel departamento/partido,Productividad promedio; y promedio de la producción de sólidos útiles y calidad higiénico - sanitaria según departamento/partido (lts/día y %): Enero 2013 a hoy,Mensual,2º semestre de 2016,Agroindustria,Agroindustria
+Producción y calidad de leche a nivel departamento/partido,Productividad promedio; y promedio de la producción de sólidos útiles y calidad higiénico - sanitaria según departamento/partido (lts/día y %): Enero 2013 a hoy,Mensual,2º semestre de 2016,Agroindustria,Agroindustria
 Destino de la producción de leche,Destino de la producción nacional a producto por mes (millones de litros): desde enero 1983 a la fecha,Trimestral,2º semestre de 2016,Agroindustria,Agroindustria
 Elaboración de Productos Lácteos,Elaboración de productos lácteos (miles de litros y toneladas): Enero 1989 a la fecha,Mensual,2º semestre de 2016,Agroindustria,Agroindustria
 Existencia de Productos Lácteos,Existencias lácteas por principales productos (miles de litros equivalentes): desde Enero1998 a la fecha,Mensual,2º semestre de 2016,Agroindustria,Agroindustria
@@ -304,20 +304,32 @@ Plan Estrategico Territorial,Descripción de los planes comprendidos en el PET,E
 Atlas de indicadores de desarrollo territoriales,Visualización de fenómenos y procesos de desarrollo que caracterizan al territorio argentino,Eventual,1º semestre de 2017,Interior,Interior
 Sistema de Identificación y Ponderación de Proyectos Estrategicos,Datos sobre proyectos y planes del SIPPE,Eventual,1º semestre de 2017,Interior,Interior
 Estadisticas MIgratorias,Información sobre movimientos migratorios en el Pais,Semestral,1º semestre de 2017,Interior,Interior
-Inventario de Archivos Abiertos de las FFAA,Documentos digitalizados vinculados a hallazgos que nos acercan al conocimiento de nuestra historia que se encuentran en los Archivos Generales de las FF.AA.,Eventual,2º semestre de 2016,Defensa,Defensa
-Registro Público de Veteranos de Guerra de Malvinas,"Altas, Bajas y Modificaciones del Registro Público de Veteranos de Guerra de Malvinas.",Mensual,2º semestre de 2016,Defensa,Defensa
+Archivos Abiertos de las FFAA,Documentos digitalizados vinculados a hallazgos que nos acercan al conocimiento de nuestra historia que se encuentran en los Archivos Generales de las FF.AA.,Eventual,1º semestre de 2017,Defensa,Defensa
+Registro Público de Veteranos de Guerra de Malvinas,"Altas, Bajas y Modificaciones del Registro Público de Veteranos de Guerra de Malvinas.",Mensual,1º semestre de 2017,Defensa,Defensa
 Operaciones de Paz,Información relativa a las misiones de Paz desplegadas por el Ministerio de Defensa.,Semestral,1º semestre de 2017,Defensa,Defensa
 Agregadurias Militares,Información de los miembros destinados de las Agregadurías Militares.,Anual,1º semestre de 2017,Defensa,Defensa
 Formación,Estadístcas de los institutos de educación de todos los niveles que funcionan bajo la orbita de las FFAA.,Anual,1º semestre de 2017,Defensa,Defensa
-Apoyo a la Comunidad,Información de los apoyos a la comunidad brindados por las FFAA ante desastres naturales o sociales.,Semestral,1º semestre de 2017,Defensa,Defensa
+Apoyo a la Comunidad,Información  de los apoyos a la comunidad brindados por las FFAA ante desastres naturales o sociales.,Semestral,1º semestre de 2017,Defensa,Defensa
 Información con persepectiva de genero,Información sobre la integración de las mujeres a las FF.AA. Información institucional de las políticas de genero llevadas a cabo en el ambito del MINDEF.,Anual,1º semestre de 2017,Defensa,Defensa
 Cuestión Antartica,Información de las actividades antárticas del sistema de defensa.,Anual,1º semestre de 2017,Defensa,Defensa
 Ejercicios Combinados,Información de los Ejercicios combinados realizados con las FF.AA. de otros países.,Anual,1º semestre de 2017,Defensa,Defensa
-Listado de Productos Comercializables (Fabricaciones Militares),"Unidades de Negocios, Bienes y Servicios comercializados, especificaciones técnicas",Mensual,2º semestre de 2016,Defensa,Defensa
+Convenios firmados por el IGN,Convenios firmados desde 1980,Mensual,1º semestre de 2017,Defensa,Defensa
+Archivos de la Red Argentina de Monitoreo Satelital Permantente,Información disponible de todas las bases que integran el RAMSAC,Diaria,1º semestre de 2017,Defensa,Defensa
+Información del RAMSAC - NTRIP,Información sobre el posicionamiento en tiempo real,Tiempo real,1º semestre de 2017,Defensa,Defensa
+Mapa fisico y politico de la Argentina y de las Provincias,Archivos vectoriales correspondientes a diferentes objetos geograficos tales como actividades,Eventual,1º semestre de 2017,Defensa,Defensa
+Mapas educativos,"Mapa fisico y politico de la Argentina y de las Provincias, para que los alumnos puedan completar",Eventual,1º semestre de 2017,Defensa,Defensa
+Archivos vectoriales,"Archivos vectoriales correspondientes a diferentes objetos geograficos tales como actividades humanas, centros poblados, coberturas del suelo, cuerpos de agua, cursos de agua, curvas de nivel, departamentos, tejidos urbanos, islas, limites politico-administrativos, provincias, puentes, puntos geograficos destacados, red vial, infraestructura rural, infraestructura de transporte, coberturas hojas escala",Eventual,1º semestre de 2017,Defensa,Defensa
+Publicaciones de Geodesia,Publicaciones presentadas en congresos y jornadas,Semestral,1º semestre de 2017,Defensa,Defensa
+Geoportal,"Aplicaciones para visualizar datos provenientes de los diferntes proyectos y actividades del IGN tales como cartografia, topografia, fotos areas, imagenes satelitales, modelos digitales de elevaciones geodesicas",Eventual,1º semestre de 2017,Defensa,Defensa
+Modelo digital de elevacion,Datos de elevaciones en formato de imagen,Eventual,1º semestre de 2017,Defensa,Defensa
+Archivos transferencia de tiempo,Información para diseminar y comparar la escala de tiempo GPS y tiempo atómico.,Eventual,1º semestre de 2017,Defensa,Defensa
+Red Argentina de Gravedad Absoluta,Gravedad de los puntos RAGA,Eventual,1º semestre de 2017,Defensa,Defensa
+Red Gravimétrica de Primer Orden (BACARA),Valores de gravedad finales que surgen de un ajuste por minimos cuadrados,Eventual,1º semestre de 2017,Defensa,Defensa
+Normas de uso de abreviaturas,Listado que normaliza las abreviaturas usadas por el IGN,Eventual,1º semestre de 2017,Defensa,Defensa
 Fototeca departamento de Hidrografía,Catálogo de Fotografías,Mensual,1º semestre de 2017,Defensa,Defensa
 Cartas electrónicas,Catálogo de Cartas Electrónicas,Eventual,1º semestre de 2017,Defensa,Defensa
 Faros Argentinos,"Listad de Faros, nombre posición latitud-longitud",Eventual,1º semestre de 2017,Defensa,Defensa
-Balizas,"Lista de las Balizas, Nombre Posición-Latitiud-Longitud",Eventual,1º semestre de 2017,Defensa,Defensa
+Balizas,"Lista de las Balizas, Nombre Posición-Latitiud- Longitud",Eventual,1º semestre de 2017,Defensa,Defensa
 Tablas de Marea,Planilla de predicciones de pleamares y bajamares,Anual,1º semestre de 2017,Defensa,Defensa
 Datos de Horarios de Marea,"Día, hora, estación, dato de marea",Diaria,1º semestre de 2017,Defensa,Defensa
 Estaciones Meteorológicas,Planilla de ubicación de las estaciones mareográficas,Anual,1º semestre de 2017,Defensa,Defensa
@@ -328,27 +340,33 @@ Informes de Campañas,"Listado de los informes de campañas. Nombre, actividades
 Calidades de Fondo,Caracterizacion geologica del fondo marino según analisis de muestras obtenidas.,Semestral,1º semestre de 2017,Defensa,Defensa
 Datos Fisico-químicos de agua de mar,"Tabla que contiene información periódica del agua de mar. Oxígeno disuelto, nutrientes, turbidez, nivel de clorofila, contaminantes, temperatura, corrientes, mareas, olas y datos meteorológicos",Semestral,1º semestre de 2017,Defensa,Defensa
 Efemerides,Indica las horas de salida y puesta de sol y luna para cada dia del año y cada lugar.,Diaria,1º semestre de 2017,Defensa,Defensa
-Convenios firmados por el IGN,Convenios firmados desde 1980,Mensual,2º semestre de 2016,Defensa,Defensa
-Archivos de la Red Argentina de Monitoreo Satelital Permantente,Información disponible de todas las bases que integran el RAMSAC,Tiempo real,2º semestre de 2016,Defensa,Defensa
-Información del RAMSAC - NTRIP,Información sobre el posicionamiento en tiempo real,Tiempo real,2º semestre de 2016,Defensa,Defensa
-Mapa fisico y politico de la Argentina y de las Provincias,"Archivos vectoriales correspondientes a diferentes objetos geograficos tales como actividades humanas, centros poblados, coberturas del suelo, cuerpos de agua, cursos de agua, curvas de nivel, departamentos, tejidos urbanos, islas, limites politico-administrativos, provincias, puentes, puntos geograficos destacados, red vial, infraestructura rural, infraestructura de transporte, coberturas hojas escala",Eventual,2º semestre de 2016,Defensa,Defensa
-Archivos transferencia de tiempo,Información para diseminar y comparar la escala de tiempo GPS y tiempo atómico.,Eventual,2º semestre de 2016,Defensa,Defensa
-Red Argentina de Gravedad Absoluta,Gravedad de los puntos RAGA,Eventual,2º semestre de 2016,Defensa,Defensa
-Red Gravimétrica de Primer Orden (BACARA),Valores de gravedad finales que surgen de un ajuste por minimos cuadrados,Eventual,1º semestre de 2017,Defensa,Defensa
-Normas de uso de abreviaturas,Listado que normaliza las abreviaturas usadas por el IGN,Eventual,2º semestre de 2016,Defensa,Defensa
 Prónostico del Tiempo,"Pronóstico de temperatura, viento y precipitación para varias localidades del país.",Diaria,1º semestre de 2017,Defensa,Defensa
-Dato meteorológico de todas las estaciones de superficie del país (GTS),Sistema coordinado de telecomunicación global que permite conocer los datos de las estaciones meteorológicas de todo el país.,Diaria,1º semestre de 2017,Defensa,Defensa
+Dato meteorológico de todas las estaciones de superficie del país,Datos de las estaciones meteorológicas de todo el país.,Diaria,1º semestre de 2017,Defensa,Defensa
 Registro de Temperatura,Temperaturas máximas y mínimas diarias registradas durante el último año.,Anual,1º semestre de 2017,Defensa,Defensa
 Mapa de Estaciones,"Ubicación de las estaciones meteorológicas, su código OACI, latitud y longitud",Eventual,1º semestre de 2017,Defensa,Defensa
-Datos de Radiación,Datos que se obtienen mediante la medición de la radiación solar y su interacción con la atmósfera,Eventual,2º semestre de 2016,Defensa,Defensa
-Alertas,Advertencias sobre fenómenos meteorológicos significativos que pueden poner en riesgo la vida de la población.,Eventual,2º semestre de 2016,Defensa,Defensa
-Estado del Tiempo,Último registro de las variable meterológicas medidas en la red del SMN,Tiempo real,2º semestre de 2016,Defensa,Defensa
-Imágenes Satelitales,Imagenes obtenidas a través de satelites geoestacionarios y satelites de órbita polar.,Eventual,2º semestre de 2016,Defensa,Defensa
-Imágenes de Radar,imágenes provenientes de los radares situados en diferentes provincias.,Tiempo real,2º semestre de 2016,Defensa,Defensa
-Estadística Climática Básica,"Valores medios y/o extremos a nivel mensual y anual de algúnos parámetros (temperatura máxima, media y mínima, humedad, presión al nivel del mar, heliofanía, viento, precipitación, número de días con cielo cubierto, con cielo claro y con lluvia) calculados a partir de series históricas de los períodos 2001-2010.",Anual,2º semestre de 2016,Defensa,Defensa
-Vigilancia del clima,"Mapas y gráficos integrados en distintas escalas temporales de temperatura media, máxima y mínima y frecuencia de temperaturas extremas, precipitación días con precipitación, índices de sequías, heliofanía, y anomalías de dichos parámetros.",Eventual,2º semestre de 2016,Defensa,Defensa
+Datos de Radiación,Datos que se obtienen mediante la medición de la radiación solar y su interacción con la atmósfera,Eventual,1º semestre de 2017,Defensa,Defensa
+Alertas,Advertencias sobre fenómenos meteorológicos significativos que pueden poner en riesgo la vida de la población.,Eventual,1º semestre de 2017,Defensa,Defensa
+Estado del Tiempo,Último registro de las variable meterológicas medidas en la red del SMN,Tiempo real,1º semestre de 2017,Defensa,Defensa
 SIPA,Información relativa a los sujetos pasivos y activos que integran el sistema integrado previsional argentino,Semestral,1º semestre de 2017,Trabajo,Trabajo
 Asignacion universal por hijo,Datos relativos al alcance de la asignacion universal por hijo,Semestral,1º semestre de 2017,Trabajo,Trabajo
 Asignacion universal por embarazo,Datos relativos al alcance de la asignacion universal por embarazo,Trimestral,1º semestre de 2017,Trabajo,Trabajo
 Prestacion por desempleo,Datos relativos al alcance de la prestación por desempleo,Trimestral,1º semestre de 2017,Trabajo,Trabajo
 Otras Asignaciones familiares,Información relativa a las asignaciones de sujetos contributivos y sujetos no contribuitivos,Semestral,1º semestre de 2017,Trabajo,Trabajo
+Estadísticas Vitales (Serie 5 - DEIS),"Información sobre nacidos vivos, matrimonios, defunciones y defunciones fetales para el total del país y por jurisdicción, incluyendo
+tasas y distribuciones relativas. ",Anual,1º semestre de 2017,Salud,Salud
+Estadísticas de Consultas e Internación en Establecimientos Públicos (Serie 11 - DEIS),Egresos y consultas hospitalarias registradas en el Informe Estadístico de Internación en Establecimientos Públicos,Anual,1º semestre de 2017,Salud,Salud
+Registro Federal de Establecimientos de Salud (REFES),"Registro de establecimientos sanitarios del país del sector público y privado, con y sin internación, que se encuentran funcionando en cada una de las jurisdicciones provinciales según la reglamentación vigente en ellas.",Eventual,1º semestre de 2017,Salud,Salud
+Registro Federal de Profesionales de Salud (REFEPS),Registro oficial de Profesionales de Salud de todo el país de todas las profesiones matriculadas para el ejercicio profesional en salud,Eventual,1º semestre de 2017,Salud,Salud
+Registro Nacional de Investigaciones en Salud (RENIS),Registro oficial y federal de investigaciones en Salud,Eventual,1º semestre de 2017,Salud,Salud
+Registro Federal Farmacias (REFAR) y Registro Federal de Droguerías (REDRO),"Registro oficial de farmacias de atención al público, hospitalarias y droguerías de todo el país registrado por la autoridad jurisdiccional",Eventual,1º semestre de 2017,Salud,Salud
+Legislacion en Salud de la República Argentina (LEGISALUD),"Registro de la legislación sanitaria intenacional,nacional, provincial y municipal vinculadas a todas las temáticas sanitarias agrupadas por tipo de legilsación, jurisdicción y por temática a texto completo",Eventual,1º semestre de 2017,Salud,Salud
+Estadísticas CUS MEDICAMENTOS,"Serie histórica (sin nominalizar) de personas que recibieron medicamentos bajo prescripción del programa CUS MEDICAMENTOS por edad, sexo y provincia",Mensual,1º semestre de 2017,Salud,Salud
+Recetas CUS  MEDICAMENTOS,Serie histórica de medicamentos recetados a través del programa CUS MEDICAMENTOS por provincia,Mensual,1º semestre de 2017,Salud,Salud
+Consultas CUS MEDICAMENTOS,Serie histórica de consultas con médicos u odontólogos en CAPs que reciben botiquines CUS MEDICAMENTOS,Mensual,1º semestre de 2017,Salud,Salud
+Estadísticas Inlcuir Salud,"Distribución por provincia y por ley de otorgamiento de beneficiarios, prestaciones otorgadas, monto de transferencias",Anual,1º semestre de 2017,Salud,Salud
+Estadísticas Nacionales de VIH/Sida,"Estadísticas que surgen de las notificaciones nacionales de infecciones por VIH/Sida desglosadas por provincias. Incluye indicadores de gestión en prevención, diagnóstico y tratamiento",Anual,1º semestre de 2017,Salud,Salud
+Estadísticas SUMAR,"Estadísticas de distribución de beneficiarios, transferencias y prestaciones",Trimestral,1º semestre de 2017,Salud,Salud
+Boletín Integrado de Vigilancia,"Casos registrados de eventos bajo vigilancia (incluye Chagas, Dengue, Zika, infecciones respiratorias agudas)",Trimestral,1º semestre de 2017,Salud,Salud
+Estadística Climática Básica,"Valores medios y/o extremos a nivel mensual y anual de algúnos parámetros (temperatura máxima, media y mínima, humedad, presión al nivel del mar, heliofanía, viento, precipitación, número de días con cielo cubierto, con cielo claro y con lluvia) calculados a partir de series históricas de los períodos 2001-2010.",Anual,1º semestre de 2017,Defensa,Defensa
+Vigilancia del clima,Mapas y gráficos integrados en distintas escalas temporales.,Eventual,1º semestre de 2017,Defensa,Defensa
+Listado de Productos Comercializables,"Unidades de Negocios, Bienes y Servicios comercializados, especificaciones técnicas",Semestral,1º semestre de 2017,Defensa,Defensa
