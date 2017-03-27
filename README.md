@@ -2,7 +2,7 @@
 
 Repositorio con páginas públicas de comunicación sobre equipo y proyectos de la Dirección Nacional de Datos.
 
-## Levantar el server
+## Levantar el server
 
 El sitio está hosteado en github-pages.
 
@@ -12,6 +12,6 @@ Las hojas de estilo CSS están generadas usando SASS. Para realizar modificacion
 
 ## Contacto
 
-Te invitamos a [crearnos un issue](https://github.com/datosgobar/datosgobar.github.io/issues/new?title=Encontre un bug en el sitio) en caso de que encuentres algún bug o tengas feedback de alguna parte del sitio.
+Te invitamos a [crearnos un issue](https://github.com/datosgobar/datosgobar.github.io/issues/new?title=Encontre%20un%20bug%20en%20el%20sitio) en caso de que encuentres algún bug o tengas feedback de alguna parte del sitio.
 
 Para todo lo demás, podés mandarnos tu comentario o consulta a [datos@modernizacion.gob.ar](mailto:datos@modernizacion.gob.ar).
