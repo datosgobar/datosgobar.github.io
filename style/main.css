@@ -724,6 +724,9 @@ body.pad {
       font-size: 18px;
       font-weight: 500;
       margin: 0; }
+    .pad-results-container .pad-results .result .tag {
+      max-height: 25px;
+      margin-bottom: 5px; }
     .pad-results-container .pad-results .result .reference {
       color: #999999; }
     .pad-results-container .pad-results .result .dataset-name {
