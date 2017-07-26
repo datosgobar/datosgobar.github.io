@@ -240,18 +240,36 @@ window.pad.actions.renderResults = function () {
     var resultsContainer = $('.pad-results .results-list');
     $('.pad-results-container').removeClass('hidden');
     var exampleTemplate = $('.example-result').clone().removeClass('hidden example-result');
+    var publishedTag = '<img class="tag" src="../img/pad/pad-tag-publicado.svg">';
+    var openFormatTag = '<img class="tag" src="../img/pad/pad-tag-en-formato-abierto.svg">';
     for (var i = 0; i < window.pad.variables.paginatedResults.length; i++) {
         var result = window.pad.variables.paginatedResults[i];
+        var distributions = window.pad.actions.getDistributionsFor(result['compromiso_id']);
         var template = exampleTemplate.clone();
         template.find('.dataset-name').text(result['denominacion']);
         template.find('.dataset-description').text(result['descripcion']);
         template.find('.publication').text(result['fecha']);
         template.find('.update').text(result['actualizacion']);
         template.find('.organism').text(result['nombre_tarjeta_home']);
-        template.find('.result-org').append('<img class="tag" src="../img/pad/pad-tag-publicado.svg">');
-        template.find('.result-org').append('<img class="tag" src="../img/pad/pad-tag-en-formato-abierto.svg">');
+        var resultHasDistributions = distributions.length > 0;
+        if (resultHasDistributions) {
+            template.find('.dataset-name').wrap('<a class="dataset-link"></a>');
+            template.find('.result-org').append(publishedTag);
+            var isOpenFormat = true; // csv, json, kml, y xml.
+            if (isOpenFormat) { template.find('.result-org').append(openFormatTag); }
+            if (distributions.length == 1) {
+                var accessURL = distributions[0]['distribution_accessURL'] || distributions[0]['dataset_landingPage'];
+                template.find('.dataset-link').attr('href', accessURL);
+            }
+        }
         resultsContainer.append(template);
     }
+};
+
+window.pad.actions.getDistributionsFor = function(commitmentId) {
+    return $.grep(window.pad.variables.dist, function(dist) {
+        return dist['compromiso_id'] == commitmentId;
+    });
 };
 
 $(function () {
