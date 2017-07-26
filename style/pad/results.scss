@@ -175,8 +175,10 @@
       }
 
       .tag {
-        max-height: 25px;
+        height: 25px;
         margin-bottom: 5px;
+        max-width: 100%;
+        padding-right: 10px;
       }
 
       .reference {

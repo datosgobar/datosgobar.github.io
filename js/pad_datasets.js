@@ -248,6 +248,8 @@ window.pad.actions.renderResults = function () {
         template.find('.publication').text(result['fecha']);
         template.find('.update').text(result['actualizacion']);
         template.find('.organism').text(result['nombre_tarjeta_home']);
+        template.find('.result-org').append('<img class="tag" src="../img/pad/pad-tag-publicado.svg">');
+        template.find('.result-org').append('<img class="tag" src="../img/pad/pad-tag-en-formato-abierto.svg">');
         resultsContainer.append(template);
     }
 };
