@@ -632,6 +632,7 @@ body.pad {
 .pad-results-container .pad-filters {
   padding: 60px 0;
   background: #f5f5f5; }
+  .pad-results-container .pad-filters .status-filters hr,
   .pad-results-container .pad-filters .publication-filters hr,
   .pad-results-container .pad-filters .update-filters hr,
   .pad-results-container .pad-filters .reset-filters hr {

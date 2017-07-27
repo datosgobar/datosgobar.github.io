@@ -146,7 +146,9 @@ window.pad.actions.paginateResults = function () {
 
 window.pad.actions.collectEntities = function (datasets) {
     datasets = datasets || window.pad.variables.csv;
-    var entities = {organism: [], publication: [], update: []};
+    var entities = {organism: [], status: [], publication: [], update: []};
+    entities.status.push('Publicado');
+    entities.status.push('En formato abierto');
     for (var i = 0; i < datasets.length; i++) {
         var result = datasets[i];
         if (entities.organism.indexOf(result['nombre_tarjeta_home']) == -1) {
@@ -231,6 +233,7 @@ window.pad.actions.renderFilter = function (options) {
 window.pad.actions.renderFilters = function () {
     window.pad.variables.entities = window.pad.actions.collectEntities();
     window.pad.actions.renderFilter({filterName: 'organism', urlName: 'organismo', prependSelected: true});
+    window.pad.actions.renderFilter({filterName: 'status', urlName: 'estado', cumulative: true});
     window.pad.actions.renderFilter({filterName: 'publication', urlName: 'publicacion', cumulative: true});
     window.pad.actions.renderFilter({filterName: 'update', urlName: 'actualizacion', cumulative: true});
     $('.reset-filters').toggleClass('hidden', !location.search.length > 0)
