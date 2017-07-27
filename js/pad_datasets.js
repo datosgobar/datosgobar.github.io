@@ -255,7 +255,9 @@ window.pad.actions.renderResults = function () {
         if (resultHasDistributions) {
             template.find('.dataset-name').wrap('<a class="dataset-link"></a>');
             template.find('.result-org').append(publishedTag);
-            var isOpenFormat = true; // csv, json, kml, y xml.
+            var isOpenFormat = distributions.some(function (dist) {
+                return ['csv', 'json', 'kml', 'xml'].indexOf(dist['distribution_format']) > -1;
+            });
             if (isOpenFormat) { template.find('.result-org').append(openFormatTag); }
             if (distributions.length == 1) {
                 var accessURL = distributions[0]['distribution_accessURL'] || distributions[0]['dataset_landingPage'];
