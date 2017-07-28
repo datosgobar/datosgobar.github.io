@@ -25,12 +25,13 @@ window.pad = {
 };
 
 window.pad.actions.loadCSV = function () {
-    $.get('./pad_distribuciones.csv', {}, function (response) {
+    var promiseDistributions = $.get('./pad_distribuciones.csv', {}, function (response) {
         window.pad.variables.dist = $.csv.toObjects(response);
     });
-    return $.get('./planes_de_apertura_2016_2017.csv', {}, function (response) {
+    var promisePad = $.get('./planes_de_apertura_2016_2017.csv', {}, function (response) {
         window.pad.variables.csv = $.csv.toObjects(response);
     });
+    return $.when(promiseDistributions, promisePad);
 };
 
 window.pad.actions.searchFromTextInput = function () {

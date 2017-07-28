@@ -245,13 +245,13 @@ window.pad.actions.renderResults = function () {
     var exampleTemplate = $('.example-result').clone().removeClass('hidden example-result');
     for (var i = 0; i < window.pad.variables.paginatedResults.length; i++) {
         var result = window.pad.variables.paginatedResults[i];
-        var distributions = window.pad.actions.getDistributionsFor(result['compromiso_id']);
         var template = exampleTemplate.clone();
         template.find('.dataset-name').text(result['denominacion']);
         template.find('.dataset-description').text(result['descripcion']);
         template.find('.publication').text(result['fecha']);
         template.find('.update').text(result['actualizacion']);
         template.find('.organism').text(result['nombre_tarjeta_home']);
+        var distributions = result['distribuciones'];
         var resultHasDistributions = distributions.length > 0;
         if (resultHasDistributions) {
             template.find('.dataset-name').wrap('<a class="dataset-link" target="_blank"></a>');
@@ -269,14 +269,28 @@ window.pad.actions.renderResults = function () {
     }
 };
 
-window.pad.actions.getDistributionsFor = function(commitmentId) {
-    return $.grep(window.pad.variables.dist, function(dist) {
-        return dist['compromiso_id'] == commitmentId;
-    });
+window.pad.actions.collectDistributions = function() {
+    var commitments = {};
+    for (var i = 0; i < window.pad.variables.dist.length; i++) {
+        var distribution = window.pad.variables.dist[i];
+        if (!commitments[distribution['compromiso_id']]) {
+            commitments[distribution['compromiso_id']] = [];
+        }
+        commitments[distribution['compromiso_id']].push(distribution);
+    }
+    for (var n=0; n < window.pad.variables.csv.length; n++) {
+        var commitmentId = window.pad.variables.csv[n]['compromiso_id'];
+        if (commitments[commitmentId]) {
+            window.pad.variables.csv[n]['distribuciones'] = commitments[commitmentId];
+        } else {
+            window.pad.variables.csv[n]['distribuciones'] = [];
+        }
+    }
 };
 
 $(function () {
     window.pad.actions.loadCSV().then(function () {
+        window.pad.actions.collectDistributions();
         window.pad.actions.initializeLunr();
         window.pad.actions.parseUrlQuery();
         window.pad.variables.results = window.pad.actions.searchByText();
