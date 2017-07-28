@@ -55,6 +55,17 @@ window.pad.actions.filterResults = function (results, query) {
             return dataset['nombre_tarjeta_home'].toLowerCase() == query['organismo'][0].toLowerCase()
         })
     }
+    if (query['estado'] && query['estado'].indexOf('Publicado') > -1)  {
+        results = results.filter(function (dataset) {
+            return dataset['distribuciones'].length > 0;
+        })
+    }
+    if (query['estado'] && query['estado'].indexOf('En formato abierto') > -1) {
+        results = results.filter(function (dataset) {
+            return dataset['distribuciones'].length > 0 &&
+            window.pad.actions.isOpenFormat(dataset['distribuciones']);
+        })
+    }
     if (query['publicacion']) {
         results = results.filter(function (dataset) {
             return query['publicacion'].indexOf(dataset['fecha']) != -1
@@ -252,13 +263,10 @@ window.pad.actions.renderResults = function () {
         template.find('.update').text(result['actualizacion']);
         template.find('.organism').text(result['nombre_tarjeta_home']);
         var distributions = result['distribuciones'];
-        var resultHasDistributions = distributions.length > 0;
-        if (resultHasDistributions) {
+        if (distributions.length > 0) {
             template.find('.dataset-name').wrap('<a class="dataset-link" target="_blank"></a>');
             template.find('.tag-published').removeClass('hidden');
-            var isOpenFormat = distributions.some(function (dist) {
-                return ['csv', 'json', 'kml', 'xml'].indexOf(dist['distribution_format']) > -1;
-            });
+            var isOpenFormat = window.pad.actions.isOpenFormat(distributions);
             if (isOpenFormat) { template.find('.tag-open').removeClass('hidden'); }
             if (distributions.length == 1) {
                 var accessURL = distributions[0]['distribution_accessURL'] || distributions[0]['dataset_landingPage'];
@@ -267,6 +275,12 @@ window.pad.actions.renderResults = function () {
         }
         resultsContainer.append(template);
     }
+};
+
+window.pad.actions.isOpenFormat = function(distributions) {
+    return distributions.some(function (dist) {
+        return ['csv', 'json', 'kml', 'xml'].indexOf(dist['distribution_format']) > -1;
+    });
 };
 
 window.pad.actions.collectDistributions = function() {
@@ -290,9 +304,9 @@ window.pad.actions.collectDistributions = function() {
 
 $(function () {
     window.pad.actions.loadCSV().then(function () {
-        window.pad.actions.collectDistributions();
         window.pad.actions.initializeLunr();
         window.pad.actions.parseUrlQuery();
+        window.pad.actions.collectDistributions();
         window.pad.variables.results = window.pad.actions.searchByText();
         window.pad.variables.results = window.pad.actions.filterResults();
         window.pad.actions.renderTitle();
