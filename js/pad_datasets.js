@@ -243,8 +243,6 @@ window.pad.actions.renderResults = function () {
     var resultsContainer = $('.pad-results .results-list');
     $('.pad-results-container').removeClass('hidden');
     var exampleTemplate = $('.example-result').clone().removeClass('hidden example-result');
-    var publishedTag = '<img class="tag" src="../img/pad/pad-tag-publicado.svg">';
-    var openFormatTag = '<img class="tag" src="../img/pad/pad-tag-en-formato-abierto.svg">';
     for (var i = 0; i < window.pad.variables.paginatedResults.length; i++) {
         var result = window.pad.variables.paginatedResults[i];
         var distributions = window.pad.actions.getDistributionsFor(result['compromiso_id']);
@@ -256,12 +254,12 @@ window.pad.actions.renderResults = function () {
         template.find('.organism').text(result['nombre_tarjeta_home']);
         var resultHasDistributions = distributions.length > 0;
         if (resultHasDistributions) {
-            template.find('.dataset-name').wrap('<a class="dataset-link"></a>');
-            template.find('.result-org').append(publishedTag);
+            template.find('.dataset-name').wrap('<a class="dataset-link" target="_blank"></a>');
+            template.find('.tag-published').removeClass('hidden');
             var isOpenFormat = distributions.some(function (dist) {
                 return ['csv', 'json', 'kml', 'xml'].indexOf(dist['distribution_format']) > -1;
             });
-            if (isOpenFormat) { template.find('.result-org').append(openFormatTag); }
+            if (isOpenFormat) { template.find('.tag-open').removeClass('hidden'); }
             if (distributions.length == 1) {
                 var accessURL = distributions[0]['distribution_accessURL'] || distributions[0]['dataset_landingPage'];
                 template.find('.dataset-link').attr('href', accessURL);
