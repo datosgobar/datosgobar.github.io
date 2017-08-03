@@ -264,13 +264,24 @@ window.pad.actions.renderResults = function () {
         template.find('.organism').text(result['nombre_tarjeta_home']);
         var distributions = result['distribuciones'];
         if (distributions.length > 0) {
-            template.find('.dataset-name').wrap('<a class="dataset-link" target="_blank"></a>');
+            template.find('.dataset-name').wrap('<a href="#" class="dataset-link" target="_blank"></a>');
             template.find('.tag-published').removeClass('hidden');
             var isOpenFormat = window.pad.actions.isOpenFormat(distributions);
             if (isOpenFormat) { template.find('.tag-open').removeClass('hidden'); }
             if (distributions.length == 1) {
                 var accessURL = distributions[0]['distribution_accessURL'] || distributions[0]['dataset_landingPage'];
                 template.find('.dataset-link').attr('href', accessURL);
+            } else {
+                template.find('.dataset-link').click(function(e) {
+                    e.preventDefault();
+                    $(e.currentTarget).parents('.result').find('.links-tree').toggleClass('hidden');
+                });
+                $(distributions).each(function() {
+                    var title = '<h4>' + this['distribution_title'] + '</h4>';
+                    var href = this['distribution_accessURL'] || this['dataset_landingPage'];
+                    var link = $('<a target="_blank"></a>').html(title).attr('href', href);
+                    template.find('.links-tree').append(link);
+                });
             }
         }
         resultsContainer.append(template);
