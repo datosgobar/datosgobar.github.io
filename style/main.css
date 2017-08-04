@@ -739,6 +739,39 @@ body.pad {
     .pad-results-container .pad-results .result .dataset-description {
       font-size: 16px;
       margin: 0 0 40px 0; }
+    .pad-results-container .pad-results .result .links-tree {
+      margin-bottom: 20px; }
+    .pad-results-container .pad-results .result .links-branch {
+      padding-left: 30px;
+      padding-bottom: 10px;
+      position: relative;
+      margin-bottom: 1px; }
+    .pad-results-container .pad-results .result .links-branch h4 {
+      margin: 0;
+      padding-left: 2px; }
+    .pad-results-container .pad-results .result .links-branch:before {
+      content: '';
+      position: absolute;
+      top: 0.7em;
+      left: 15px;
+      width: 15px;
+      border-bottom: dashed 1px #0695C7; }
+    .pad-results-container .pad-results .result .links-branch:after {
+      content: '';
+      position: absolute;
+      left: 15px;
+      top: 0;
+      height: 100%;
+      border-left: dashed 1px #0695C7; }
+    .pad-results-container .pad-results .result .links-branch:first-child:after {
+      content: '';
+      position: absolute;
+      left: 15px;
+      top: -25%;
+      height: 125%;
+      border-left: dashed 1px #0695C7; }
+    .pad-results-container .pad-results .result .links-branch:last-child:after {
+      height: 0.7em; }
     .pad-results-container .pad-results .result .publication-container,
     .pad-results-container .pad-results .result .update-container {
       position: relative;

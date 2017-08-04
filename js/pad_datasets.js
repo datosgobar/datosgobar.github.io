@@ -274,13 +274,16 @@ window.pad.actions.renderResults = function () {
             } else {
                 template.find('.dataset-link').click(function(e) {
                     e.preventDefault();
-                    $(e.currentTarget).parents('.result').find('.links-tree').toggleClass('hidden');
+                    var card = $(e.currentTarget).parents('.result');
+                    card.find('.links-tree').toggleClass('hidden');
+                    card.find('.dataset-description').css('margin-bottom', '15px');
                 });
                 $(distributions).each(function() {
                     var title = '<h4>' + this['distribution_title'] + '</h4>';
                     var href = this['distribution_accessURL'] || this['dataset_landingPage'];
                     var link = $('<a target="_blank"></a>').html(title).attr('href', href);
-                    template.find('.links-tree').append(link);
+                    var div = $('<div class="links-branch"></div>').html(link);
+                    template.find('.links-tree').append(div);
                 });
             }
         }
