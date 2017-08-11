@@ -218,7 +218,7 @@
           top: 0.7em;
           left: 15px;
           width: 15px;
-          border-bottom: dashed 1px #0695C7;
+          border-bottom: dashed 1px $pad-blue;
         }
 
         .links-branch:after {
@@ -227,7 +227,7 @@
           left: 15px;
           top: 0;
           height: 100%;
-          border-left: dashed 1px #0695C7;
+          border-left: dashed 1px $pad-blue;
         }
 
         .links-branch:first-child:after {
@@ -236,7 +236,7 @@
           left: 15px;
           top: -25%;
           height: 125%;
-          border-left: dashed 1px #0695C7;
+          border-left: dashed 1px $pad-blue;
         }
 
         .links-branch:last-child:after {
