@@ -250,7 +250,7 @@ button.btn {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 2;
+  z-index: 3;
   font-weight: 500;
   background: white;
   overflow: hidden; }
@@ -738,9 +738,22 @@ body.pad {
       margin: 0 0 10px 0; }
     .pad-results-container .pad-results .result .dataset-description {
       font-size: 16px;
-      margin: 0 0 40px 0; }
+      margin: 0 0 40px 0;
+      position: relative;
+      z-index: 2;
+      background: white; }
     .pad-results-container .pad-results .result .links-tree {
-      margin-bottom: 20px; }
+      margin-bottom: 20px;
+      -o-transition: opacity 500ms linear, max-height 500ms ease-in-out;
+      -moz-transition: opacity 500ms linear, max-height 500ms ease-in-out;
+      -webkit-transition: opacity 500ms linear, max-height 500ms ease-in-out;
+      transition: opacity 500ms linear, max-height 500ms ease-in-out;
+      opacity: 0;
+      max-height: 0;
+      overflow: hidden; }
+      .pad-results-container .pad-results .result .links-tree.fade {
+        opacity: 1;
+        max-height: 1000px; }
     .pad-results-container .pad-results .result .links-branch {
       padding-left: 30px;
       padding-bottom: 10px;

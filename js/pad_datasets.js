@@ -275,7 +275,7 @@ window.pad.actions.renderResults = function () {
                 template.find('.dataset-link').click(function(e) {
                     e.preventDefault();
                     var card = $(e.currentTarget).parents('.result');
-                    card.find('.links-tree').toggleClass('hidden');
+                    card.find('.links-tree').toggleClass('fade');
                     card.find('.dataset-description').css('margin-bottom', '15px');
                 });
                 $(distributions).each(function() {

@@ -195,10 +195,25 @@
       .dataset-description {
         font-size: 16px;
         margin: 0 0 40px 0;
+        position: relative;
+        z-index: 2;
+        background: white;
       }
 
       .links-tree {
         margin-bottom: 20px;
+        -o-transition: opacity 500ms linear, max-height 500ms ease-in-out; 
+        -moz-transition: opacity 500ms linear, max-height 500ms ease-in-out; 
+        -webkit-transition: opacity 500ms linear, max-height 500ms ease-in-out; 
+        transition: opacity 500ms linear, max-height 500ms ease-in-out; 
+        opacity: 0;
+        max-height: 0;
+        overflow: hidden;
+
+        &.fade {
+          opacity: 1;
+          max-height: 1000px;
+        }
       }
 
       .links-branch {
