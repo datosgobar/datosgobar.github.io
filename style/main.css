@@ -744,10 +744,10 @@ body.pad {
       background: white; }
     .pad-results-container .pad-results .result .links-tree {
       margin-bottom: 20px;
-      -o-transition: opacity 500ms linear, max-height 500ms ease-in-out;
-      -moz-transition: opacity 500ms linear, max-height 500ms ease-in-out;
-      -webkit-transition: opacity 500ms linear, max-height 500ms ease-in-out;
-      transition: opacity 500ms linear, max-height 500ms ease-in-out;
+      -o-transition: opacity 500ms ease-in-out, max-height 500ms ease-in-out;
+      -moz-transition: opacity 500ms ease-in-out, max-height 500ms ease-in-out;
+      -webkit-transition: opacity 500ms ease-in-out, max-height 500ms ease-in-out;
+      transition: opacity 500ms ease-in-out, max-height 500ms ease-in-out;
       opacity: 0;
       max-height: 0;
       overflow: hidden; }
