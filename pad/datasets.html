@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j
+            ,f);
+    })(window,document,'script','dataLayer','GTM-PK7DG3');</script>
+    <!-- End Google Tag Manager -->
+
+    <meta charset="UTF-8">
+    <title>Plan de Apertura de Datos de la Nación Argentina</title>
+    <meta name="description" content="" />
+
+    <meta property="og:url" content="https://datosgobar.github.io/pad/datasets.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Plan de Apertura de Datos de la Nación Argentina">
+    <meta property="og:site_name" content="Plan de Apertura de Datos de la Nación Argentina">
+    <meta property="og:description" content="Conocé los Planes de Apertura de Datos presentados por las jurisdicciones del Poder Ejecutivo Nacional en cumplimiento del decreto 117/2016.">
+    <meta property="og:image" content="https://datosgobar.github.io/img/pad/PAD-metatag-fb.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="2400">
+    <meta property="og:image:height" content="1260">
+    <meta property="og:locale" content="es_AR">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@datosgobar"/>
+    <meta name="twitter:title" content="Plan de Apertura de Datos de la Nación Argentina">
+    <meta name="twitter:description" content="Conocé los Planes de Apertura de Datos presentados por las jurisdicciones del Poder Ejecutivo Nacional en cumplimiento del decreto 117/2016">
+    <meta name="twitter:image:src" content="https://datosgobar.github.io/img/pad/PAD-metatag-tw.png">
+
+    <link rel="shortcut icon" href="/img/favicon.ico" type="image/vnd.microsoft.icon">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" integrity="sha256-t2/7smZfgrST4FS1DT0bs/KotCM74XlcqZN5Vu7xlrw=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="../style/main.css?v2" type="text/css">
+
+    <script src="../js/augment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="../js/lunr.min.js"></script>
+    <script src="../js/jquery.csv.min.js"></script>
+    <script src="../js/replace-diacritics.js"></script>
+    <script src="../js/pad.js"></script>
+    <script src="../js/pad_datasets.js"></script>
+
+</head>
+<body class="pad with-header">
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-PK7DG3"
+        height="0" width="0"
+        style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<div id="header">
+    <div id="header-content" class="container no-padding">
+        <a href="/pad/">
+            <img src="../img/logo_ministerio.svg" class="header-logo">
+        </a>
+
+        <a href="https://medium.com/datos-argentina" target="_blank" class="pull-right">
+            <i class="fa fa-medium fa-2x" aria-hidden="true"></i>
+        </a><a href="https://github.com/datosgobar" target="_blank" class="pull-right">
+        <i class="fa fa-github-alt fa-2x" aria-hidden="true"></i>
+    </a><a href="https://twitter.com/datosgobar" target="_blank" class="pull-right">
+        <i class="fa fa-twitter fa-2x" aria-hidden="true"></i>
+    </a><a href="https://www.facebook.com/GobAbiertoAR/" target="_blank" class="pull-right">
+        <i class="fa fa-facebook fa-2x" aria-hidden="true"></i>
+    </a><a href="http://datos.gob.ar/" target="_blank" class="pull-right">
+        DATOS.GOB.AR
+    </a>
+    </div>
+</div>
+
+<div class="pad-title-container">
+    <div class="title-background no-padding">
+        <div class="container">
+            <div class="breadcrum">
+                <a href="./">
+                    Planes de Apertura de Datos
+                </a>
+                <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                Resultados
+            </div>
+            <h2></h2>
+            <div class="search-container">
+                <input type="text" class="search" value="" autocomplete="off" placeholder="¿Qué plan o conjunto de datos buscás?" id="pad-search-input">
+                <button>
+                    <img src="/img/search.svg" class="search-icon">
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="pad-results-container hidden">
+    <div class="container no-padding">
+        <div class="pad-filters col-xs-4">
+            <div class="organism-filters">
+                <div class="filter-title">
+                    Organismo responsable
+                </div>
+                <div class="filter-list">
+                    <a class="filter filter-example hidden">
+                        <div class="filter-text">
+                            <span class="text"></span>
+                            <img src="../img/close-filter.svg" class="close-filter">
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="publication-filters">
+                <div class="filter-title">
+                    <hr>
+                    Fecha estimada de publicación
+                </div>
+                <div class="filter-list">
+                    <a class="filter checkbox-filter filter-example hidden">
+                        <div class="filter-text">
+                            <span class="fa-checkbox"><i class="fa fa-check" aria-hidden="true"></i></span>
+                            <span class="text"></span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="update-filters">
+                <div class="filter-title">
+                    <hr>
+                    Frecuencia de actualización
+                </div>
+                <div class="filter-list">
+                    <a class="filter checkbox-filter filter-example hidden">
+                        <div class="filter-text">
+                            <span class="fa-checkbox"><i class="fa fa-check" aria-hidden="true"></i></span>
+                            <span class="text"></span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="reset-filters">
+                <div class="filter-title">
+                    <hr>
+                    <a href="?">
+                        <button class="reset-filter">BORRAR FILTROS</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="pad-results col-xs-8">
+            <div class="results-list col-xs-12 no-padding">
+                <div class="result col-xs-12 example-result hidden">
+                    <div class="col-xs-4 no-padding">
+                        <p class="organism"></p>
+                        <p class="reference">ORGANISMO RESPONSABLE</p>
+                    </div>
+                    <div class="col-xs-8 no-padding">
+                        <div class="col-xs-12 no-padding">
+                            <h3 class="dataset-name"></h3>
+                            <p class="dataset-description"></p>
+                        </div>
+                        <div class="col-xs-6 no-padding publication-container">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                            <p class="publication"></p>
+                            <p class="reference">FECHA ESTIMADA DE PUBLICACIÓN</p>
+                        </div>
+                        <div class="col-xs-6 no-padding update-container">
+                            <i class="fa fa-align-center fa-rotate-270" aria-hidden="true"></i>
+                            <p class="update"></p>
+                            <p class="reference">FRECUENCIA DE ACTUALIZACIÓN</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="results-pagination col-xs-12 no-padding">
+                <a class="pagination-example hidden">
+                    <span class="pagination-link"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="pad-no-results-container hidden">
+    <div class="container">
+        <img src="../img/pad/pad-elementos-error-01.svg">
+    </div>
+</div>
+
+<div class="pad-download results-download">
+    <div class="container">
+        <h3>
+            ¡Aprovechá y descargá todos los Planes de Apertura!
+            <a href="http://datos.gob.ar/dataset/43c2e6ae-f0a7-4688-b5aa-2aa6f4811a9c/resource/e4b01622-dd69-4153-9b5b-0cd72c773d7d/download/planes-apertura-2016-2017.csv" target="_blank">
+                <button>DESCARGAR PLANES</button>
+            </a>
+        </h3>
+    </div>
+</div>
+
+<div class="pad-footer">
+    <div class="no-padding container">
+        <div class="no-padding pad-footer-inst col-xs-12">
+            <div class="social-links">
+                <a href="https://www.facebook.com/GobAbiertoAR/" target="_blank">
+                    <i class="fa fa-facebook" aria-hidden="true"></i>
+                </a>
+
+                <a href="https://twitter.com/datosgobar" target="_blank">
+                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+
+                <a href="https://github.com/datosgobar" target="_blank">
+                    <i class="fa fa-github-alt" aria-hidden="true"></i>
+                </a>
+
+                <a href="https://medium.com/datos-argentina" target="_blank">
+                    <i class="fa fa-medium" aria-hidden="true"></i>
+                </a>
+            </div>
+
+        </div>
+
+        <div class="no-padding col-xs-12">
+            <div class="no-padding col-xs-12 col-sm-6">
+                <a href="https://www.argentina.gob.ar/modernizacion" target="_blank">
+                    <img src="../img/logo_ministerio.svg" class="pad-footer-logo">
+                </a>
+            </div>
+            <div class="no-padding pad-footer-contact col-xs-12 col-sm-6">
+                <p>
+                    ¿Tenés dudas?
+                    <br>
+                    <a href="mailto:datos@modernizacion.gob.ar">
+                        ¡Escribinos!
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
