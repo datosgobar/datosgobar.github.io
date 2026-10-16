@@ -173,7 +173,7 @@
         {
           "titulo": "Perfil Nacional de Metadatos",
           "descripcion": "Los campos que describen cada dataset: temas, frecuencia de actualización, cobertura y más.",
-          "url": "https://datos.gob.ar/dataset/cartera-de-proyectos-mineros-en-argentina-del-siacam",
+          "url": "https://datosgobar.github.io/paquete-apertura-datos/perfil-metadatos/",
           "repo": "https://github.com/datosgobar/ckanext-scheming-gobar",
           "publico": [
             "portal",
