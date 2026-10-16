@@ -201,7 +201,7 @@
     },
     {
       "titulo": "Contribuí código",
-      "descripcion": "Todo el código es abierto. Cada repositorio explica cómo proponer cambios.",
+      "descripcion": "Todos los repositorios de la Dirección son de código abierto, proponé tus cambios o mejoras.",
       "accion": "Ir a GitHub",
       "url": "https://github.com/datosgobar",
       "icono": "github"
