@@ -32,11 +32,6 @@ const accesos = [
       </div>
     </header>
     <main><slot /></main>
-    <footer class="pie">
-      <div class="interior">
-        <p>Dirección de Datos Abiertos. El código de cada recurso es abierto y está en <a href="https://github.com/datosgobar">GitHub</a>.</p>
-      </div>
-    </footer>
   </body>
 </html>
 
@@ -50,9 +45,6 @@ const accesos = [
   nav { display: flex; gap: 1.5rem; margin-left: auto; overflow-x: auto; }
   nav a { color: #fff; opacity: .85; font-weight: 600; font-size: .925rem; text-decoration: none; white-space: nowrap; padding-block: .5rem; }
   nav a:hover { opacity: 1; text-decoration: underline; text-underline-offset: 3px; }
-  .pie { background: var(--gris-fondo); margin-top: 0; padding-block: 2.5rem; font-size: .925rem; color: var(--texto-2); }
-  .pie .interior { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; }
-  .pie p { margin: 0; }
   /* En pantallas angostas la navegación pasa a su propia fila y se desliza de costado. */
   @media (max-width: 50rem) {
     .cabecera .interior { flex-wrap: wrap; gap: 0 1rem; padding-block: .5rem; }
