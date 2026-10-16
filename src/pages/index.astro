@@ -31,7 +31,7 @@ const filtros = [
       <ul class="tarjetas">
         {s.recursos.map((r) => (
           <li class="tarjeta" data-publico={(r.publico ?? []).join(' ')}>
-            {r.logo && <span class:list={['logo', r.logoFondo]}><img src={r.logo} alt="" /></span>}
+            {r.logo && <span class="logo"><img src={r.logo} alt="" /></span>}
             <h3><a href={r.url}>{r.titulo}</a></h3>
             <p>{r.descripcion}</p>
             {(r.etiquetas || r.repo) && (
@@ -119,7 +119,6 @@ const filtros = [
   /* Logo oficial del producto, sin recortar ni recolorear. */
   .logo { display: flex; align-items: center; height: 3.25rem; margin-bottom: .5rem; }
   .logo img { height: 100%; width: auto; max-width: 12rem; object-fit: contain; }
-  .logo.navy { background: var(--navy); border-radius: 4px; padding: .7rem .9rem; align-self: flex-start; }
   .tarjeta h3 { font-size: 1.05rem; line-height: 1.3; }
   .tarjeta h3 a { color: var(--navy); text-decoration: none; }
   .tarjeta h3 a:focus-visible { outline: none; }

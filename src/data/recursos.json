@@ -100,9 +100,9 @@
             "usar"
           ],
           "etiquetas": [
+            "Georef",
             "En el navegador"
-          ],
-          "logo": "/logos/georef-color.png"
+          ]
         },
         {
           "titulo": "pygeorefar",
@@ -113,9 +113,9 @@
             "usar"
           ],
           "etiquetas": [
+            "Georef",
             "Python"
-          ],
-          "logo": "/logos/georef-color.png"
+          ]
         },
         {
           "titulo": "georefar",
@@ -125,9 +125,9 @@
             "usar"
           ],
           "etiquetas": [
+            "Georef",
             "R"
-          ],
-          "logo": "/logos/georef-color.png"
+          ]
         },
         {
           "titulo": "Georef para QGIS",
@@ -137,9 +137,9 @@
             "usar"
           ],
           "etiquetas": [
+            "Georef",
             "QGIS"
-          ],
-          "logo": "/logos/georef-color.png"
+          ]
         }
       ]
     },
@@ -150,15 +150,14 @@
       "tipo": "andino",
       "recursos": [
         {
-          "titulo": "datos.gob.ar",
-          "descripcion": "El portal nacional de datos abiertos, funcionando sobre Portal Andino V2.",
+          "titulo": "Portal Nacional de Datos Públicos",
+          "descripcion": "Funciona sobre Portal Andino V2: todo lo que trae la plataforma, en uso.",
           "url": "https://datos.gob.ar/",
           "repo": "https://github.com/datosgobar/portal-andino-v2",
           "publico": [
             "portal"
           ],
-          "logo": "/logos/datos-gob-ar-blanco.png",
-          "logoFondo": "navy"
+          "logo": "/logos/datos-gob-ar-color.png"
         },
         {
           "titulo": "Buscador de series",
