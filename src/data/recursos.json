@@ -131,15 +131,16 @@
         },
         {
           "titulo": "Georef para QGIS",
-          "descripcion": "Capas de Georef listas para analizar en QGIS.",
-          "url": "https://www.argentina.gob.ar/georef",
+          "descripcion": "Plugin para cargar provincias, departamentos, localidades y asentamientos de Georef como capas en QGIS.",
+          "url": "https://plugins.qgis.org/plugins/georef_ar_qgis_plugin_master/",
           "publico": [
             "usar"
           ],
           "etiquetas": [
             "Georef",
             "QGIS"
-          ]
+          ],
+          "repo": "https://github.com/datosgobar/georef-ar-qgis-plugin"
         }
       ]
     },
