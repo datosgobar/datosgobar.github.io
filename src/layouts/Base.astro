@@ -3,7 +3,7 @@ import { secciones } from '../data/recursos.json';
 const { titulo, descripcion } = Astro.props;
 // Mismos accesos que la franja del hub en los sitios de documentación.
 const accesos = [
-  ...secciones.map((s) => ({ texto: s.titulo === 'Documentación de APIs' ? 'APIs' : s.titulo, href: `/#${s.id}` })),
+  ...secciones.map((s) => ({ texto: { 'Guías y manuales': 'Guías', 'Documentación de APIs': 'APIs' }[s.titulo] ?? s.titulo, href: `/#${s.id}` })),
   { texto: 'Comunidad', href: '/#comunidad' },
 ];
 ---

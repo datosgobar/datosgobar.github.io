@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Icono from '../components/Icono.astro';
-import { secciones, comunidad, contacto, novedades } from '../data/recursos.json';
+import { secciones, comunidad, contacto } from '../data/recursos.json';
 
 const grupos = secciones;
 const filtros = [
@@ -10,7 +10,6 @@ const filtros = [
   { id: 'publicar', texto: 'Publicar datos' },
   { id: 'portal', texto: 'Tener un portal' },
 ];
-const fecha = (iso) => new Date(`${iso}T12:00:00`).toLocaleDateString('es-AR', { day: 'numeric', month: 'long', year: 'numeric' });
 ---
 <Base titulo="Datos Abiertos Hub" descripcion="Guías, documentación de APIs y herramientas para abrir y usar datos públicos del Estado argentino.">
   <div class="intro interior">
@@ -63,14 +62,6 @@ const fecha = (iso) => new Date(`${iso}T12:00:00`).toLocaleDateString('es-AR', {
             </li>
           ))}
         </ul>
-      </div>
-      <div class="novedades">
-        <h2>Novedades</h2>
-        <ol>
-          {novedades.map((n) => (
-            <li><time datetime={n.fecha}>{fecha(n.fecha)}</time><a href={n.url}>{n.texto}</a></li>
-          ))}
-        </ol>
       </div>
     </div>
   </section>
@@ -144,7 +135,6 @@ const fecha = (iso) => new Date(`${iso}T12:00:00`).toLocaleDateString('es-AR', {
 
   /* Fondo claro: la banda oscura se confundía con el pie de página. */
   .comunidad { background: var(--lavanda); border-block: 1px solid var(--borde); margin-top: 4.5rem; padding-block: 3.5rem; }
-  .comunidad .interior { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 3rem; }
   .correo { user-select: all; color: var(--navy); }
   .vias { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: 1rem; }
   .vias li { display: grid; gap: .4rem; align-content: start; background: #fff; border: 1px solid var(--borde); border-radius: 6px; padding: 1.25rem; }
@@ -152,14 +142,6 @@ const fecha = (iso) => new Date(`${iso}T12:00:00`).toLocaleDateString('es-AR', {
   .vias h3 { font-size: 1.05rem; }
   .vias p { margin: 0; font-size: .9rem; }
   .vias a { font-weight: 700; }
-  .novedades ol { list-style: none; margin: 1rem 0 0; padding: 0; display: grid; gap: 1.1rem; }
-  .novedades li { display: grid; gap: .1rem; border-left: 3px solid var(--violeta); padding-left: 1rem; }
-  .novedades time { font-size: .8rem; font-weight: 700; color: var(--texto-2); }
-  .novedades a { color: var(--navy); font-weight: 600; font-size: .95rem; text-decoration: none; }
-  .novedades a:hover { text-decoration: underline; }
 
 
-  @media (max-width: 50rem) {
-    .comunidad .interior { grid-template-columns: 1fr; }
-  }
 </style>

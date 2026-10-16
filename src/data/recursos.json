@@ -2,7 +2,7 @@
   "secciones": [
     {
       "id": "guias",
-      "titulo": "Guías",
+      "titulo": "Guías y manuales",
       "bajada": "Para leer de principio a fin, paso a paso.",
       "tipo": "guia",
       "recursos": [
@@ -20,7 +20,7 @@
           "logo": "/logos/paquete-apertura-color.png"
         },
         {
-          "titulo": "Instalar Portal Andino",
+          "titulo": "Guía de Instalación",
           "descripcion": "Para que un organismo nacional, provincial o municipal instale y mantenga su propio portal de datos.",
           "url": "https://datosgobar.github.io/guias-andino/",
           "repo": "https://github.com/datosgobar/guias-andino",
@@ -34,7 +34,7 @@
           "logo": "/logos/andino-color.png"
         },
         {
-          "titulo": "Usar Portal Andino",
+          "titulo": "Guía de Usuario",
           "descripcion": "Cómo publicar, actualizar y organizar datasets una vez que el portal está funcionando.",
           "url": "https://datosgobar.github.io/guias-andino/uso/",
           "repo": "https://github.com/datosgobar/guias-andino",
@@ -209,23 +209,6 @@
     }
   ],
   "contacto": "datosargentina@jefatura.gob.ar",
-  "novedades": [
-    {
-      "fecha": "2026-09-25",
-      "texto": "El Explorador de Georef pasa a la identidad de Datos Abiertos y se corrigen el mapa y la vista en celulares.",
-      "url": "https://datosgobar.github.io/georef-ux/"
-    },
-    {
-      "fecha": "2026-09-23",
-      "texto": "Se publican las guías de instalación y de uso de Portal Andino V2.",
-      "url": "https://datosgobar.github.io/guias-andino/"
-    },
-    {
-      "fecha": "2026-09-17",
-      "texto": "El catálogo de usos suma un formulario para cargar desarrollos nuevos.",
-      "url": "https://alencarbajal.github.io/catalogo-reutilizadores-datos-abiertos/"
-    }
-  ],
   "lab": {
     "id": "vidriera",
     "titulo": "Lab",
