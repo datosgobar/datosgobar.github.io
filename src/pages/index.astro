@@ -36,7 +36,7 @@ const filtros = [
             <p>{r.descripcion}</p>
             {(r.etiquetas || r.repo) && (
               <div class="meta">
-                {r.etiquetas?.map((e) => <span>{e}</span>)}
+                {r.etiquetas && <div class="etiquetas">{r.etiquetas.map((e) => <span>{e}</span>)}</div>}
                 {r.repo && <a class="github" href={r.repo}><Icono nombre="github" />Código en GitHub</a>}
               </div>
             )}
@@ -125,9 +125,12 @@ const filtros = [
   /* Toda la tarjeta es clickeable; el foco y el lector de pantalla siguen en el título. */
   .tarjeta h3 a::after { content: ""; position: absolute; inset: 0; }
   .tarjeta p { margin: 0; font-size: .925rem; }
-  .meta { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; margin-top: auto; padding-top: .6rem; font-size: .8rem; }
-  .meta span { background: var(--gris-fondo); padding: .15rem .5rem; border-radius: 3px; font-weight: 600; }
-  .github { position: relative; z-index: 1; margin-left: auto; display: inline-flex; align-items: center; gap: .4rem; padding: .3rem .6rem; border: 1px solid var(--borde); border-radius: 4px; color: var(--navy); font-weight: 700; text-decoration: none; background: #fff; }
+  .meta { display: flex; flex-direction: column; align-items: flex-start; gap: .6rem; margin-top: auto; padding-top: .6rem; font-size: .8rem; }
+  .etiquetas { display: flex; flex-wrap: wrap; gap: .4rem; }
+  /* Sin botón, se reserva su alto: así las etiquetas quedan a la misma altura en toda la fila. */
+  .meta:not(:has(.github))::after { content: ""; height: 2rem; }
+  .etiquetas span { background: var(--gris-fondo); padding: .15rem .5rem; border-radius: 3px; font-weight: 600; }
+  .github { position: relative; z-index: 1; height: 2rem; box-sizing: border-box; display: inline-flex; align-items: center; gap: .4rem; padding: .3rem .6rem; border: 1px solid var(--borde); border-radius: 4px; color: var(--navy); font-weight: 700; text-decoration: none; background: #fff; }
   .github:hover { border-color: var(--navy); background: var(--gris-fondo); }
   .github :global(.icono) { width: 16px; height: 16px; }
   .vacio { padding-top: 2rem; }
