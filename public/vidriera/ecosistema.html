@@ -1,0 +1,504 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ecosistema de Datos Abiertos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&family=IBM+Plex+Mono:wght@400&display=swap">
+<style>
+/* papel semi-blanco, trazo negro; índigo y violeta de Datos Abiertos en datos y detalles. Tema claro único, a propósito. */
+:root{
+  color-scheme:light;
+  --tinta:#141414; --texto-2:#55555F; --tenue:#6B6B78;
+  --indigo:#393793; --violeta:#B369ED; --navy:#232D4F; --tile:#ECECEC; --papel:#F7F7F8;
+  --sans:Montserrat,system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+html,body{height:100%;margin:0}
+body{background:var(--papel);color:var(--tinta);font:500 15px var(--sans);overflow:hidden}
+#lienzo{display:block;width:100%;height:100%;cursor:pointer}
+#lienzo:focus-visible{outline:none}
+text{font-family:var(--sans);fill:var(--tinta)}
+.mono{font-family:var(--mono)!important}
+.tramo{fill:none;stroke:var(--tinta);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+#punta{fill:var(--tinta);transition:opacity .3s}
+.it{opacity:0;transition:opacity .7s ease}
+.it.on{opacity:1}
+.extra{fill:none;stroke:var(--tinta);stroke-width:1.8;stroke-linecap:round}
+.extra.i{stroke:var(--indigo)}.extra.punteado{stroke-dasharray:6 8}
+.serie{fill:none;stroke:var(--violeta);stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round}
+.pop line{stroke:var(--violeta);stroke-width:2;stroke-linecap:round;stroke-dasharray:1;animation:rayo .6s cubic-bezier(.2,.7,.3,1) forwards}
+@keyframes rayo{0%{stroke-dashoffset:1}50%{stroke-dashoffset:0}100%{stroke-dashoffset:-1}}
+
+.marca{position:fixed;top:calc(18px + env(safe-area-inset-top,0px));left:20px;display:flex;gap:10px;align-items:center;font:700 13px var(--sans);pointer-events:none}
+.marca i{display:inline-flex;gap:4px}.marca i b{width:6px;height:6px;border-radius:50%;background:var(--violeta)}
+.mando{position:fixed;right:20px;bottom:calc(18px + env(safe-area-inset-bottom,0px));display:flex;gap:6px;align-items:center;opacity:.35;transition:opacity .3s}
+.mando:hover,.mando:focus-within{opacity:1}
+.mando button{font:700 13px var(--sans);color:var(--tinta);background:var(--papel);border:1.25px solid var(--tinta);height:36px;min-width:36px;padding:0 12px;cursor:pointer}
+.mando button:hover{background:var(--tinta);color:var(--papel)}
+.mando button[aria-pressed="true"]{background:var(--violeta);border-color:var(--violeta);color:#fff}
+.mando button:focus-visible{outline:3px solid var(--violeta);outline-offset:2px}
+#num{font:400 13px var(--mono);color:var(--tenue);min-width:60px;text-align:center}
+.ayuda{position:fixed;left:20px;bottom:calc(24px + env(safe-area-inset-bottom,0px));font:400 12px var(--mono);color:var(--tenue);pointer-events:none}
+@media (max-width:640px){.ayuda{display:none}}
+@media (prefers-reduced-motion:reduce){.it{transition:none}.pop{display:none}}
+</style>
+
+<span class="marca"><i><b></b><b></b><b></b></i>Datos Abiertos</span>
+<svg id="lienzo" tabindex="0" role="region" aria-roledescription="presentación" aria-label="El ecosistema de datos abiertos"></svg>
+<div class="mando">
+  <button type="button" id="ant" aria-label="Anterior">←</button>
+  <span id="num" aria-live="polite"></span>
+  <button type="button" id="sig" aria-label="Siguiente">→</button>
+  <button type="button" id="auto" aria-pressed="false">Auto</button>
+</div>
+<p class="ayuda">→ o click para avanzar</p>
+
+<script>
+const NS = 'http://www.w3.org/2000/svg';
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const svg = document.getElementById('lienzo');
+const W = 1600, H = 900, PASO = 3200;
+const f = n => n.toFixed(1);
+const fmt = n => Math.round(n).toLocaleString('es-AR');
+const mill = v => (v / 1e6).toFixed(1).replace('.', ',') + ' M';
+function el(parent, tag, attrs = {}, text){
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  if (text != null) e.textContent = text;
+  parent.appendChild(e); return e;
+}
+const capa = el(svg, 'g'), trazos = el(svg, 'g'), efectosCapa = el(svg, 'g');
+const punta = el(svg, 'circle', {id: 'punta', r: 4.5});
+
+/* ---------- una sola línea, partida en tramos ----------
+   Los puntos son globales: la curva es continua y suave también en el paso
+   de un tramo a otro. Solo los puntos marcados como rectos (ejes, barras) hacen esquina. */
+const P = [], TR = [];
+let tr = null, off = [0, 0];
+function tramo(tipo){ tr = {tipo, a: P.length, items: [], efectos: []}; TR.push(tr); return tr; }
+const add = (x, y, s = false) => {
+  const q = {x: x + off[0], y: y + off[1], s}, u = P[P.length - 1];
+  if (u && Math.abs(u.x - q.x) < .01 && Math.abs(u.y - q.y) < .01){ u.s = u.s || s; return P.length - 1; } // mismo punto: no se duplica
+  P.push(q); return P.length - 1;
+};
+const aqui = () => P.length - 1;
+const cuando = (e, i = P.length - 1, fijo) => { tr.items.push({el: e, i, fijo}); return e; };
+// algo que se anima cuando la línea pasa por el punto i
+const efecto = (i, fx) => tr.efectos.push({i, ...fx});
+function T(g, x, y, txt, {s = 26, w = 500, c = 'var(--tinta)', a = 'start', mono = false, lh = 1.35, i} = {}){
+  const t = el(g, 'text', {x, y, 'font-size': s, 'font-weight': w, 'text-anchor': a, class: `it ${mono ? 'mono' : ''}`, style: `fill:${c}`});
+  [].concat(txt).forEach((line, k) => el(t, 'tspan', {x, dy: k ? s * lh : 0}, line));
+  return cuando(t, i ?? P.length - 1);
+}
+const slide = k => el(capa, 'g', {transform: `translate(${k * PASO} 0)`});
+function encabezado(g, kick, tit, bajada){
+  const i = P.length; // aparece cuando la línea entra
+  T(g, 120, 118, kick.toUpperCase(), {s: 17, mono: true, c: 'var(--tenue)', i});
+  T(g, 120, 190, tit, {s: 56, w: 800, i});
+  if (bajada) T(g, 120, 254, bajada, {s: 25, c: 'var(--texto-2)', i});
+}
+const PASOS = [];
+const ultimo = () => [P[P.length - 1].x, P[P.length - 1].y];
+// viaje por el blanco: sale siguiendo la dirección de la línea y entra suave
+function viaje(k, entrada){
+  const [x0, y0] = ultimo(), x1 = k * PASO + entrada[0], y1 = entrada[1];
+  const v = tramo('viaje'); off = [0, 0];
+  add(x0 + 420, y0 + (y1 - y0) * .15); add((x0 + x1) / 2, (y0 + y1) / 2 + ((k % 2) ? 60 : -60)); add(x1 - 420, y1 - (y1 - y0) * .15); add(x1, y1);
+  return v;
+}
+function diapositiva(k, entrada, armar){
+  const v = k ? viaje(k, entrada) : null;
+  off = [k * PASO, 0];
+  const c = tramo('contenido'), g = slide(k);
+  armar(g);
+  PASOS.push({k, tramos: v ? [v, c] : [c]});
+}
+
+// ---------- estallido y contadores ----------
+function estallido(x, y){
+  if (reduce) return;
+  const p = el(efectosCapa, 'g', {class: 'pop', transform: `translate(${f(x)} ${f(y)})`});
+  for (let k = 0; k < 8; k++){
+    const a = k / 8 * 2 * Math.PI, r0 = 9, r1 = k % 2 ? 20 : 26;
+    el(p, 'line', {x1: f(Math.cos(a) * r0), y1: f(Math.sin(a) * r0), x2: f(Math.cos(a) * r1), y2: f(Math.sin(a) * r1), pathLength: 1});
+  }
+  setTimeout(() => p.remove(), 800);
+}
+const salida = t => 1 - Math.pow(1 - t, 3);
+function animar(dur, cada, listo){
+  if (reduce){ cada(1); listo && listo(); return () => {}; }
+  let id, t0 = performance.now();
+  (function fr(now){ const q = Math.min(1, (now - t0) / dur); cada(salida(q)); if (q < 1) id = requestAnimationFrame(fr); else listo && listo(); })(t0);
+  return () => cancelAnimationFrame(id);
+}
+// número que sube desde 0 al pasar la línea
+function contador(g, x, y, valor, formato, estilo){
+  const t = el(g, 'text', {x, y, ...estilo, style: `${estilo.style || ''};opacity:0`});
+  let parar = () => {};
+  efecto(P.length - 1, {
+    run(){ t.style.opacity = 1; parar = animar(1400, e => t.textContent = formato(valor * e)); },
+    final(){ parar(); t.style.opacity = 1; t.textContent = formato(valor); },
+    reset(){ parar(); t.style.opacity = 0; t.textContent = formato(0); },
+  });
+  return t;
+}
+
+/* ---------- gráficos: la línea dibuja los ejes; cada dato explota al pasar,
+   deja un 0 y sube hasta su valor ---------- */
+function grafico(g, {tipo, xs, valores, max, etiquetas, color, formato, x0 = 200, x1 = 1480, y0 = 760, alto = 400, ancho = 130}){
+  const top = y0 - alto, yv = v => y0 - v / max * alto, ox = off[0];
+  add(x0, top, true); add(x0, y0, true); // entra a la altura del eje y baja
+  const linea = tipo === 'linea' ? el(g, 'path', {class: 'serie'}) : null;
+  const pts = xs.map(x => ({x, y: y0, on: false}));
+  const redibujar = () => { if (!linea) return; const on = pts.filter(p => p.on); linea.setAttribute('d', on.length ? 'M' + on.map(p => `${f(p.x)} ${f(p.y)}`).join('L') : ''); };
+  xs.forEach((x, k) => {
+    const i = add(x, y0, true);
+    T(g, x, y0 + 34, etiquetas[k], {s: 17, mono: true, a: 'middle', c: 'var(--tenue)', lh: 1.25, i});
+    const v = valores[k], meta = yv(v);
+    const marca = tipo === 'linea'
+      ? el(g, 'circle', {cx: x, cy: y0, r: 7, style: `fill:${color};opacity:0`})
+      : el(g, 'rect', {x: x - ancho / 2, y: y0, width: ancho, height: 0, style: `fill:${color};opacity:0`});
+    const num = el(g, 'text', {x, y: y0 - 14, 'text-anchor': 'middle', 'font-size': 22, 'font-weight': 700, style: 'opacity:0'}, '0');
+    let parar = () => {};
+    const poner = e => {
+      const y = y0 + (meta - y0) * e;
+      pts[k].y = y;
+      if (tipo === 'linea') marca.setAttribute('cy', f(y));
+      else { marca.setAttribute('y', f(y)); marca.setAttribute('height', f(y0 - y)); }
+      num.setAttribute('y', f(y - 16)); num.textContent = formato(v * e);
+      redibujar();
+    };
+    efecto(i, {
+      run(){ estallido(x + ox, y0); marca.style.opacity = 1; num.style.opacity = 1; pts[k].on = true; poner(0);
+             parar(); setTimeout(() => { parar = animar(1400, poner); }, 350); },
+      final(){ parar(); marca.style.opacity = 1; num.style.opacity = 1; pts[k].on = true; poner(1); },
+      reset(){ parar(); marca.style.opacity = 0; num.style.opacity = 0; pts[k].on = false; poner(0); },
+    });
+  });
+  add(x1, y0, true);
+}
+// línea de tiempo: la línea pasa por cada fecha
+function tiempo(g, eventos, {y = 600, x0 = 170, paso = 280} = {}){
+  add(100, y);
+  eventos.forEach(([fe, a, b], k) => {
+    const x = x0 + k * paso, up = k % 2 === 0, i = add(x, y);
+    cuando(el(g, 'circle', {cx: x, cy: y, r: 7, class: 'it', style: `fill:${k === eventos.length - 1 ? 'var(--violeta)' : 'var(--indigo)'}`}), i);
+    T(g, x, up ? y - 104 : y + 50, fe, {s: 17, mono: true, a: 'middle', c: 'var(--indigo)', i});
+    T(g, x, up ? y - 72 : y + 82, a, {s: 21, w: 700, a: 'middle', i});
+    if (b) T(g, x, up ? y - 44 : y + 110, b, {s: 18, a: 'middle', c: 'var(--tenue)', i});
+  });
+  add(1500, y);
+}
+
+// ---------- trazos aparte: se dibujan cuando la línea principal llega a un punto ----------
+function texto(g, x, y, txt, {s = 26, w = 500, c = 'var(--tinta)', a = 'start', mono = false, lh = 1.35} = {}){
+  const t = el(g, 'text', {x, y, 'font-size': s, 'font-weight': w, 'text-anchor': a, class: mono ? 'mono' : '', style: `fill:${c}`});
+  [].concat(txt).forEach((line, k) => el(t, 'tspan', {x, dy: k ? s * lh : 0}, line));
+  return t;
+}
+function aparecer(e, {i = P.length - 1, demora = 0} = {}){
+  e.style.opacity = 0; e.style.transition = 'opacity .6s ease'; let t;
+  efecto(i, {
+    run(){ clearTimeout(t); t = setTimeout(() => e.style.opacity = 1, reduce ? 0 : demora); },
+    final(){ clearTimeout(t); e.style.opacity = 1; },
+    reset(){ clearTimeout(t); e.style.opacity = 0; },
+  });
+  return e;
+}
+function trazoAparte(g, d, {i = P.length - 1, demora = 0, clase = '', dur = 1100} = {}){
+  const p = el(g, 'path', {d, class: `extra ${clase}`, pathLength: 1});
+  p.style.strokeDasharray = clase.includes('punteado') ? '' : 1; p.style.strokeDashoffset = 1;
+  let parar = () => {}, t;
+  const pon = e => { if (clase.includes('punteado')) p.style.opacity = e; else p.style.strokeDashoffset = 1 - e; };
+  efecto(i, {
+    run(){ clearTimeout(t); parar(); t = setTimeout(() => { parar = animar(dur, pon); }, reduce ? 0 : demora); },
+    final(){ clearTimeout(t); parar(); pon(1); },
+    reset(){ clearTimeout(t); parar(); pon(0); },
+  });
+  pon(0);
+  return p;
+}
+
+// =================== diapositivas ===================
+
+// 1 · portada
+diapositiva(0, null, g => {
+  T(g, 120, 290, 'DATOS ABIERTOS · SEPTIEMBRE 2026', {s: 17, mono: true, c: 'var(--tenue)', i: 0});
+  T(g, 120, 410, ['El ecosistema', 'de datos abiertos'], {s: 104, w: 800, lh: 1.05, i: 0});
+  T(g, 120, 600, 'Portal Andino, los portales de cada organismo, Georef, Series de Tiempo y sus herramientas.', {s: 26, c: 'var(--texto-2)', i: 0});
+  add(120, 660); add(560, 654); add(980, 664);
+  const m = add(1200, 660);
+  [['var(--navy)','{ }','#fff'],['var(--tile)','λ','var(--navy)'],['var(--violeta)','↓','#fff'],['var(--tile)','Σ','var(--navy)'],['var(--indigo)','•••','#fff'],['var(--tile)','°','var(--navy)'],['var(--indigo)','#','#fff'],['var(--tile)','→','var(--navy)'],['var(--navy)','✓','#fff']]
+    .forEach(([bg, gl, col], k) => {
+      const x = 1190 + (k % 3) * 95, y = 150 + Math.floor(k / 3) * 95;
+      cuando(el(g, 'rect', {x, y, width: 88, height: 88, class: 'it', style: `fill:${bg}`}), m);
+      T(g, x + 44, y + 56, gl, {s: 34, w: 700, a: 'middle', c: col, i: m});
+    });
+  add(1500, 690);
+});
+
+// 2 · Portal Andino, la base
+diapositiva(1, [100, 560], g => {
+  encabezado(g, '2016 · La base', 'Portal Andino', ['Una distribución de CKAN para que cualquier organismo publique datos abiertos', 'con el Perfil Nacional de Metadatos. Sobre ella funciona datos.gob.ar.']);
+  add(100, 560); add(120, 575, true);
+  [[120, 2016, null, 'nace el repositorio portal-andino'], [600, 38, v => fmt(v), 'releases publicados entre 2018 y 2019'], [1080, 1287, v => fmt(v), 'datasets hoy en datos.gob.ar']]
+    .forEach(([x, n, fo, l]) => {
+      add(x, 575, true); add(x, 551, true);
+      if (fo) contador(g, x, 520, n, fo, {'font-size': 84, 'font-weight': 800}); else T(g, x, 520, String(n), {s: 84, w: 800});
+      add(x, 575, true);
+      T(g, x, 624, l, {s: 22, c: 'var(--texto-2)'});
+    });
+  add(1480, 575, true);
+});
+
+// 3 · temas del catálogo
+diapositiva(2, [100, 400], g => {
+  encabezado(g, 'Catálogo nacional', 'Datasets por tema', ['datos.gob.ar reúne 1.287 datasets de 38 organismos, organizados en 14 temas.', 'Un dataset puede estar en más de un tema.']);
+  add(100, 400);
+  grafico(g, {tipo: 'barras', xs: [255, 420, 585, 750, 915, 1080, 1245, 1410], valores: [485, 190, 188, 159, 103, 83, 74, 62], max: 500, alto: 360, ancho: 96, color: 'var(--violeta)', formato: v => fmt(v),
+    etiquetas: [['Economía y', 'Finanzas'], ['Gobierno y', 'Sector Público'], ['Energía'], ['Agroganadería,', 'pesca y', 'forestación'], ['Salud'], ['Población y', 'Sociedad'], ['Medio', 'Ambiente'], ['Educación,', 'cultura y', 'deportes']]});
+  T(g, 1480, 380, '8 de 14 temas · Fuente: API de datos.gob.ar (23/09/2026)', {s: 17, mono: true, a: 'end', c: 'var(--tenue)'});
+});
+
+// 4 · Georef, primeros años
+diapositiva(3, [100, 600], g => {
+  encabezado(g, '2017 – 2019 · API Georef', 'Georef: direcciones y lugares normalizados', ['Convierte direcciones y nombres de lugares escritos de cualquier forma en datos', 'oficiales: provincia, departamento, localidad, calle y coordenadas.']);
+  tiempo(g, [['abr 2017', 'Primer commit', 'georef-ar-api'], ['ago 2018', 'Versión 0.1.0', 'la primera etiquetada'], ['oct 2018', 'Intersecciones', 'y descargas completas'], ['dic 2018', 'Búsquedas más precisas', '"salta" ya no trae "santa"'], ['ene 2019', 'XML y Shapefile', 'y direcciones más flexibles'], ['may 2019', 'Localidades censales', 'y asentamientos (BAHRA)']], {paso: 230});
+  T(g, 120, 850, 'Fuente: historial de versiones de georef-ar-api.', {s: 15, mono: true, c: 'var(--tenue)'});
+});
+
+// 5 · Georef v2
+diapositiva(4, [100, 600], g => {
+  encabezado(g, '2025 – 2026 · Georef v2', 'Georef v2: más capas y una API renovada', ['Nuevas unidades oficiales, establecimientos cercanos y nuevos formatos.', 'La versión 1.0 se discontinúa y la reemplaza la 2.1.']);
+  tiempo(g, [['mar 2025', 'Al costado de la calle', 'no sobre su eje'], ['may 2025', 'Unidades geoestadísticas', 'fracciones y radios censales'], ['jun 2025', 'Establecimientos cercanos', 'escuelas y universidades'], ['ago 2025', 'Georef v2.0', 'nueva versión de la API'], ['sep 2025', 'GeoPackage', 'y nomenclatura en ubicación'], ['abr 2026', 'Filtro por localidad', 'en direcciones'], ['jun 2026', 'Georef v2.1', 'reemplaza a la 1.0']], {paso: 200});
+  T(g, 120, 850, 'Fuente: commits de georef-ar-api (rama development) y argentina.gob.ar/georef.', {s: 15, mono: true, c: 'var(--tenue)'});
+});
+
+// 6 · herramientas sobre Georef: de un nodo salen varias ramas
+diapositiva(5, [100, 560], g => {
+  encabezado(g, 'Herramientas', 'Georef, desde donde ya trabajás', 'Plugins y paquetes oficiales, y clientes que armó la comunidad.');
+  add(100, 560);
+  const iG = add(330, 560);
+  cuando(el(g, 'circle', {cx: 330, cy: 560, r: 13, class: 'it', style: 'fill:var(--violeta)'}), iG);
+  T(g, 330, 512, 'API Georef', {s: 26, w: 800, a: 'middle', i: iG});
+  T(g, 330, 484, 'v2.1', {s: 18, mono: true, a: 'middle', c: 'var(--tenue)', i: iG});
+  const H = [['Plugin para QGIS', 'oficial · capas listas para analizar · v1.0.6 (ago 2026)'], ['Paquete para R: georefar', 'oficial · en CRAN desde septiembre de 2026'], ['Librería para Python: pygeorefar', 'oficial · consultas y procesamiento por lotes'], ['Planilla de Google', 'funciones básicas precargadas'], ['georef-ux', 'explorador web con mapa y lotes en CSV'], ['Comunidad', 'clientes en PHP, Go y Nim, y un servidor MCP']];
+  H.forEach(([nom, desc], k) => {
+    const y = 350 + k * 88, d = `M344 560 C 560 560, 640 ${y}, 880 ${y}`;
+    trazoAparte(g, d, {i: iG, demora: 150 + k * 220, clase: k === 5 ? 'i' : ''});
+    aparecer(el(g, 'circle', {cx: 888, cy: y, r: 7, style: 'fill:var(--indigo)'}), {i: iG, demora: 900 + k * 220});
+    aparecer(texto(g, 912, y - 2, nom, {s: 22, w: 700}), {i: iG, demora: 950 + k * 220});
+    aparecer(texto(g, 912, y + 24, desc, {s: 18, c: 'var(--tenue)'}), {i: iG, demora: 1000 + k * 220});
+  });
+  add(380, 650); add(560, 820); add(900, 876); add(1500, 880);
+  T(g, 120, 296, 'Fuente: argentina.gob.ar/georef (herramientas y aplicaciones), CRAN, QGIS y GitHub.', {s: 15, mono: true, c: 'var(--tenue)', i: iG});
+});
+
+// 7 · uso de Georef
+diapositiva(6, [100, 360], g => {
+  encabezado(g, 'Uso · API Georef', 'Consultas a Georef por año', 'En nueve meses de 2026 ya superó a cualquier año completo.');
+  add(100, 360);
+  grafico(g, {tipo: 'linea', xs: [380, 720, 1060, 1400], valores: [63307302, 72454546, 105361207, 165720630], max: 180e6, color: 'var(--violeta)', formato: mill,
+    etiquetas: ['2023*', '2024', '2025', '2026*']});
+  T(g, 120, 850, '* 2023: julio a diciembre · 2026: enero a septiembre. Fuente: planillas de indicadores mensuales.', {s: 15, mono: true, c: 'var(--tenue)'});
+});
+
+// 8 · Series de Tiempo
+diapositiva(7, [100, 600], g => {
+  encabezado(g, '2017 – 2019 · API Series de Tiempo', 'Series de Tiempo: indicadores oficiales', ['Precios, actividad, empleo y mucho más: se consultan, cruzan y transforman', 'desde una URL, sin descargar archivos. Hoy reúne 33.154 series.']);
+  tiempo(g, [['jul 2017', 'Primer commit', 'series-tiempo-ar-api'], ['dic 2017', 'Cierre de período', 'al agrupar por frecuencia'], ['ago 2018', 'Hasta 40 series', 'en una sola consulta'], ['sep–dic 2018', 'Descargas completas', 'CSV, XLSX, SQL y DTA'], ['nov 2018', 'Parámetro last', 'los valores más recientes'], ['feb 2019', 'Modos de representación', 'variaciones y porcentajes'], ['ago 2019', 'Uso desde otras webs', 'CORS habilitado']], {paso: 200});
+  T(g, 120, 850, 'Fuente: releases de series-tiempo-ar-api.', {s: 15, mono: true, c: 'var(--tenue)'});
+});
+
+// 9 · uso de Series
+diapositiva(8, [100, 360], g => {
+  encabezado(g, 'Uso · API Series de Tiempo', 'Consultas a la API de Series por año', 'Entre enero y septiembre de 2026 hubo más consultas que en cualquier año anterior.');
+  add(100, 360);
+  grafico(g, {tipo: 'barras', xs: [380, 720, 1060, 1400], valores: [8495273, 17045193, 13920049, 26341470], max: 30e6, color: 'var(--indigo)', formato: mill, ancho: 150,
+    etiquetas: ['2023*', '2024', '2025', '2026*']});
+  T(g, 120, 850, '* 2023: julio a diciembre · 2026: enero a septiembre. Fuente: planillas de indicadores mensuales.', {s: 15, mono: true, c: 'var(--tenue)'});
+});
+
+// 10 · buscador de series: capturas reales
+diapositiva(9, [100, 752], g => {
+  encabezado(g, '2018 → 2026', 'Buscar series desde el portal', ['En 2018 datos.gob.ar sumó un explorador de series. En 2026 vuelve,', 'integrado al portal como extensión de CKAN (ckanext-series-explorer).']);
+  const img = (x, src, pie, i) => {
+    aparecer(el(g, 'rect', {x, y: 330, width: 640, height: 400, style: 'fill:var(--tile)'}), {i});
+    aparecer(el(g, 'image', {href: src, x, y: 330, width: 640, height: 400, preserveAspectRatio: 'xMidYMin slice'}), {i, demora: 200});
+    aparecer(texto(g, x, 790, pie, {s: 19, c: 'var(--texto-2)'}), {i, demora: 300});
+  };
+  add(100, 752); add(120, 752, true);
+  const i1 = add(760, 752, true); add(760, 736, true); add(760, 752, true);
+  img(120, 'img/explorador-2018-busqueda.jpg', '2018 · búsqueda con filtros por tema, fuente y unidad', i1);
+  add(840, 752, true); add(840, 736, true); add(840, 752, true);
+  const i2 = add(1480, 752, true);
+  img(840, 'img/explorador-2018-serie.jpg', '2018 · cada serie con su gráfico interactivo', i2);
+});
+
+// 11 · Andino V2
+diapositiva(10, [100, 400], g => {
+  encabezado(g, '2026 · Reemplaza a la primera versión', 'Andino V2', ['CKAN 2.11 sin modificar su código: lo propio va en extensiones y la configuración', 'en un solo archivo .env. datos.gob.ar ya funciona sobre CKAN 2.11.5.']);
+  add(100, 400); add(140, 430, true);
+  [['ckanext-gobar-theme', 'identidad visual de gob.ar, por perfil'], ['ckanext-scheming-gobar', 'Perfil Nacional de Metadatos'], ['ckanext-gobar-harvest', 'cosecha de catálogos'], ['ckanext-spatial-widget-ar', 'búsqueda en el mapa'], ['ckanext-series-explorer', 'el nuevo buscador de series']]
+    .forEach(([nom, desc], k) => {
+      const y = 460 + k * 66;
+      add(140, y, true); add(176, y, true); const i = add(140, y, true);
+      T(g, 200, y + 7, nom, {s: 22, mono: true, i});
+      T(g, 640, y + 7, desc, {s: 22, c: 'var(--texto-2)', i});
+    });
+  add(140, 770, true); add(190, 800); add(1500, 800);
+});
+
+// 12 · cómo se conecta: dos circuitos, datos y geografía
+diapositiva(11, [100, 430], g => {
+  encabezado(g, 'Todo junto', 'Cómo se conecta el ecosistema');
+  const nodo = (x, y, nom, desc, color, i, demora) => {
+    const c = el(g, 'circle', {cx: x, cy: y, r: 11, style: `fill:${color}`});
+    const a = texto(g, x, y + 44, nom, {s: 22, w: 700, a: 'middle'}), b = texto(g, x, y + 70, desc, {s: 18, a: 'middle', c: 'var(--tenue)'});
+    [c, a, b].forEach((e, k) => aparecer(e, {i, demora: demora + k * 80}));
+  };
+  const etiqueta = (x, y, t, i, demora = 0) => aparecer(texto(g, x, y, t, {s: 17, mono: true, a: 'middle', c: 'var(--indigo)'}), {i, demora});
+  T(g, 120, 330, 'DATOS', {s: 15, mono: true, c: 'var(--tenue)'});
+  // circuito de datos: lo dibuja la línea principal
+  add(100, 430);
+  let i = add(220, 430); nodo(220, 430, 'Portales de organismos', 'Andino y planillas XLSX', 'var(--navy)', i, 0);
+  add(430, 400); etiqueta(430, 384, 'cosecha', aqui());
+  i = add(640, 430); nodo(640, 430, 'datos.gob.ar', 'Andino V2 · 1.287 datasets', 'var(--indigo)', i, 0);
+  add(850, 400); etiqueta(850, 384, 'publica series', aqui());
+  i = add(1060, 430); nodo(1060, 430, 'API Series de Tiempo', '33.154 series', 'var(--violeta)', i, 0);
+  add(1250, 400); etiqueta(1250, 384, 'consulta', aqui());
+  const iD = add(1440, 430); nodo(1440, 430, 'Buscador de series', 'dentro de datos.gob.ar', 'var(--indigo)', iD, 0);
+  // el buscador vive en el portal
+  trazoAparte(g, 'M1440 414 C 1400 300, 690 300, 648 414', {i: iD, demora: 300, clase: 'i punteado', dur: 700});
+  etiqueta(1045, 316, 'vive dentro del portal', iD, 700);
+  // circuito geográfico: trazos aparte
+  aparecer(texto(g, 120, 640, 'GEOGRAFÍA', {s: 15, mono: true, c: 'var(--tenue)'}), {i: iD, demora: 900});
+  nodo(220, 720, 'Fuentes oficiales', 'IGN, INDEC y BAHRA', 'var(--navy)', iD, 1100);
+  trazoAparte(g, 'M232 720 C 400 690, 480 690, 628 720', {i: iD, demora: 1300});
+  etiqueta(430, 690, 'se normalizan en', iD, 1700);
+  nodo(640, 720, 'API Georef', 'v2.1', 'var(--violeta)', iD, 2000);
+  ['QGIS', 'R', 'Python', 'Planillas y apps'].forEach((t, k) => {
+    const y = 630 + k * 60;
+    trazoAparte(g, `M652 720 C 820 720, 860 ${y}, 1040 ${y}`, {i: iD, demora: 2300 + k * 200});
+    aparecer(el(g, 'circle', {cx: 1048, cy: y, r: 6, style: 'fill:var(--indigo)'}), {i: iD, demora: 2900 + k * 200});
+    aparecer(texto(g, 1068, y + 7, t, {s: 21, w: 700}), {i: iD, demora: 2950 + k * 200});
+  });
+  add(1500, 430);
+});
+
+// 13 · cierre
+diapositiva(12, [100, 700], g => {
+  T(g, 120, 118, 'DESDE JULIO DE 2023', {s: 17, mono: true, c: 'var(--tenue)', i: P.length});
+  add(100, 700); add(300, 690);
+  contador(g, 120, 360, 472645670, v => fmt(v), {'font-size': 120, 'font-weight': 800});
+  T(g, 120, 430, 'consultas a Georef y a la API de Series de Tiempo.', {s: 32, w: 700});
+  add(700, 704);
+  T(g, 120, 520, ['Detrás de cada una hay alguien normalizando una dirección, armando un tablero', 'o respondiendo una pregunta con datos públicos.'], {s: 26, c: 'var(--texto-2)'});
+  add(1050, 690); add(1170, 630); add(1218, 560); const iu = add(1232, 440);
+  [[1232, 'var(--navy)'], [1270, 'var(--indigo)'], [1308, 'var(--violeta)']].forEach(([x, col]) => cuando(el(g, 'circle', {cx: x, cy: 420, r: 12, class: 'it', style: `fill:${col}`}), iu));
+  T(g, 120, 800, 'Fuentes: github.com/datosgobar · argentina.gob.ar/georef · API de datos.gob.ar (23/09/2026) · planillas de indicadores mensuales.', {s: 15, mono: true, c: 'var(--tenue)', i: iu});
+});
+
+// ---------- geometría ----------
+const SEG = [];
+for (let k = 0; k < P.length - 1; k++){
+  const p1 = P[k], p2 = P[k + 1];
+  if (p1.s && p2.s){ SEG.push(`L${f(p2.x)} ${f(p2.y)}`); continue; }
+  const p0 = p1.s ? p1 : (P[k - 1] || p1), p3 = p2.s ? p2 : (P[k + 2] || p2);
+  SEG.push(`C${f(p1.x + (p2.x - p0.x) / 6)} ${f(p1.y + (p2.y - p0.y) / 6)} ${f(p2.x - (p3.x - p1.x) / 6)} ${f(p2.y - (p3.y - p1.y) / 6)} ${f(p2.x)} ${f(p2.y)}`);
+}
+const tmp = el(svg, 'path', {style: 'visibility:hidden'});
+const ACUM = [0];
+SEG.forEach((s, k) => { tmp.setAttribute('d', `M${f(P[k].x)} ${f(P[k].y)}${s}`); ACUM.push(ACUM[k] + tmp.getTotalLength()); });
+tmp.remove();
+TR.forEach((t, n) => {
+  const desde = Math.max(0, t.a - 1), hasta = (TR[n + 1] ? TR[n + 1].a : P.length) - 1;
+  t.desde = desde; t.L0 = ACUM[desde]; t.len = ACUM[hasta] - ACUM[desde];
+  t.el = el(trazos, 'path', {d: `M${f(P[desde].x)} ${f(P[desde].y)}` + SEG.slice(desde, hasta).join(''), class: 'tramo'});
+  t.el.style.strokeDasharray = `${t.len + 1} ${t.len + 1}`;
+  t.hecho = 0;
+  t.items.forEach(it => { it.L = ACUM[it.i] - t.L0; it.on = false; });
+  t.efectos.forEach(e => { e.L = ACUM[e.i] - t.L0; e.on = false; e.reset(); });
+});
+
+// ---------- estado ----------
+const N = PASOS.length, num = document.getElementById('num');
+let actual = -1, cam = [0, 0], anim = null;
+function pintar(instantaneo){
+  svg.setAttribute('viewBox', `${f(cam[0])} ${f(cam[1])} ${W} ${H}`);
+  for (const t of TR){
+    t.el.style.strokeDashoffset = t.len + 1 - t.hecho;
+    for (const it of t.items){
+      const on = t.hecho > 0 && t.hecho >= it.L - .5;
+      if (on !== it.on){ it.on = on; it.el.classList.toggle('on', on); }
+    }
+    for (const e of t.efectos){
+      const on = t.hecho > 0 && t.hecho >= e.L - .5;
+      if (on !== e.on){ e.on = on; on ? (instantaneo ? e.final() : e.run()) : e.reset(); }
+    }
+  }
+}
+function fijar(s){
+  const hechos = new Set(PASOS.slice(0, s + 1).flatMap(p => p.tramos));
+  TR.forEach(t => { t.hecho = hechos.has(t) ? t.len : 0; });
+  cam = [PASOS[s].k * PASO, 0];
+  actual = s; rotular(); pintar(true); punta.style.opacity = 0;
+}
+const rotular = () => { num.textContent = `${actual + 1} / ${N}`; try { history.replaceState(null, '', '#' + (actual + 1)); } catch (e) {} };
+const suave = t => .5 - Math.cos(Math.PI * t) / 2;
+
+let reloj = null;
+function reproducir(s){
+  if (anim){ cancelAnimationFrame(anim); anim = null; fijar(actual); }
+  if (s < 0 || s >= N) return;
+  if (s !== actual + 1 || reduce){ fijar(s); programarAuto(); return; }
+  const Pz = PASOS[s]; actual = s; rotular();
+  const cola = Pz.tramos.slice();
+  (function siguiente(){
+    const t = cola.shift();
+    if (!t){ anim = null; punta.style.opacity = 0; programarAuto(); return; }
+    const viajando = t.tipo === 'viaje';
+    const dur = viajando ? 2600 : Math.max(1800, t.len / .6);
+    const sx0 = P[t.desde].x - cam[0], sx1 = 100; // el viaje termina en la entrada de la diapositiva (x = 100)
+    const t0 = performance.now();
+    punta.style.opacity = 1;
+    (function frame(now){
+      const q = Math.min(1, (now - t0) / dur), e = suave(q);
+      t.hecho = t.len * e;
+      const p = t.el.getPointAtLength(t.hecho);
+      if (viajando) cam = [p.x - (sx0 + (sx1 - sx0) * e), 0];
+      punta.setAttribute('cx', f(p.x)); punta.setAttribute('cy', f(p.y));
+      pintar(false);
+      if (q < 1) anim = requestAnimationFrame(frame);
+      else { if (viajando) cam = [Pz.k * PASO, 0]; siguiente(); }
+    })(t0);
+  })();
+}
+
+const ayuda = document.querySelector('.ayuda');
+const sig = () => { ayuda.hidden = true; reproducir(actual + 1); }, ant = () => reproducir(actual - 1);
+document.getElementById('sig').addEventListener('click', sig);
+document.getElementById('ant').addEventListener('click', ant);
+svg.addEventListener('click', e => (e.clientX < innerWidth / 4 ? ant() : sig()));
+addEventListener('keydown', e => {
+  if (['ArrowRight', 'PageDown', ' ', 'Enter'].includes(e.key) && !e.target.closest('button')){ e.preventDefault(); sig(); }
+  else if (['ArrowLeft', 'PageUp'].includes(e.key)){ e.preventDefault(); ant(); }
+  else if (e.key === 'Home') reproducir(0);
+  else if (e.key === 'End') reproducir(N - 1);
+});
+const autoBtn = document.getElementById('auto');
+function programarAuto(){
+  clearTimeout(reloj);
+  if (autoBtn.getAttribute('aria-pressed') !== 'true') return;
+  reloj = setTimeout(() => (actual === N - 1 ? (fijar(0), programarAuto()) : reproducir(actual + 1)), 5000);
+}
+autoBtn.addEventListener('click', () => {
+  const on = autoBtn.getAttribute('aria-pressed') !== 'true';
+  autoBtn.setAttribute('aria-pressed', on);
+  if (on && !anim) programarAuto(); else if (!on) clearTimeout(reloj);
+});
+
+const inicio = Math.max(1, Math.min(N, parseInt(location.hash.slice(1)) || 1)) - 1;
+if (inicio === 0 && !reduce){ pintar(true); reproducir(0); }
+else fijar(inicio);
+svg.focus();
+</script>

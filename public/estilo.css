@@ -1,0 +1,35 @@
+/* Identidad de Datos Abiertos compartida entre los sitios de datosgobar.github.io.
+   Los demás recursos pueden enlazar este archivo para tomar los mismos tokens. */
+:root {
+  color-scheme: light;
+  --navy: #212D51;
+  --navy-medio: #2E3A66;
+  --indigo: #393793;
+  --violeta: #B369ED;
+  --gris-mosaico: #ECECEC;
+  --gris-fondo: #F6F6F8;
+  --lavanda: #F4F2FB;
+  --borde: #E3E4EA;
+  --texto: #434343;
+  --texto-2: #5C5F6E;
+  --fuente: 'Montserrat', system-ui, sans-serif;
+  --ancho: 72rem;
+  --margen: clamp(1rem, 4vw, 2rem);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 7rem; }
+body { margin: 0; background: #fff; color: var(--texto); font: 400 1rem/1.6 var(--fuente); }
+h1, h2, h3 { color: var(--navy); line-height: 1.15; margin: 0; }
+a { color: var(--indigo); }
+a:focus-visible, button:focus-visible { outline: 3px solid var(--violeta); outline-offset: 3px; }
+img { max-width: 100%; display: block; }
+
+/* Los tres puntos de los isologos de Datos Abiertos. */
+.puntos { display: inline-flex; gap: 4px; }
+.puntos i { width: 7px; height: 7px; border-radius: 50%; background: var(--violeta); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

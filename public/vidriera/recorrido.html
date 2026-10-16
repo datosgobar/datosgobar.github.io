@@ -1,0 +1,406 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Recorrido Portal Andino</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&family=IBM+Plex+Mono:wght@400&display=swap">
+<style>
+/* papel semi-blanco, trazo negro; índigo y violeta de Datos Abiertos solo en detalles. Tema claro único, a propósito. */
+:root{
+  color-scheme:light;
+  --tinta:#141414; --texto-2:#55555F; --tenue:#6B6B78; --grilla:#DADADF;
+  --indigo:#393793; --violeta:#B369ED; --navy:#232D4F; --tile:#ECECEC; --papel:#F7F7F8;
+  --sans:Montserrat,system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+html,body{height:100%;margin:0}
+body{background:var(--papel);color:var(--tinta);font:500 15px var(--sans);overflow:hidden}
+#lienzo{display:block;width:100%;height:100%;cursor:pointer}
+#lienzo:focus-visible{outline:none}
+text{font-family:var(--sans);fill:var(--tinta)}
+.mono{font-family:var(--mono)!important}
+.tramo{fill:none;stroke:var(--tinta);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;transition:opacity .7s ease}
+.tramo.fuera{opacity:0}
+#punta{fill:var(--tinta);transition:opacity .3s}
+.g{fill:none;stroke:var(--grilla);stroke-width:1.2}
+.it{opacity:0;transition:opacity .7s ease}
+.it.on{opacity:1}
+
+.marca{position:fixed;top:calc(18px + env(safe-area-inset-top,0px));left:20px;display:flex;gap:10px;align-items:center;font:700 13px var(--sans);pointer-events:none}
+.marca i{display:inline-flex;gap:4px}.marca i b{width:6px;height:6px;border-radius:50%;background:var(--violeta)}
+.mando{position:fixed;right:20px;bottom:calc(18px + env(safe-area-inset-bottom,0px));display:flex;gap:6px;align-items:center;opacity:.35;transition:opacity .3s}
+.mando:hover,.mando:focus-within{opacity:1}
+.mando button{font:700 13px var(--sans);color:var(--tinta);background:var(--papel);border:1.25px solid var(--tinta);height:36px;min-width:36px;padding:0 12px;cursor:pointer}
+.mando button:hover{background:var(--tinta);color:var(--papel)}
+.mando button[aria-pressed="true"]{background:var(--violeta);border-color:var(--violeta);color:#fff}
+.mando button:focus-visible{outline:3px solid var(--violeta);outline-offset:2px}
+#num{font:400 13px var(--mono);color:var(--tenue);min-width:60px;text-align:center}
+.ayuda{position:fixed;left:20px;bottom:calc(24px + env(safe-area-inset-bottom,0px));font:400 12px var(--mono);color:var(--tenue);pointer-events:none}
+@media (max-width:640px){.ayuda{display:none}}
+@media (prefers-reduced-motion:reduce){.it,.tramo{transition:none}}
+</style>
+
+<span class="marca"><i><b></b><b></b><b></b></i>Portal Andino</span>
+<svg id="lienzo" tabindex="0" role="region" aria-roledescription="presentación" aria-label="Recorrido por Portal Andino"></svg>
+<div class="mando">
+  <button type="button" id="ant" aria-label="Anterior">←</button>
+  <span id="num" aria-live="polite"></span>
+  <button type="button" id="sig" aria-label="Siguiente">→</button>
+  <button type="button" id="auto" aria-pressed="false">Auto</button>
+</div>
+<p class="ayuda">→ o click para avanzar</p>
+
+<script>
+const NS = 'http://www.w3.org/2000/svg';
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const svg = document.getElementById('lienzo');
+const W = 1600, H = 900, PASO = 3200;           // cada diapositiva, y entre una y otra, una pantalla en blanco
+const f = n => n.toFixed(1);
+const fmt = n => Math.round(n).toLocaleString('es-AR');
+function el(parent, tag, attrs = {}, text){
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  if (text != null) e.textContent = text;
+  parent.appendChild(e); return e;
+}
+const capa = el(svg, 'g'), trazos = el(svg, 'g');
+const punta = el(svg, 'circle', {id: 'punta', r: 4.5});
+
+/* ---------- tramos de línea ----------
+   Cada paso de la presentación dibuja uno o más tramos: el viaje por el blanco,
+   una vuelta atrás (para redibujar), y el contenido de la diapositiva. */
+const TR = []; let tr = null, off = [0, 0];
+function tramo(tipo){ tr = {tipo, pts: [], items: []}; TR.push(tr); return tr; }
+const add = (x, y, s = false) => { tr.pts.push({x: x + off[0], y: y + off[1], s}); return tr.pts.length - 1; };
+// algo que aparece cuando la línea llega al punto i del tramo actual
+const cuando = (e, {i = tr.pts.length - 1, fijo = false} = {}) => { tr.items.push({el: e, i, fijo}); return e; };
+function T(g, x, y, txt, {s = 26, w = 500, c = 'var(--tinta)', a = 'start', mono = false, lh = 1.35, i, fijo} = {}){
+  const t = el(g, 'text', {x, y, 'font-size': s, 'font-weight': w, 'text-anchor': a, class: `it ${mono ? 'mono' : ''}`, style: `fill:${c}`});
+  [].concat(txt).forEach((line, k) => el(t, 'tspan', {x, dy: k ? s * lh : 0}, line));
+  return cuando(t, {i, fijo});
+}
+const slide = k => { off = [k * PASO, 0]; return el(capa, 'g', {transform: `translate(${k * PASO} 0)`}); };
+function encabezado(g, kick, tit, bajada){
+  T(g, 120, 118, kick.toUpperCase(), {s: 17, mono: true, c: 'var(--tenue)', i: 0});
+  T(g, 120, 190, tit, {s: 58, w: 800, i: 0});
+  if (bajada) T(g, 120, 256, bajada, {s: 26, c: 'var(--texto-2)', i: 0});
+}
+// viaje por el blanco: una sola curva suave entre la salida de una diapositiva y la entrada de la otra
+let amp = 1;
+function viaje(desde, hasta){
+  tramo('viaje'); off = [0, 0];
+  const [x0, y0] = desde, [x1, y1] = hasta; amp = -amp;
+  add(x0, y0); add(x0 + 520, y0 + 70 * amp); add(x1 - 520, y1 - 70 * amp); add(x1, y1);
+}
+const PASOS = [];
+const paso = (k, tramos, {ocultar = []} = {}) => PASOS.push({k, tramos, ocultar});
+const fin = () => [tr.pts[tr.pts.length - 1].x, tr.pts[tr.pts.length - 1].y];
+
+// ===== 1 · portada =====
+let g = slide(0), c = tramo('contenido');
+T(g, 120, 300, 'DATOS ABIERTOS · SEPTIEMBRE 2026', {s: 17, mono: true, c: 'var(--tenue)', i: 0});
+T(g, 120, 420, 'Portal Andino', {s: 124, w: 800, i: 0});
+T(g, 120, 488, 'De la primera versión, en 2016, a Andino V2 sobre CKAN 2.11.', {s: 30, c: 'var(--texto-2)', i: 0});
+add(120, 560); add(520, 556); add(900, 562);
+const mos = add(1150, 560);
+[['var(--navy)','{ }','#fff'],['var(--tile)','⊂','var(--navy)'],['var(--violeta)','↓','#fff'],['var(--tile)','≡','var(--navy)'],['var(--indigo)','•••','#fff'],['var(--tile)','∪','var(--navy)'],['var(--indigo)','#','#fff'],['var(--tile)','→','var(--navy)'],['var(--navy)','✓','#fff']]
+  .forEach(([bg, gl, col], k) => {
+    const x = 1190 + (k % 3) * 95, y = 170 + Math.floor(k / 3) * 95;
+    cuando(el(g, 'rect', {x, y, width: 88, height: 88, class: 'it', style: `fill:${bg}`}), {i: mos});
+    T(g, x + 44, y + 56, gl, {s: 34, w: 700, a: 'middle', c: col, i: mos});
+  });
+add(1500, 600);
+paso(0, [c]);
+
+// ===== 2 · qué es =====
+let prev = fin(); g = slide(1);
+let v = viaje(prev, [PASO + 100, 440]); v = tr;
+off = [PASO, 0]; c = tramo('contenido');
+encabezado(g, 'Qué es', 'Portal Andino', 'Una distribución de CKAN preparada para el Estado argentino.');
+add(100, 440); add(120, 492, true);
+[[120, 'CKAN', ['El software libre para portales', 'de datos, usado en todo el mundo.']],
+ [620, 'Perfil Nacional de Metadatos', ['Los campos que pide la Política', 'de Apertura de Datos.']],
+ [1120, 'Docker', ['Se instala y se actualiza', 'con contenedores.']]].forEach(([x, h, d], k) => {
+  const i = add(x + 380, 492, true);
+  T(g, x, 470, h, {s: 30, w: 700, i: i - (k ? 1 : 1)});
+  T(g, x, 540, d, {s: 22, c: 'var(--texto-2)', i});
+  if (k < 2){ add(x + 440, 500); add(x + 500, 492, true); }
+});
+add(1500, 520); add(1500, 600);
+paso(1, [v, c]);
+
+// ===== 3 · la primera versión =====
+prev = fin(); g = slide(2); viaje(prev, [2 * PASO + 100, 560]); v = tr;
+off = [2 * PASO, 0]; c = tramo('contenido');
+encabezado(g, '2016 – 2019', 'La primera versión', 'Publicada como código abierto en github.com/datosgobar.');
+add(100, 560, true);
+const xm = m => 220 + m * 1160 / 38; // meses desde oct 2016
+[[0, 'oct 2016', ['Se crea el repositorio', 'portal-andino'], -1], [5, 'mar 2017', ['portal-base: código común', 'con el portal nacional'], 1], [15, 'ene 2018', ['Primer release en GitHub', 'versión 2.2.9'], -1], [38, 'dic 2019', ['Último release', 'versión 2.6.3'], 1]]
+  .forEach(([m, fecha, txt, lado], k) => {
+    const x = xm(m), i = add(x, 560, true);
+    cuando(el(g, 'circle', {cx: x, cy: 560, r: 7, class: 'it', style: 'fill:var(--violeta)'}), {i});
+    const a = k === 3 ? 'end' : 'start', tx = k === 3 ? x + 10 : x - 10;
+    T(g, tx, lado < 0 ? 450 : 620, fecha, {s: 18, mono: true, c: 'var(--indigo)', a, i});
+    T(g, tx, lado < 0 ? 482 : 652, txt, {s: 22, w: 700, a, i});
+  });
+add(1500, 560, true);
+T(g, 120, 800, '38 releases publicados en GitHub entre 2018 y 2019.', {s: 24, w: 700});
+paso(2, [v, c]);
+
+// ===== 4 · Andino V2 =====
+prev = fin(); g = slide(3); viaje(prev, [3 * PASO + 100, 400]); v = tr;
+off = [3 * PASO, 0]; c = tramo('contenido');
+encabezado(g, '2025 – 2026', 'Andino V2', ['CKAN 2.11 sin modificar su código: lo propio del Estado argentino', 'va en extensiones, y la configuración en un único archivo .env.']);
+add(100, 400); add(140, 430, true);
+[['ckanext-gobar-theme', 'identidad visual con Poncho'], ['ckanext-scheming-gobar', 'Perfil Nacional de Metadatos'], ['ckanext-gobar-harvest', 'cosecha de catálogos'], ['ckanext-spatial-widget-ar', 'búsqueda en el mapa'], ['ckanext-series-explorer', 'series de tiempo en el portal']]
+  .forEach(([nom, desc], k) => {
+    const y = 460 + k * 68;
+    add(140, y, true); add(176, y, true); const i = add(140, y, true);
+    T(g, 200, y + 7, nom, {s: 22, mono: true, i});
+    T(g, 640, y + 7, desc, {s: 22, c: 'var(--texto-2)', i});
+  });
+add(140, 780, true); add(180, 800); add(1500, 800);
+paso(3, [v, c]);
+
+// ===== 5 · datos.gob.ar hoy =====
+prev = fin(); g = slide(4); viaje(prev, [4 * PASO + 100, 575]); v = tr;
+off = [4 * PASO, 0]; c = tramo('contenido');
+encabezado(g, 'Catálogo nacional · 23/09/2026', 'datos.gob.ar hoy');
+add(100, 575, true);
+[[120, '1.287', 'datasets'], [450, '38', 'organismos publicando'], [760, '14', 'temas'], [990, '43', 'fuentes de cosecha'], [1230, '2.11.5', 'versión de CKAN']]
+  .forEach(([x, n, l]) => {
+    add(x, 575, true); const i = add(x, 551, true); add(x, 575, true);
+    T(g, x, 520, n, {s: 84, w: 800, i});
+    T(g, x, 624, l, {s: 22, c: 'var(--texto-2)', i});
+  });
+add(1500, 575, true);
+T(g, 120, 800, 'Fuente: API de datos.gob.ar (package_search y status_show).', {s: 17, mono: true, c: 'var(--tenue)'});
+paso(4, [v, c]);
+
+// ===== 6 · datasets por tema: la línea dibuja las barras =====
+prev = fin(); g = slide(5); viaje(prev, [5 * PASO + 100, 740]); v = tr;
+off = [5 * PASO, 0]; c = tramo('contenido');
+encabezado(g, '8 de 14 temas', 'Datasets por tema', 'Un dataset puede estar en más de un tema.');
+const BASE = 740;
+add(100, BASE, true);
+[[485, ['Economía y', 'Finanzas']], [190, ['Gobierno y', 'Sector Público']], [188, ['Energía']], [159, ['Agroganadería,', 'pesca y', 'forestación']], [103, ['Salud']], [83, ['Población y', 'Sociedad']], [74, ['Medio', 'Ambiente']], [62, ['Educación,', 'cultura y', 'deportes']]]
+  .forEach(([val, nom], k) => {
+    const x = 160 + k * 165, h = val / 485 * 380;
+    add(x, BASE, true); add(x, BASE - h, true); const i = add(x + 90, BASE - h, true); add(x + 90, BASE, true);
+    T(g, x + 45, BASE - h - 14, String(val), {s: 20, mono: true, a: 'middle', c: k ? 'var(--texto-2)' : 'var(--indigo)', i});
+    T(g, x + 45, BASE + 34, nom, {s: 17, a: 'middle', c: 'var(--texto-2)', lh: 1.25, i});
+  });
+add(1500, BASE, true);
+paso(5, [v, c]);
+
+// ===== 7 · uso: la misma diapositiva, redibujada para cada producto =====
+// meses desde jul 2023 hasta sep 2026 (39)
+const SERIES = [543837,1455930,1421536,2012547,1758673,1302750,1503569,1550431,1882894,2075619,1671717,1271491,1009871,1219876,1256946,1268604,1254240,1079935,1031848,847679,958090,1251489,1116500,1017510,1046163,1208147,1722444,794704,1503052,1422423,1350540,1733251,2768378,3485231,3482819,2882772,3031081,3684738,3922660];
+const GEOREF = [6249835,9566702,8888772,12256441,13456154,12889398,11588875,7456569,6607872,4789328,3859328,4823663,2354507,2789786,8210264,5835490,5066250,9072614,7748130,2211090,4041359,5818218,6231859,6689018,8219398,18525108,10334514,9416116,9453909,16672488,18240586,18655885,20287058,14269035,12357743,24061788,25924987,19090596,12832952];
+const PORTAL = Array(39).fill(null);
+[8241873,8241873,8241873,16337443,6654019,5016772,7111790,7339726,8080435,8507461,8251851,6877360,7780650,7198489,7957486,8021612,8265137,6350391,7128948].forEach((x, k) => PORTAL[6 + k] = x);
+[10893286,8867365,1210343,4553694,5455534,5514224,3405063].forEach((x, k) => PORTAL[30 + k] = x);
+const CX = m => 170 + m * 1260 / 38, Y0 = 760, ALTO = 400;
+prev = fin(); g = slide(6); viaje(prev, [6 * PASO + 100, 760]); v = tr;
+off = [6 * PASO, 0];
+const estados = [
+  {datos: PORTAL, max: 18e6, ticks: [5e6, 10e6, 15e6], kick: 'Uso · Portal Andino', tit: 'Hits mensuales del portal',
+   baj: `${fmt(98902476)} hits en 2024 · ${fmt(39899509)} entre enero y julio de 2026`,
+   src: 'Fuente: planillas de indicadores mensuales. Sin datos de ago–dic 2025; ene–mar 2024 figuran con el mismo valor.'},
+  {datos: SERIES, max: 4.5e6, ticks: [1e6, 2e6, 3e6, 4e6], kick: 'Uso · API Series de Tiempo', tit: 'Consultas mensuales a la API de Series',
+   baj: `${fmt(30061649)} consultas de oct 2025 a sep 2026: 2,2 veces las de los doce meses anteriores`,
+   src: 'Fuente: planillas de indicadores mensuales (jul 2023 a jul 2025) y hits mensuales (jul 2025 a sep 2026).'},
+  {datos: GEOREF, max: 30e6, ticks: [10e6, 20e6, 30e6], kick: 'Uso · API Georef', tit: 'Consultas mensuales a la API Georef',
+   baj: `${fmt(201263143)} consultas de oct 2025 a sep 2026: 2,2 veces las de los doce meses anteriores`,
+   src: 'Fuente: planillas de indicadores mensuales (jul 2023 a jul 2025) y hits mensuales (jul 2025 a sep 2026).'},
+];
+const usos = [];
+estados.forEach((e, n) => {
+  const cy = val => Y0 - val / e.max * ALTO;
+  let vuelta = null;
+  if (n){ // la línea vuelve por debajo del eje hasta el comienzo
+    const [lx, ly] = fin(); vuelta = tramo('vuelta'); off = [0, 0];
+    add(lx, ly); add(lx + 40, ly + 60); add(lx - 40, 846); add(6 * PASO + 400, 850); add(6 * PASO + 190, 836); add(6 * PASO + 162, 790);
+    off = [6 * PASO, 0];
+  }
+  c = tramo('contenido');
+  if (!n){ add(100, Y0, true); add(CX(6), Y0, true); } // entra por el eje y sube al primer dato
+  else add(162, 790);
+  T(g, 120, 118, e.kick.toUpperCase(), {s: 17, mono: true, c: 'var(--tenue)', i: 0});
+  T(g, 120, 190, e.tit, {s: 54, w: 800, i: 0});
+  T(g, 120, 244, e.baj, {s: 24, c: 'var(--texto-2)', i: 0});
+  T(g, 120, 280, e.src, {s: 15, mono: true, c: 'var(--tenue)', i: 0});
+  e.ticks.forEach(t => T(g, 150, cy(t) + 6, `${t / 1e6} M`, {s: 15, mono: true, a: 'end', c: 'var(--tenue)', i: 0}));
+  if (!n){
+    [0, ...[5e6, 10e6, 15e6]].forEach(t => cuando(el(g, 'path', {d: `M170 ${f(Y0 - t / 18e6 * ALTO)}H1430`, class: 'g it'}), {i: 0, fijo: !t}));
+    [[0, 'jul 2023'], [6, '2024'], [18, '2025'], [30, '2026']].forEach(([m, y]) => T(g, CX(m), 794, y, {s: 16, mono: true, c: 'var(--tenue)', i: 0, fijo: true}));
+    cuando(el(g, 'rect', {x: CX(24.5), y: Y0 - ALTO, width: CX(29.5) - CX(24.5), height: ALTO, class: 'it', style: 'fill:var(--tile)'}), {i: 0});
+    T(g, CX(27), Y0 - ALTO + 24, ['sin datos', 'ago–dic 2025'], {s: 15, mono: true, a: 'middle', c: 'var(--tenue)', i: 0});
+  } else {
+    e.ticks.forEach(t => cuando(el(g, 'path', {d: `M170 ${f(cy(t))}H1430`, class: 'g it'}), {i: 0}));
+  }
+  e.datos.forEach((val, m) => {
+    if (val == null){
+      if (n === 0 && m === 27){ add(CX(25.2), cy(7.8e6)); add(CX(27), cy(9.4e6)); add(CX(28.8), cy(9.8e6)); }
+      return;
+    }
+    add(CX(m), cy(val), true);
+  });
+  usos.push({vuelta, c, cy});
+  const pasos = n ? [vuelta, c] : [v, c];
+  paso(6, pasos, {ocultar: n ? [usos[n - 1].c, usos[n - 1].vuelta].filter(Boolean) : []});
+});
+// el pico de Georef en jul 2026
+{ const u = usos[2], i = 36 + 1; // índice del punto (hay un punto de entrada antes de la serie)
+  cuando(el(g, 'circle', {cx: CX(36), cy: u.cy(25924987), r: 16, class: 'it', style: 'fill:none;stroke:var(--violeta);stroke-width:2.2'}), {i});
+  T(g, CX(36) - 24, u.cy(25924987) + 6, 'jul 2026 · 25,9 M', {s: 17, mono: true, a: 'end', c: 'var(--indigo)', i}); }
+
+// ===== 8 · cosecha =====
+prev = fin(); g = slide(7); viaje(prev, [7 * PASO + 100, 610]); v = tr;
+off = [7 * PASO, 0]; c = tramo('contenido');
+encabezado(g, 'Cosecha', 'De dónde vienen los datasets');
+add(100, 610); add(120, 612, true);
+T(g, 120, 580, '43', {s: 200, w: 800, i: 0});
+const i43 = add(420, 612, true);
+T(g, 520, 470, 'catálogos cosechados por datos.gob.ar', {s: 34, w: 700, i: i43});
+add(470, 600); add(520, 612, true);
+const iTx = add(1300, 612, true);
+T(g, 520, 520, ['Planillas XLSX de cada organismo, portales Andino anteriores', 'y otros CKAN. La cosecha corre cada cinco minutos.'], {s: 24, c: 'var(--texto-2)', i: iTx - 1});
+add(1500, 612, true);
+paso(7, [v, c], {ocultar: [usos[2].vuelta]});
+
+// ===== 9 · cronología de V2 =====
+prev = fin(); g = slide(8); viaje(prev, [8 * PASO + 100, 560]); v = tr;
+off = [8 * PASO, 0]; c = tramo('contenido');
+encabezado(g, 'Cronología', 'Andino V2, de diciembre de 2025 a hoy');
+add(100, 560, true);
+[['dic 2025', 'Tema visual', 'ckanext-gobar-theme'], ['feb 2026', 'Perfil de metadatos', 'ckanext-scheming-gobar'], ['abr 2026', 'Cosecha', 'ckanext-gobar-harvest'], ['may 2026', 'Stack de despliegue', 'portal-andino-v2'], ['jul 2026', 'Explorador de series', 'series_explorer'], ['2 sep 2026', 'Rama de lanzamiento', 'del tema'], ['22 sep 2026', 'Guías de instalación', 'y de uso'], ['23 sep 2026', 'datos.gob.ar en', 'CKAN 2.11.5']]
+  .forEach(([fe, a, b], k) => {
+    const x = 170 + k * 180, up = k % 2 === 0, i = add(x, 560, true);
+    cuando(el(g, 'circle', {cx: x, cy: 560, r: 6, class: 'it', style: `fill:${k === 7 ? 'var(--violeta)' : 'var(--indigo)'}`}), {i});
+    T(g, x, up ? 450 : 626, fe, {s: 17, mono: true, a: 'middle', c: 'var(--indigo)', i});
+    T(g, x, up ? 484 : 660, a, {s: 20, w: 700, a: 'middle', i});
+    T(g, x, up ? 512 : 688, b, {s: 17, mono: true, a: 'middle', c: 'var(--tenue)', i});
+  });
+add(1500, 560, true);
+paso(8, [v, c]);
+
+// ===== 10 · cierre =====
+prev = fin(); g = slide(9); viaje(prev, [9 * PASO + 100, 700]); v = tr;
+off = [9 * PASO, 0]; c = tramo('contenido');
+T(g, 120, 118, 'EN RESUMEN', {s: 17, mono: true, c: 'var(--tenue)', i: 0});
+add(100, 700);
+[['2016', 'primera versión de Portal Andino'], ['2026', 'Andino V2 sobre CKAN 2.11'], ['1.287', 'datasets en datos.gob.ar']].forEach(([n, l], k) => {
+  const i = add(260 + k * 240, 700);
+  T(g, 120, 290 + k * 130, n, {s: 76, w: 800, i});
+  T(g, 420, 290 + k * 130, l, {s: 30, c: 'var(--texto-2)', i});
+});
+add(1000, 700); add(1150, 660); add(1218, 560); const iu = add(1232, 440);
+[[1232, 'var(--navy)'], [1270, 'var(--indigo)'], [1308, 'var(--violeta)']].forEach(([x, col]) => cuando(el(g, 'circle', {cx: x, cy: 420, r: 12, class: 'it', style: `fill:${col}`}), {i: iu}));
+T(g, 120, 780, 'Fuentes: github.com/datosgobar · API de datos.gob.ar (23/09/2026) · planillas de indicadores mensuales · repositorios de Andino V2.', {s: 15, mono: true, c: 'var(--tenue)', i: iu});
+paso(9, [v, c]);
+
+// ---------- geometría de cada tramo ----------
+const tmp = el(svg, 'path', {style: 'visibility:hidden'});
+TR.forEach(t => {
+  const P = t.pts, seg = [];
+  for (let k = 0; k < P.length - 1; k++){
+    const p1 = P[k], p2 = P[k + 1];
+    if (p1.s && p2.s){ seg.push(`L${f(p2.x)} ${f(p2.y)}`); continue; }
+    const p0 = p1.s ? p1 : (P[k - 1] || p1), p3 = p2.s ? p2 : (P[k + 2] || p2);
+    seg.push(`C${f(p1.x + (p2.x - p0.x) / 6)} ${f(p1.y + (p2.y - p0.y) / 6)} ${f(p2.x - (p3.x - p1.x) / 6)} ${f(p2.y - (p3.y - p1.y) / 6)} ${f(p2.x)} ${f(p2.y)}`);
+  }
+  t.acum = [0];
+  seg.forEach((s, k) => { tmp.setAttribute('d', `M${f(P[k].x)} ${f(P[k].y)}${s}`); t.acum.push(t.acum[k] + tmp.getTotalLength()); });
+  t.len = t.acum[t.acum.length - 1] || 0;
+  t.el = el(trazos, 'path', {d: `M${f(P[0].x)} ${f(P[0].y)}` + seg.join(''), class: 'tramo'});
+  t.el.style.strokeDasharray = `${t.len + 1} ${t.len + 1}`;
+  t.hecho = 0;
+  t.items.forEach(it => { it.L = t.acum[Math.min(it.i, t.acum.length - 1)]; it.on = false; });
+});
+tmp.remove();
+
+// ---------- estado y dibujo ----------
+const N = PASOS.length, num = document.getElementById('num');
+let actual = -1, cam = [0, 0], anim = null, ocultos = new Set();
+function pintar(){
+  svg.setAttribute('viewBox', `${f(cam[0])} ${f(cam[1])} ${W} ${H}`);
+  for (const t of TR){
+    t.el.style.strokeDashoffset = t.len + 1 - t.hecho;
+    const fuera = ocultos.has(t);
+    t.el.classList.toggle('fuera', fuera);
+    for (const it of t.items){
+      const on = t.hecho > 0 && t.hecho >= it.L - .5 && (!fuera || it.fijo);
+      if (on !== it.on){ it.on = on; it.el.classList.toggle('on', on); }
+    }
+  }
+}
+// estado final del paso s, sin animación
+function fijar(s){
+  ocultos = new Set(PASOS.slice(0, s + 1).flatMap(p => p.ocultar));
+  const dibujados = new Set(PASOS.slice(0, s + 1).flatMap(p => p.tramos));
+  TR.forEach(t => { t.hecho = dibujados.has(t) ? t.len : 0; });
+  cam = [PASOS[s].k * PASO, 0];
+  actual = s; rotular(); pintar(); punta.style.opacity = 0;
+}
+const rotular = () => { num.textContent = `${actual + 1} / ${N}`; try { history.replaceState(null, '', '#' + (actual + 1)); } catch (e) {} };
+const suave = t => .5 - Math.cos(Math.PI * t) / 2;
+
+let reloj = null;
+function reproducir(s){
+  if (anim){ cancelAnimationFrame(anim); anim = null; fijar(actual); }
+  if (s < 0 || s >= N) return;
+  if (s !== actual + 1 || reduce){ fijar(s); programarAuto(); return; }
+  const P = PASOS[s];
+  P.ocultar.forEach(t => ocultos.add(t));
+  actual = s; rotular();
+  const cola = P.tramos.slice();
+  (function siguiente(){
+    const t = cola.shift();
+    if (!t){ anim = null; punta.style.opacity = 0; programarAuto(); return; }
+    const viajando = t.tipo === 'viaje';
+    const dur = viajando ? 2600 : Math.max(1600, t.len / .62);   // ~620 unidades por segundo al dibujar
+    const camX0 = cam[0], sx0 = t.pts[0].x - camX0, sx1 = t.pts[t.pts.length - 1].x - P.k * PASO;
+    const t0 = performance.now();
+    punta.style.opacity = 1;
+    (function frame(now){
+      const q = Math.min(1, (now - t0) / dur), e = suave(q);
+      t.hecho = t.len * e;
+      const p = t.el.getPointAtLength(t.hecho);
+      if (viajando) cam = [p.x - (sx0 + (sx1 - sx0) * e), 0]; // la cámara acompaña a la línea por el blanco
+      punta.setAttribute('cx', f(p.x)); punta.setAttribute('cy', f(p.y));
+      pintar();
+      if (q < 1) anim = requestAnimationFrame(frame);
+      else { if (viajando) cam = [P.k * PASO, 0]; siguiente(); }
+    })(t0);
+  })();
+}
+
+const ayuda = document.querySelector('.ayuda');
+const sig = () => { ayuda.hidden = true; reproducir(actual + 1); }, ant = () => reproducir(actual - 1);
+document.getElementById('sig').addEventListener('click', sig);
+document.getElementById('ant').addEventListener('click', ant);
+svg.addEventListener('click', e => (e.clientX < innerWidth / 4 ? ant() : sig()));
+addEventListener('keydown', e => {
+  if (['ArrowRight', 'PageDown', ' ', 'Enter'].includes(e.key) && !e.target.closest('button')){ e.preventDefault(); sig(); }
+  else if (['ArrowLeft', 'PageUp'].includes(e.key)){ e.preventDefault(); ant(); }
+  else if (e.key === 'Home') reproducir(0);
+  else if (e.key === 'End') reproducir(N - 1);
+});
+// auto: espera un rato con la diapositiva quieta y sigue; al final vuelve a empezar
+const autoBtn = document.getElementById('auto');
+function programarAuto(){
+  clearTimeout(reloj);
+  if (autoBtn.getAttribute('aria-pressed') !== 'true') return;
+  reloj = setTimeout(() => (actual === N - 1 ? (fijar(0), programarAuto()) : reproducir(actual + 1)), 4500);
+}
+autoBtn.addEventListener('click', () => {
+  const on = autoBtn.getAttribute('aria-pressed') !== 'true';
+  autoBtn.setAttribute('aria-pressed', on);
+  if (on && !anim) programarAuto(); else if (!on) clearTimeout(reloj);
+});
+
+const inicio = Math.max(1, Math.min(N, parseInt(location.hash.slice(1)) || 1)) - 1;
+if (inicio === 0 && !reduce){ cam = [0, 0]; pintar(); reproducir(0); }
+else fijar(inicio);
+svg.focus();
+</script>

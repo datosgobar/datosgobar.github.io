@@ -1,0 +1,372 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Andino Arcade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap">
+<style>
+/* ponytail: un solo mundo diurno, sin variante oscura a propósito */
+:root{
+  color-scheme:light;
+  --sky:#e6f4fd; --paper:#ffffff; --ink:#1d2a5b; --dim:#5a6391; --line:#1d2a5b;
+  --celeste:#2f8fc4; --sol:#f6b40e; --rosa:#e23b6f; --pasto:#4caf50;
+  --px:"Press Start 2P",ui-monospace,monospace;
+  --vt:"VT323",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+body{background:var(--sky);color:var(--ink);font:22px/1.25 var(--vt);padding-inline:16px;padding-block:20px 48px}
+.wrap{max-width:960px;margin:0 auto;display:grid;gap:16px}
+.px{font-family:var(--px);letter-spacing:.04em}
+header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:12px}
+h1{margin:0;font:clamp(16px,3.4vw,26px)/1.2 var(--px);color:var(--ink);text-shadow:3px 3px 0 var(--sol)}
+.hud{display:flex;flex-wrap:wrap;gap:8px;font:10px/1 var(--px)}
+.hud span{background:var(--paper);border:3px solid var(--line);padding:7px 9px}
+#hudDemo{background:var(--sol)} #hudDemo[hidden]{display:none}
+
+.screen{position:relative;border:4px solid var(--line);box-shadow:6px 6px 0 var(--line);background:#8dd0f5}
+#game{display:block;width:100%;height:auto;aspect-ratio:200/112;image-rendering:pixelated;touch-action:manipulation}
+#game:focus-visible,button:focus-visible{outline:3px solid var(--rosa);outline-offset:3px}
+
+.pad{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.pad .keys{display:flex;gap:8px}
+.pad button{font:14px/1 var(--px);background:var(--paper);color:var(--ink);border:3px solid var(--line);
+  box-shadow:3px 3px 0 var(--line);width:52px;height:46px;cursor:pointer;user-select:none;-webkit-user-select:none;touch-action:none}
+.pad button:active{transform:translate(3px,3px);box-shadow:none}
+.pad p{margin:0;color:var(--dim);font-size:19px}
+kbd{font:10px var(--px);border:2px solid var(--dim);padding:2px 4px;background:var(--paper)}
+
+.dialog{background:var(--paper);border:4px solid var(--line);box-shadow:6px 6px 0 var(--line);padding:18px 20px;min-height:170px;position:relative}
+.dialog::after{content:"▼";position:absolute;right:14px;bottom:8px;font:10px var(--px);color:var(--rosa);animation:blink 1s steps(1) infinite}
+.dialog .when{margin:0;font:10px var(--px);color:var(--rosa)}
+.dialog h2{margin:8px 0 10px;font:15px/1.5 var(--px);text-wrap:balance}
+.dialog p{margin:0 0 10px;max-width:65ch}
+.dialog code{font:inherit;color:var(--celeste);word-break:break-all}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin:6px 0 10px}
+.stat{border:3px solid var(--line);padding:10px;display:grid;gap:6px}
+.stat b{font:clamp(13px,2vw,17px)/1.2 var(--px);color:var(--celeste);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.stat small{font-size:18px;color:var(--dim)}
+.bars{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;height:150px;align-items:end;border-bottom:3px solid var(--line);margin:6px 0 34px;padding-inline:4px}
+.yr{height:100%;display:flex;gap:3px;align-items:end;justify-content:center;position:relative}
+.yr i{width:min(40%,34px);height:var(--h);background:repeating-linear-gradient(0deg,var(--c) 0 8px,transparent 8px 10px)}
+.yr span{position:absolute;bottom:-28px;font-size:18px;color:var(--dim)}
+.legend{display:flex;gap:16px;font-size:19px}
+.legend b{display:inline-block;width:12px;height:12px;margin-right:6px}
+
+.travel{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.travel strong{font:10px var(--px);color:var(--dim);margin-right:4px}
+.travel button{font:9px/1.3 var(--px);background:var(--paper);color:var(--ink);border:3px solid var(--line);padding:6px 8px;cursor:pointer}
+.travel button.seen{background:#fff4cf}
+.travel button[aria-current="true"]{background:var(--ink);color:var(--paper)}
+footer{color:var(--dim);font-size:18px;border-top:3px dashed var(--dim);padding-top:12px}
+footer a{color:var(--celeste)}
+#status{font:9px var(--px);color:var(--dim)}
+@keyframes blink{50%{opacity:0}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>ANDINO ARCADE</h1>
+    <div class="hud" aria-live="polite">
+      <span id="hudHitos">HITOS 0/10</span>
+      <span id="hudDemo" hidden>MODO PASEO</span>
+    </div>
+  </header>
+
+  <div class="screen">
+    <canvas id="game" width="200" height="112" tabindex="0"
+      aria-label="Mundo del Portal Andino. Usá las flechas para caminar y tocá los objetos para ver cada hito."></canvas>
+  </div>
+
+  <div class="pad">
+    <div class="keys">
+      <button type="button" data-k="L" aria-label="Caminar a la izquierda">◀</button>
+      <button type="button" data-k="R" aria-label="Caminar a la derecha">▶</button>
+      <button type="button" data-k="J" aria-label="Saltar">▲</button>
+    </div>
+    <p><kbd>←</kbd> <kbd>→</kbd> caminar · <kbd>↑</kbd> saltar · click en cualquier cosa del paisaje</p>
+  </div>
+
+  <section class="dialog" id="panel" aria-live="polite"></section>
+
+  <nav class="travel" id="travel" aria-label="Ir a un hito"><strong>IR A:</strong></nav>
+
+  <footer>
+    <span id="status">VALORES GUARDADOS · CONSULTADOS EL 23/09/2026</span><br>
+    Uso de las APIs: series <code>apis_georef_*</code> y <code>apis_series_*</code> de
+    <a href="https://apis.datos.gob.ar/series/api/" target="_blank" rel="noopener">apis.datos.gob.ar</a> (publicadas hasta agosto de 2024).
+    Hitos tomados del historial de los repositorios.
+  </footer>
+</div>
+
+<script>
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const fmt = n => Math.round(n).toLocaleString('es-AR');
+
+// valores guardados (23/09/2026); se pisan con la API si responde (abriendo el archivo local)
+const D = {
+  geoTotal: 264037620, geoDate: '27/08/2024', serTotal: 47618528, serDate: '04/08/2024',
+  serCount: 33154, deps: 529, mun: 2082, loc: 4037, orgs: 45,
+  years: [['2019',10784848,7188897],['2020',25515474,6128263],['2021',44536302,7358547],['2022',64416323,3603430],['2023',72847789,9229218]],
+};
+const stat = (v, l, c) => `<div class="stat"><b style="color:${c || 'var(--celeste)'}">${v}</b><small>${l}</small></div>`;
+const bars = d => {
+  const max = 80e6;
+  return `<div class="legend"><span><b style="background:var(--sol)"></b>Georef</span><span><b style="background:var(--celeste)"></b>Series</span></div>
+  <div class="bars">${d.years.map(([y, g, s]) =>
+    `<div class="yr"><i style="--h:${g/max*100}%;--c:var(--sol)" title="Georef ${y}: ${fmt(g)}"></i><i style="--h:${s/max*100}%;--c:var(--celeste)" title="Series ${y}: ${fmt(s)}"></i><span>${y}</span></div>`).join('')}</div>
+  <p>Millones de consultas por año completo (escala 0–80 M).</p>`;
+};
+
+// el mundo: cada hito es un objeto que se puede tocar
+const OBJ = [
+  {x: 20, w: 16, h: 20, kind: 'sign', label: 'INICIO', when: 'PRESS START', title: '¡Hola, les damos la bienvenida al Portal Andino!',
+    body: () => `<p>Caminá con las flechas (o los botones), saltá con ↑ y tocá cualquier cosa del paisaje para ver su historia. Si no tocás nada, la exploradora pasea sola.</p><p>Cada parada es un hito real del portal y de sus APIs de datos abiertos.</p>`},
+  {x: 110, w: 28, h: 28, kind: 'house', label: '2014', when: 'OCT 2014', title: 'Nace el repo de despliegue',
+    body: () => `<p>Primer commit de lo que hoy es <code>portal-andino-v2</code>: el stack dockerizado que levanta un Andino con CKAN, Solr, PostgreSQL, Redis y nginx.</p>`},
+  {x: 220, w: 16, h: 30, kind: 'machine', c: '#2f8fc4', label: 'API SERIES', when: 'ENE 2018', title: 'La API de Series de Tiempo empieza a contar',
+    body: d => `<p>Desde el 08/01/2018 cada consulta queda registrada como una serie diaria más.</p><div class="stats">${stat(fmt(d.serTotal), 'consultas acumuladas al ' + d.serDate)}${stat(fmt(d.serCount), 'series publicadas en el buscador', 'var(--rosa)')}</div><p><code>apis.datos.gob.ar/series/api/</code></p>`},
+  {x: 320, w: 30, h: 30, kind: 'board', c: '#2f8fc4', label: 'EXPLORADOR', when: 'MAY 2018', title: 'Explorador de Series',
+    body: () => `<p>Arranca <code>series-tiempo-ar-explorer</code>: gráficos interactivos y embebibles construidos sobre la API de Series.</p>`},
+  {x: 430, w: 16, h: 30, kind: 'machine', c: '#f6b40e', label: 'API GEOREF', when: 'JUL 2018', title: 'Georef entra al juego',
+    body: d => `<p>Desde el 17/07/2018 se miden las consultas a la API que normaliza y geocodifica direcciones de todo el país.</p><div class="stats">${stat(fmt(d.geoTotal), 'consultas acumuladas al ' + d.geoDate, '#b07d00')}${stat(`${d.deps} · ${d.mun} · ${fmt(d.loc)}`, 'departamentos · municipios · localidades')}</div><p><code>apis.datos.gob.ar/georef/api/</code></p>`},
+  {x: 540, w: 24, h: 26, kind: 'trophy', label: 'RÉCORD', when: '2023', title: 'Récord: 72,8 M consultas a Georef en un año',
+    body: d => `<p>El año completo con más consultas registradas. Series de Tiempo sumó 9,2 M ese mismo año.</p>${bars(d)}`},
+  {x: 640, w: 30, h: 26, kind: 'stand', label: 'PONCHO', when: 'DIC 2025', title: 'Tema gob.ar con Poncho',
+    body: () => `<p><code>ckanext-gobar-theme</code> suma la identidad oficial con Poncho, y <code>ckanext-spatial-widget-ar</code> pone mapas en los datasets.</p>`},
+  {x: 750, w: 26, h: 44, kind: 'tower', label: 'CKAN 2.11', when: 'JUN 2026', title: 'Andino V2 sobre CKAN 2.11',
+    body: d => `<p>Todo en extensiones y cuatro perfiles (genérico, APN, nacional, central) que se eligen con una sola variable. Suman <code>georef-ux</code> y <code>pygeorefar</code> sobre Georef v2.1.</p><div class="stats">${stat(d.orgs, 'organismos publicando en datos.gob.ar', 'var(--rosa)')}</div><p><code>datos.gob.ar/api/3/action/</code></p>`},
+  {x: 860, w: 30, h: 30, kind: 'board', c: '#e23b6f', label: 'SERIES', when: 'JUL 2026', title: 'Series dentro del portal',
+    body: () => `<p><code>ckanext-series-explorer</code>: buscador, comparador y detalle de series de tiempo como extensión de CKAN.</p>`},
+  {x: 980, w: 40, h: 46, kind: 'castle', label: 'LANZAMIENTO', when: 'SEP 2026', title: 'Rama de lanzamiento',
+    body: () => `<p>El 02/09/2026 el tema entra a la rama de lanzamiento. Próximo nivel: producción.</p>`},
+];
+
+const VW = 200, VH = 112, GY = 92, WORLD = 1060;
+const cv = document.getElementById('game'), x = cv.getContext('2d');
+const panel = document.getElementById('panel'), travel = document.getElementById('travel');
+const hudHitos = document.getElementById('hudHitos'), hudDemo = document.getElementById('hudDemo');
+
+const p = {x: 30, y: 0, vy: 0, dir: 1};
+const llama = {x: 14};
+const keys = {}, visited = new Set();
+let cam = 0, t = 0, cur = -1, target = null, idle = 0, demo = false, demoI = 1, pause = 0, hover = -1;
+
+const PAL = {r:'#e23b4f', y:'#f6b40e', s:'#f1b58a', k:'#1d2a5b', b:'#2f8fc4', w:'#ffffff', n:'#6b3e26', c:'#f4efe6'};
+const HERO = [
+  '...rr...','..rrrr..','.ryyyyr.','.rssssk.','.rsssss.','..bbbb..','.bbwwbb.','bbbbbbbb','.bbbbbb.','..nnnn..'];
+const LEGS = [['..n..n..','.kk..kk.'], ['.n....n.','kk....kk']];
+const LLAMA = ['......c.c.','......ccc.','......cckc','......ccc.','......cc..','.crrrrcc..','cccccccc..','.cccccccc.'];
+const LLEGS = [['.c.c..c.c.','.k.k..k.k.'], ['c...c...c.','k...k...k.']];
+
+function spr(rows, px, py, flip){
+  rows.forEach((r, j) => [...r].forEach((ch, i) => {
+    if (ch === '.') return;
+    x.fillStyle = PAL[ch];
+    x.fillRect(flip ? px + r.length - 1 - i : px + i, py + j, 1, 1);
+  }));
+}
+const R = (c, a, b, w, h) => { x.fillStyle = c; x.fillRect(a, b, w, h); };
+
+const DRAW = {
+  sign(a){ R('#8a5a34', a+7, GY-12, 2, 12); R('#8a5a34', a, GY-20, 16, 10); R('#e0a864', a+1, GY-19, 14, 8); R('#8a5a34', a+3, GY-17, 10, 1); R('#8a5a34', a+3, GY-14, 7, 1); },
+  house(a){
+    R('#ffffff', a+2, GY-16, 24, 16);
+    for (let r = 0; r < 12; r++) R('#e23b4f', a+13-r, GY-28+r, 2+2*r, 1);
+    R('#1d2a5b', a+11, GY-9, 6, 9); R('#8dd0f5', a+4, GY-12, 5, 5); R('#8dd0f5', a+19, GY-12, 5, 5);
+    R('#8a5a34', a+19, GY-30, 3, 6);
+  },
+  machine(a, o){
+    R('#1d2a5b', a-1, GY-31, 18, 31); R(o.c, a, GY-30, 16, 30);
+    R('#ffffff', a+2, GY-28, 12, 4); R('#1d2a5b', a+2, GY-22, 12, 9);
+    for (let k = 0; k < 7; k++) if (((t/8 + k*5) | 0) % 3) R('#7bd67f', a+3+(k*3)%10, GY-21+(k*2)%7, 1, 1);
+    R('#1d2a5b', a+1, GY-11, 14, 3); R('#e23b4f', a+4, GY-10, 2, 1); R('#ffffff', a+9, GY-10, 2, 1);
+  },
+  board(a, o){
+    R('#8a5a34', a+4, GY-12, 2, 12); R('#8a5a34', a+24, GY-12, 2, 12);
+    R('#1d2a5b', a, GY-30, 30, 18); R('#ffffff', a+1, GY-29, 28, 16);
+    let yy = GY-18;
+    for (let i = 0; i < 24; i++){ yy += ((i*7 + (t/12|0)) % 5) - 2; yy = Math.max(GY-27, Math.min(GY-15, yy)); R(o.c, a+3+i, yy, 1, 2); }
+  },
+  trophy(a){
+    R('#1d2a5b', a+2, GY-8, 20, 8); R('#5a6391', a+5, GY-12, 14, 4);
+    R('#f6b40e', a+7, GY-26, 10, 9); R('#f6b40e', a+4, GY-25, 3, 1); R('#f6b40e', a+4, GY-25, 1, 5); R('#f6b40e', a+17, GY-25, 3, 1); R('#f6b40e', a+19, GY-25, 1, 5);
+    R('#f6b40e', a+11, GY-17, 2, 5); R('#ffffff', a+9, GY-24, 1, 4);
+    if ((t/20|0) % 2) R('#ffffff', a+15, GY-29, 1, 1);
+  },
+  stand(a){
+    R('#8a5a34', a+2, GY-20, 2, 20); R('#8a5a34', a+26, GY-20, 2, 20);
+    for (let k = 0; k < 6; k++) R(k % 2 ? '#ffffff' : '#74c2e1', a+k*5, GY-26, 5, 7);
+    R('#e23b4f', a+10, GY-18, 10, 9); R('#f6b40e', a+10, GY-15, 10, 1); R('#1d2a5b', a+14, GY-18, 2, 2);
+    R('#c98b4f', a+1, GY-7, 28, 7);
+  },
+  tower(a){
+    R('#1d2a5b', a+12, GY-52, 2, 8); R('#e23b4f', a+12, GY-53, 2, 1);
+    R('#5a6fb0', a, GY-44, 26, 44);
+    for (let r = 0; r < 7; r++) for (let q = 0; q < 3; q++)
+      R(((r*3 + q + (t/90|0)) % 4) ? '#f6e27a' : '#3b4a85', a+3+q*8, GY-40+r*5, 4, 3);
+    R('#1d2a5b', a+10, GY-6, 6, 6);
+  },
+  castle(a){
+    R('#b9c0e0', a, GY-30, 10, 30); R('#b9c0e0', a+30, GY-30, 10, 30); R('#d9dcef', a+6, GY-22, 28, 22);
+    for (let k = 0; k < 3; k++){ R('#b9c0e0', a+k*4, GY-33, 2, 3); R('#b9c0e0', a+30+k*4, GY-33, 2, 3); R('#d9dcef', a+8+k*9, GY-25, 4, 3); }
+    R('#1d2a5b', a+16, GY-12, 8, 12); R('#1d2a5b', a+17, GY-14, 6, 2);
+    R('#1d2a5b', a+19, GY-48, 1, 26);
+    const wv = (t/10|0) % 2;
+    R('#74c2e1', a+20, GY-48+wv, 12, 3); R('#ffffff', a+20, GY-45+wv, 12, 3); R('#74c2e1', a+20, GY-42+wv, 12, 3); R('#f6b40e', a+25, GY-45+wv, 2, 2);
+  },
+};
+
+const clouds = [[10,10,22],[80,22,16],[150,8,26],[230,18,18],[300,6,22]];
+function drawWorld(){
+  ['#6ec3f2','#82cbf4','#98d4f6','#b0def8','#c9e8fb','#dff2fd'].forEach((c, i) => R(c, 0, i*10, VW, 10));
+  R('#dff2fd', 0, 60, VW, GY-60);
+  // sol de mayo, fijo en el cielo
+  const cx = 170, cy = 18;
+  for (let a = 0; a < 16; a++){
+    const ang = a*Math.PI/8 + (reduce ? 0 : (t/40|0)*Math.PI/16), len = a % 2 ? 9 : 11;
+    R('#f6b40e', cx + Math.cos(ang)*len | 0, cy + Math.sin(ang)*len | 0, 1, 1);
+  }
+  for (let yy = -6; yy <= 6; yy++) for (let xx = -6; xx <= 6; xx++) if (xx*xx + yy*yy <= 36) R('#f6b40e', cx+xx, cy+yy, 1, 1);
+  clouds.forEach(([cx0, cy0, w]) => {
+    const sx = ((cx0 - cam*0.2 + t*0.03) % 320 + 320) % 320 - 40 | 0;
+    R('#ffffff', sx, cy0, w, 4); R('#ffffff', sx+4, cy0-3, w-10, 3);
+  });
+  for (let i = 0; i < VW; i++){
+    const wx = i + cam*0.3;
+    const h = 64 - Math.abs(Math.sin(wx*0.045)*18 + Math.sin(wx*0.13)*6) | 0;
+    R('#8ea4d8', i, h, 1, GY-h);
+    if (h < 52) R('#ffffff', i, h, 1, 3);
+  }
+  for (let i = 0; i < VW; i++){
+    const wx = i + cam*0.6;
+    const h = 82 - Math.abs(Math.sin(wx*0.03 + 2)*9 + Math.sin(wx*0.09)*3) | 0;
+    R('#7fcb7a', i, h, 1, GY-h);
+  }
+  R('#c98b4f', 0, GY, VW, VH-GY); R('#4caf50', 0, GY, VW, 4); R('#7bd67f', 0, GY, VW, 1);
+  const off = cam % 16;
+  for (let k = -16; k < VW+16; k += 16){ R('#a8733f', k-off+3, GY+8, 2, 1); R('#a8733f', k-off+11, GY+14, 1, 1); R('#e0a864', k-off+7, GY+11, 1, 1); }
+}
+
+function bubble(text, cxs, top){
+  x.font = '8px "Press Start 2P"';
+  const w = x.measureText(text).width + 6 | 0, bx = Math.max(1, Math.min(VW-w-1, cxs - w/2 | 0));
+  R('#1d2a5b', bx-1, top-1, w+2, 12); R('#ffffff', bx, top, w, 10);
+  x.fillStyle = '#1d2a5b'; x.textBaseline = 'top'; x.fillText(text, bx+3, top+2);
+}
+
+function near(){
+  let best = -1, bd = 1e9;
+  OBJ.forEach((o, i) => { const d = Math.abs(p.x - (o.x + o.w/2)); if (d < o.w/2 + 6 && d < bd){ bd = d; best = i; } });
+  return best;
+}
+
+function open(i){
+  if (i === cur) return;
+  cur = i;
+  const o = OBJ[i];
+  panel.innerHTML = `<p class="when">${o.when}</p><h2>${o.title}</h2>${o.body(D)}`;
+  visited.add(i);
+  hudHitos.textContent = visited.size === OBJ.length ? '¡NIVEL COMPLETO! 10/10' : `HITOS ${visited.size}/${OBJ.length}`;
+  [...travel.querySelectorAll('button')].forEach((b, j) => { b.classList.toggle('seen', visited.has(j)); b.setAttribute('aria-current', j === i); });
+}
+
+function goTo(i){ target = OBJ[i].x + OBJ[i].w/2; }
+function wake(){ idle = 0; demo = false; hudDemo.hidden = true; }
+
+function update(){
+  let mv = (keys.R ? 1 : 0) - (keys.L ? 1 : 0);
+  if (mv) target = null;
+  if (!mv && target !== null){
+    const d = target - p.x;
+    if (Math.abs(d) < 1.2){ p.x = target; target = null; pause = 150; } else mv = Math.sign(d);
+  }
+  if (!reduce && ++idle > 240 && target === null){
+    if (!demo){ demo = true; hudDemo.hidden = false; }
+    if (--pause <= 0){ goTo(demoI); demoI = (demoI + 1) % OBJ.length; }
+  }
+  p.x = Math.max(4, Math.min(WORLD-4, p.x + mv*1.1));
+  if (mv) p.dir = mv;
+  p.moving = mv !== 0;
+  if (keys.J && p.y === 0) p.vy = 3.2;
+  p.y += p.vy; p.vy -= 0.2;
+  if (p.y <= 0){ p.y = 0; p.vy = 0; }
+  llama.x += (p.x - 16*p.dir - llama.x) * 0.04;
+  const n = near();
+  if (n >= 0) open(n);
+  cam = Math.max(0, Math.min(WORLD-VW, p.x - VW/2));
+}
+
+function draw(){
+  drawWorld();
+  const n = near();
+  OBJ.forEach((o, i) => {
+    const sx = Math.round(o.x - cam);
+    if (sx < -60 || sx > VW+10) return;
+    DRAW[o.kind](sx, o);
+    const top = GY - o.h - 12 - (reduce ? 0 : Math.abs(Math.sin(t/10))*3 | 0);
+    if (i === n || i === hover) bubble(o.label, sx + o.w/2, top - 4);
+    else if (!visited.has(i)){ x.font = '8px "Press Start 2P"'; x.fillStyle = '#e23b6f'; x.fillText('!', sx + o.w/2 - 3, top); }
+  });
+  const lf = p.moving || Math.abs(llama.x - p.x) > 18 ? (t/8|0) % 2 : 0;
+  const lx = Math.round(llama.x - cam - 5), ldir = p.x < llama.x;
+  spr(LLAMA, lx, GY-10, ldir); spr(LLEGS[lf], lx, GY-2, ldir);
+  const f = p.moving && p.y === 0 ? (t/6|0) % 2 : 0;
+  const hx = Math.round(p.x - cam - 4), hy = Math.round(GY - 12 - p.y);
+  spr(HERO, hx, hy, p.dir < 0); spr(LEGS[f], hx, hy + 10, p.dir < 0);
+}
+
+function loop(){ t++; update(); draw(); requestAnimationFrame(loop); }
+
+// controles
+const KEYMAP = {ArrowLeft: 'L', a: 'L', A: 'L', ArrowRight: 'R', d: 'R', D: 'R', ArrowUp: 'J', w: 'J', W: 'J', ' ': 'J'};
+addEventListener('keydown', e => {
+  const k = KEYMAP[e.key]; if (!k || e.target.closest('button,a')) return;
+  e.preventDefault(); keys[k] = true; wake();
+});
+addEventListener('keyup', e => { const k = KEYMAP[e.key]; if (k) keys[k] = false; });
+addEventListener('blur', () => { keys.L = keys.R = keys.J = false; });
+document.querySelectorAll('.pad button').forEach(b => {
+  const k = b.dataset.k;
+  b.addEventListener('pointerdown', e => { e.preventDefault(); keys[k] = true; wake(); });
+  ['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => b.addEventListener(ev, () => { keys[k] = false; }));
+});
+function hit(e){
+  const r = cv.getBoundingClientRect();
+  const wx = (e.clientX - r.left) / r.width * VW + cam, wy = (e.clientY - r.top) / r.height * VH;
+  return {wx, i: OBJ.findIndex(o => wx >= o.x - 2 && wx <= o.x + o.w + 2 && wy >= GY - o.h - 16 && wy <= GY + 2)};
+}
+cv.addEventListener('click', e => { const {wx, i} = hit(e); wake(); target = i >= 0 ? OBJ[i].x + OBJ[i].w/2 : Math.max(4, Math.min(WORLD-4, wx)); });
+cv.addEventListener('pointermove', e => { hover = hit(e).i; cv.style.cursor = hover >= 0 ? 'pointer' : 'default'; });
+cv.addEventListener('pointerleave', () => { hover = -1; });
+
+OBJ.forEach((o, i) => {
+  const b = document.createElement('button');
+  b.type = 'button'; b.textContent = o.label;
+  b.addEventListener('click', () => { wake(); goTo(i); });
+  travel.appendChild(b);
+});
+
+// datos en vivo (el sandbox del artifact los bloquea; abierto local, responden)
+const API = 'https://apis.datos.gob.ar';
+const get = q => fetch(API + q).then(r => r.ok ? r.json() : Promise.reject(r.status));
+const dmy = s => s.split('-').reverse().join('/');
+Promise.all([
+  get('/series/api/series/?ids=apis_georef_005&last=1'),
+  get('/series/api/series/?ids=apis_series_005&last=1'),
+  get('/series/api/series/?ids=apis_georef_001,apis_series_001&collapse=year&collapse_aggregation=sum'),
+  get('/series/api/search/?limit=1'),
+  get('/georef/api/departamentos?max=1'), get('/georef/api/municipios?max=1'), get('/georef/api/localidades?max=1'),
+]).then(([g, s, yr, se, de, mu, lo]) => {
+  Object.assign(D, {
+    geoTotal: g.data[0][1], geoDate: dmy(g.data[0][0]), serTotal: s.data[0][1], serDate: dmy(s.data[0][0]),
+    serCount: se.count, deps: de.total, mun: mu.total, loc: lo.total,
+    years: yr.data.filter(r => r[1] && r[2]).map(r => [String(parseInt(r[0])), r[1], r[2]]),
+  });
+  document.getElementById('status').textContent = '● EN VIVO · apis.datos.gob.ar';
+  const c = cur; cur = -1; if (c >= 0) open(c);
+}).catch(() => {});
+
+open(0);
+document.fonts.load('8px "Press Start 2P"').finally(loop);
+</script>

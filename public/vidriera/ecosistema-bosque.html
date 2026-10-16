@@ -1,0 +1,463 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bosque de Datos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&family=IBM+Plex+Mono:wght@400&display=swap">
+<style>
+/* bosque en pixel art a pantalla completa; paleta de Datos Abiertos. Tema único, a propósito. */
+:root{
+  color-scheme:light;
+  --tinta:#141414; --navy:#232D4F; --indigo:#393793; --violeta:#B369ED; --papel:#F7F7F8; --tenue:#5E6072;
+  --sans:Montserrat,system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+html,body{height:100%;margin:0;overflow:hidden;background:#1B2146}
+#pantalla{position:fixed;inset:0;width:100vw;height:100vh;height:100dvh;object-fit:cover;image-rendering:pixelated;image-rendering:crisp-edges;display:block}
+.tarjeta{position:fixed;left:clamp(16px,3vw,48px);top:calc(clamp(16px,3vw,44px) + env(safe-area-inset-top,0px));max-width:min(560px,calc(100vw - 32px));
+  background:rgba(247,247,248,.94);color:var(--tinta);padding:clamp(14px,1.6vw,22px) clamp(16px,2vw,26px);box-shadow:6px 6px 0 rgba(35,45,79,.35);
+  font:500 clamp(14px,1.25vw,18px)/1.45 var(--sans);transition:opacity .6s ease, transform .6s ease}
+.tarjeta.oculta{opacity:0;transform:translateY(-8px)}
+.tarjeta .kicker{margin:0 0 6px;font:400 clamp(11px,.9vw,13px) var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--indigo)}
+.tarjeta h2{margin:0 0 8px;font:800 clamp(22px,2.6vw,38px)/1.08 var(--sans);letter-spacing:-.015em;text-wrap:balance}
+.tarjeta p{margin:0;color:var(--tenue)}
+.cifras{display:flex;flex-wrap:wrap;gap:6px 26px;margin-top:12px}
+.cifras b{display:block;font:800 clamp(22px,2.4vw,34px)/1 var(--sans);color:var(--tinta);font-variant-numeric:tabular-nums}
+.cifras small{font:400 clamp(11px,.85vw,13px) var(--mono);color:var(--tenue)}
+.titulo{max-width:min(760px,calc(100vw - 32px))}
+.titulo h2{font-size:clamp(34px,5vw,72px)}
+.foto{position:fixed;right:clamp(16px,3vw,48px);top:calc(clamp(16px,3vw,44px) + env(safe-area-inset-top,0px));width:min(34vw,420px);margin:0;
+  background:var(--papel);padding:8px;box-shadow:6px 6px 0 rgba(35,45,79,.35);transition:opacity .6s ease}
+.foto img{display:block;width:100%;height:auto}
+.foto figcaption{font:400 12px var(--mono);color:var(--tenue);padding:6px 2px 0}
+.foto.oculta{opacity:0}
+.hud{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom,0px));display:flex;gap:10px;align-items:center;
+  background:rgba(20,26,58,.55);padding:8px 12px;transition:opacity .5s}
+.hud.quieto{opacity:0}
+.hud button{all:unset;cursor:pointer;color:#fff;font:700 13px var(--sans);padding:2px 6px}
+.hud button:focus-visible{outline:2px solid var(--violeta)}
+.puntos{display:flex;gap:6px}
+.puntos i{width:8px;height:8px;background:rgba(255,255,255,.35)}
+.puntos i.ya{background:rgba(255,255,255,.8)}.puntos i.ahora{background:var(--violeta)}
+@media (max-width:700px){.foto{display:none}}
+</style>
+
+<canvas id="pantalla" aria-hidden="true"></canvas>
+<section class="tarjeta" id="tarjeta" aria-live="polite"></section>
+<figure class="foto oculta" id="foto"><img src="img/explorador-2018-serie.jpg" alt="Explorador de series de 2018: gráfico de una serie"><figcaption>El explorador de series de 2018</figcaption></figure>
+<nav class="hud" id="hud" aria-label="Capítulos">
+  <button type="button" id="ant" aria-label="Capítulo anterior">‹</button>
+  <span class="puntos" id="puntos"></span>
+  <button type="button" id="sig" aria-label="Capítulo siguiente">›</button>
+  <button type="button" id="pausa" aria-label="Pausar">❚❚</button>
+</nav>
+
+<script>
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const cv = document.getElementById('pantalla'), x = cv.getContext('2d');
+const H = 216, G = 140;           // alto del mundo y línea del piso
+let W = 384;                      // ancho visible: sale del aspecto de la pantalla
+const fmt = n => Math.round(n).toLocaleString('es-AR');
+const mill = v => (v / 1e6).toFixed(1).replace('.', ',');
+
+// ---------- paleta ----------
+const C = {
+  navy: '#232D4F', indigo: '#393793', violeta: '#B369ED', tile: '#ECECEC', blanco: '#FFFFFF', papel: '#F7F7F8',
+  muro: '#E4E5EC', muroS: '#C9CBD8', vidrio: '#2B3566', luz: '#FFE39A', piso: '#CFCBC2', pisoS: '#B7B2A7', pasto: '#A9C3A2', pastoS: '#8FAE8A', calle: '#6B6B78',
+};
+const mezcla = (a, b, t) => { const p = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16)); const A = p(a), B = p(b);
+  return '#' + A.map((v, i) => Math.round(v + (B[i] - v) * t).toString(16).padStart(2, '0')).join(''); };
+
+// ---------- fuente de 3x5 ----------
+const F = {A:'010101111101101',B:'110101110101110',C:'011100100100011',D:'110101101101110',E:'111100110100111',F:'111100110100100',G:'011100101101011',H:'101101111101101',I:'111010010010111',J:'001001001101010',K:'101101110101101',L:'100100100100111',M:'101111111101101',N:'110101101101101',O:'010101101101010',P:'110101110100100',Q:'010101101110011',R:'110101110101101',S:'011100010001110',T:'111010010010010',U:'101101101101111',V:'101101101101010',W:'101101111111101',X:'101101010101101',Y:'101101010010010',Z:'111001010100111',
+  0:'111101101101111',1:'010110010010111',2:'110001010100111',3:'110001010001110',4:'101101111001001',5:'111100110001110',6:'011100111101111',7:'111001010010010',8:'111101111101111',9:'111101111001110',
+  ',':'000000000010100','.':'000000000000010','*':'000101010101000','-':'000000111000000','/':'001001010100100',' ':'000000000000000'};
+let camX = 0;
+const R = (wx, y, w, h, c) => { const sx = Math.round(wx - camX); if (sx + w < 0 || sx > W) return; x.fillStyle = c; x.fillRect(sx, Math.round(y), w, h); };
+const ancho = s => s.length * 4 - 1;
+function txt(s, wx, y, c, centro = false){
+  s = s.toUpperCase(); let px = centro ? wx - ancho(s) / 2 : wx;
+  for (const ch of s){ const g = F[ch] || F[' ']; for (let k = 0; k < 15; k++) if (g[k] === '1') R(px + k % 3, y + (k / 3 | 0), 1, 1, c); px += 4; }
+}
+
+// ---------- tiempo narrativo ----------
+/* Cada capítulo: duración, a dónde mira la cámara y su tarjeta. Todo lo que se dibuja
+   depende del avance de su capítulo (0 a 1), así cualquier momento se puede reconstruir. */
+const CAPS = [
+  {id: 'titulo', dur: 9, cam: 200, tit: true, kicker: 'Datos Abiertos · 2016 → 2026', h: 'El ecosistema de datos abiertos',
+   p: 'Contado como un bosque: cada árbol es un producto y sus raíces muestran cómo se conectan los datos.'},
+  {id: 'andino', dur: 11, cam: 470, kicker: '2016', h: 'Nace Portal Andino',
+   p: 'Una distribución de CKAN para que cualquier organismo publique sus datos abiertos con el Perfil Nacional de Metadatos. Sobre ella crece datos.gob.ar.'},
+  {id: 'red', dur: 12, cam: 400, kicker: 'Una red de portales', h: 'Los organismos brotan alrededor',
+   p: 'Bajo tierra, sus raíces se unen a las de datos.gob.ar: así se cosechan sus catálogos (planillas XLSX, portales Andino y otros CKAN).', cifras: [[43, 'catálogos cosechados'], [38, 'organismos']]},
+  {id: 'temas', dur: 11, cam: 560, kicker: 'Catálogo nacional', h: '1.287 datasets en 14 temas',
+   p: 'Cada planta es un tema y crece según sus datasets: Economía y Finanzas llega a 485, Gobierno y Sector Público a 190 y Energía a 188.', cifras: [[1287, 'datasets']]},
+  {id: 'georef', dur: 12, cam: 790, kicker: '2017 – 2019 · API Georef', h: 'Georef echa raíces por todo el país',
+   p: 'Convierte direcciones escritas de cualquier forma en datos oficiales: "avenida de mayo 500" pasa a AV DE MAYO 500, Monserrat, CABA.'},
+  {id: 'v2geo', dur: 12, cam: 800, kicker: '2025 – 2026 · Georef v2', h: 'La araucaria suma ramas',
+   p: 'Unidades geoestadísticas, establecimientos educativos cercanos, GeoPackage y búsqueda por localidad. La v2.1 reemplaza a la 1.0.'},
+  {id: 'herramientas', dur: 11, cam: 960, kicker: 'Herramientas', h: 'Una red bajo tierra',
+   p: 'Como los hongos que unen a los árboles, Georef llega a QGIS, a R con georefar, a Python con pygeorefar y a una planilla de Google.'},
+  {id: 'series', dur: 12, cam: 1150, kicker: '2017 · API Series de Tiempo', h: 'Indicadores oficiales en una URL',
+   p: 'Precios, actividad, empleo y más, listos para consultar, cruzar y transformar. En el tablero, las consultas mes a mes desde julio de 2023.', cifras: [[33154, 'series publicadas']]},
+  {id: 'buscador', dur: 12, cam: 560, kicker: '2018 → 2026', h: 'Buscar series desde el portal',
+   p: 'En 2018 datos.gob.ar sumó un explorador de series. En 2026 vuelve integrado al portal, como extensión de CKAN, y consulta a la API en vivo.', foto: true},
+  {id: 'v2', dur: 14, cam: 440, kicker: '2026 · Andino V2', h: 'El árbol madre se renueva',
+   p: 'CKAN 2.11 sin tocar su código: lo propio crece como extensiones. datos.gob.ar ya funciona sobre CKAN 2.11.5.'},
+  {id: 'uso', dur: 14, cam: 1520, kicker: 'Uso', h: 'Los anillos de cada año',
+   p: 'Cada anillo es un año de consultas. Entre enero y septiembre de 2026 las dos APIs superaron a cualquier año completo anterior.', cifras: [[165720630, 'consultas a Georef', mill, ' M'], [26341470, 'consultas a Series', mill, ' M']]},
+  {id: 'cierre', dur: 15, cam: 410, kicker: 'Desde julio de 2023', h: 'Consultas a Georef y a Series',
+   p: 'Cada luciérnaga es alguien normalizando una dirección, armando un tablero o respondiendo una pregunta con datos públicos.', cifras: [[472645670, 'consultas en total']]},
+];
+const INICIO = []; { let t = 0; CAPS.forEach(c => { INICIO.push(t); t += c.dur; }); }
+const TOTAL = INICIO[INICIO.length - 1] + CAPS[CAPS.length - 1].dur;
+const idx = id => CAPS.findIndex(c => c.id === id);
+let T = 0;
+const cap = () => { let k = 0; while (k < CAPS.length - 1 && T >= INICIO[k + 1]) k++; return k; };
+const av = id => { const k = idx(id), c = cap(); return c > k ? 1 : c < k ? 0 : Math.min(1, (T - INICIO[k]) / CAPS[k].dur); };
+const tramo = (p, a, b) => Math.max(0, Math.min(1, (p - a) / (b - a)));
+const suave = t => t * t * (3 - 2 * t);
+
+// ---------- mundo ----------
+const MUNDO = 1700;
+const V = {  // verdes y tierra: apagados, para convivir con la paleta de Datos Abiertos
+  hojaO: '#3F6A5B', hoja: '#5B8A70', hojaC: '#8BB592', tronco: '#6B5344', troncoC: '#8A6D57',
+  tierra: '#7A6757', tierraO: '#665546', raiz: '#C2A98B', piedra: '#958676', otono: '#C9955A', otonoO: '#A96F3E',
+};
+const cordillera = [], cerros = [];
+for (let i = 0; i < MUNDO; i++){
+  cordillera.push(Math.round(78 - Math.abs(Math.sin(i * .021) * 26 + Math.sin(i * .057 + 1) * 10 + Math.sin(i * .11) * 4)));
+  cerros.push(Math.round(118 - Math.abs(Math.sin(i * .013 + 2) * 12 + Math.sin(i * .041) * 5)));
+}
+const estrellas = Array.from({length: 70}, (_, k) => [(k * 97) % 560, (k * 53) % 80 + 4, k % 3]);
+const SERIES_M = [543837,1455930,1421536,2012547,1758673,1302750,1503569,1550431,1882894,2075619,1671717,1271491,1009871,1219876,1256946,1268604,1254240,1079935,1031848,847679,958090,1251489,1116500,1017510,1046163,1208147,1722444,794704,1503052,1422423,1350540,1733251,2768378,3485231,3482819,2882772,3031081,3684738,3922660];
+const piedras = Array.from({length: 90}, (_, k) => [(k * 173) % MUNDO, G + 8 + (k * 37) % (H - G - 12), 1 + k % 2]);
+
+// raíces: segmentos precalculados, ordenados por profundidad para crecer de a poco
+function raices(x0, y0, largo, abertura, prof, semilla){
+  const segs = []; let s = semilla;
+  const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  (function rama(x, y, ang, l, d){
+    if (d > prof || l < 3) return;
+    const x1 = x + Math.cos(ang) * l, y1 = y + Math.sin(ang) * l;
+    segs.push([x, y, x1, y1, d]);
+    rama(x1, y1, ang - abertura * (.5 + rnd() * .5), l * .72, d + 1);
+    rama(x1, y1, ang + abertura * (.5 + rnd() * .5), l * .72, d + 1);
+  })(x0, y0, Math.PI / 2, largo, 0);
+  return segs.sort((a, b) => a[4] - b[4]);
+}
+const RAIZ_MADRE = raices(490, G + 2, 18, .9, 5, 7);
+const RAIZ_GEO = raices(822, G + 2, 20, 1.05, 6, 11);
+const BROTES = [[262, 20], [290, 28], [318, 16], [344, 24], [372, 32], [398, 18], [424, 22], [448, 14]];
+
+// ---------- dibujo básico ----------
+function linea(x0, y0, x1, y1, c){
+  const d = Math.max(1, Math.abs(x1 - x0), Math.abs(y1 - y0));
+  for (let s = 0; s <= d; s++) R(x0 + (x1 - x0) * s / d, y0 + (y1 - y0) * s / d, 1, 1, c);
+}
+function disco(wx, y, r, c){
+  for (let dy = -r; dy <= r; dy++){ const w = Math.round(Math.sqrt(r * r - dy * dy)); R(wx - w, y + dy, 2 * w + 1, 1, c); }
+}
+function particula(wx, y, c = C.violeta){ R(wx - 1, y - 1, 3, 3, c); }
+
+function cielo(n){
+  const bandas = 6;
+  for (let k = 0; k < bandas; k++){
+    const dia = mezcla('#C9DDF2', '#EEF1F7', k / (bandas - 1)), noc = mezcla('#141A3A', '#2B3566', k / (bandas - 1));
+    x.fillStyle = mezcla(dia, noc, n); x.fillRect(0, k * 14, W, 14);
+  }
+  x.fillStyle = mezcla('#EEF1F7', '#2B3566', n); x.fillRect(0, bandas * 14, W, H);
+  if (n > .2) for (const [sx, sy, b] of estrellas) if (sx < W && ((T * 2 + b) | 0) % 5){ x.fillStyle = `rgba(255,255,255,${(n - .2) * (b ? .6 : 1)})`; x.fillRect(sx, sy, 1, 1); }
+  const cx = W - 60, cy = 30 + 8 * n, r = 9;
+  for (let dy = -r; dy <= r; dy++) for (let dx = -r; dx <= r; dx++) if (dx * dx + dy * dy <= r * r){ x.fillStyle = mezcla('#FFE7A8', '#E9ECF7', n); x.fillRect(cx + dx, cy + dy, 1, 1); }
+}
+function fondo(n){
+  const cm = camX * .35, cc = camX * .6;
+  for (let sx = 0; sx < W; sx++){
+    const i = Math.max(0, Math.min(MUNDO - 1, Math.round(sx + cm))), h = cordillera[i];
+    x.fillStyle = mezcla('#AEB6D8', '#2A3263', n); x.fillRect(sx, h, 1, G - h);
+    if (h < 60){ x.fillStyle = mezcla('#FFFFFF', '#C3C8E0', n); x.fillRect(sx, h, 1, Math.min(4, 60 - h)); }
+    const j = Math.max(0, Math.min(MUNDO - 1, Math.round(sx + cc))), c = cerros[j];
+    x.fillStyle = mezcla('#8FA3B8', '#1F2A45', n); x.fillRect(sx, c, 1, G - c);
+  }
+}
+// el suelo en corte: se ven las raíces
+function suelo(n){
+  x.fillStyle = mezcla(V.hojaC, '#2E4A45', n); x.fillRect(0, G - 1, W, 3);
+  x.fillStyle = mezcla(V.tierra, '#2B2530', n); x.fillRect(0, G + 2, W, H - G);
+  x.fillStyle = mezcla(V.tierraO, '#221D28', n); x.fillRect(0, G + 30, W, H - G);
+  for (const [wx, y, s] of piedras) R(wx, y, s + 1, s, mezcla(V.piedra, '#3A3340', n));
+  for (let wx = Math.floor(camX / 7) * 7; wx < camX + W; wx += 7) R(wx + ((wx * 3) % 5), G - 3, 1, 2, mezcla(V.hoja, '#2E4A45', n)); // pasto
+}
+function dibujarRaices(segs, q, n, c = V.raiz){
+  const cant = Math.round(segs.length * q);
+  for (let k = 0; k < cant; k++){ const [a, b, c1, d] = segs[k]; linea(a, b, c1, d, mezcla(c, '#6E6070', n * .7)); }
+}
+// copa redonda hecha de discos
+function copa(wx, top, esc, n, tono = 0){
+  const hoja = mezcla(V.hoja, V.otono, tono), hojaO = mezcla(V.hojaO, V.otonoO, tono), hojaC = mezcla(V.hojaC, '#E2B77A', tono);
+  const B = [[0, 0, 22], [-18, 8, 15], [18, 8, 15], [-8, -10, 14], [10, -9, 14]];
+  for (const [dx, dy, r] of B) disco(wx + dx * esc, top + 22 * esc + dy * esc, Math.round(r * esc), mezcla(hojaO, '#1C3040', n));
+  for (const [dx, dy, r] of B) disco(wx + dx * esc - 2, top + 20 * esc + dy * esc, Math.round(r * esc * .8), mezcla(hoja, '#23394A', n));
+  for (const [dx, dy, r] of B.slice(3)) disco(wx + dx * esc - 4, top + 16 * esc + dy * esc, Math.round(r * esc * .4), mezcla(hojaC, '#2D4556', n));
+}
+function tronco(wx, alto, ancho, n){
+  for (let y = 0; y < alto; y++){ const w = Math.round(ancho * (1 - y / alto * .45)); R(wx - w / 2, G - y, w, 1, mezcla(V.tronco, '#3A2E30', n)); R(wx - w / 2, G - y, 1, 1, mezcla(V.troncoC, '#4A3C3E', n)); }
+}
+
+// ---------- escenas ----------
+function madre(n){
+  const a1 = av('andino'), a8 = av('buscador'), a9 = av('v2');
+  const crece = suave(tramo(a1, .1, .7));
+  dibujarRaices(RAIZ_MADRE, tramo(a1, .3, .9), n);
+  if (crece <= 0) return;
+  const alto = Math.round(58 * crece);
+  tronco(490, alto, 10, n);
+  if (crece > .5){ linea(490, G - alto * .7, 474, G - alto * .95, mezcla(V.tronco, '#3A2E30', n)); linea(490, G - alto * .65, 508, G - alto * .92, mezcla(V.tronco, '#3A2E30', n)); }
+  // otoño, caída y rebrote de V2
+  const otono = tramo(a9, .1, .35), cae = tramo(a9, .35, .55), rebrote = suave(tramo(a9, .55, .85));
+  if (cae < 1){
+    const esc = crece * (1 - cae * .85);
+    if (esc > .05) copa(490, G - alto - 34 * crece, esc, n, otono);
+    if (cae > 0) for (let k = 0; k < 24; k++){ const fx = 460 + (k * 37) % 64, fy = G - 90 + ((k * 23 + cae * 120) % 90); R(fx + Math.sin(T * 2 + k) * 3, fy, 2, 1, k % 2 ? V.otono : V.otonoO); }
+  }
+  if (rebrote > 0){
+    copa(490, G - alto - 40 * rebrote, rebrote * 1.15, n);
+    // cinco ramas nuevas: una por extensión propia
+    const mods = [['THEME', -44, 58], ['SCHEMING', 44, 66], ['HARVEST', -46, 80], ['SPATIAL', 46, 88], ['SERIES', 0, 104]];
+    mods.forEach(([m, dx, dy], k) => {
+      const t = tramo(a9, .7 + k * .04, .78 + k * .04); if (t <= 0) return;
+      const tx = 490 + dx, ty = G - dy;
+      R(tx - ancho(m) / 2 - 2, ty - 1, ancho(m) + 4, 8, mezcla(C.papel, '#E9ECF7', n)); R(tx - ancho(m) / 2 - 2, ty - 1, 1, 8, C.violeta);
+      txt(m, tx, ty + 1, C.navy, true);
+    });
+    if (a9 > .92) txt('CKAN 2.11', 490, G - 118, n > .5 ? '#FFFFFF' : C.indigo, true);
+    for (let k = 0; k < 9; k++) disco(470 + (k * 29) % 44, G - 92 + (k * 17) % 34, 1, C.violeta); // flores
+  }
+  // cartel al pie
+  if (a1 > .7){ R(503, G - 12, 1, 12, V.tronco); R(496, G - 19, 58, 8, mezcla('#E9DCC8', '#5C5060', n)); txt('DATOS.GOB.AR', 525, G - 17, n > .5 ? '#FFFFFF' : C.navy, true); }
+  // hueco del tronco con el buscador
+  if (a8 > .45 && a9 < .55){
+    const q = tramo(a8, .45, .8);
+    R(484, G - 40, 14, 11, C.navy); R(485, G - 39, 12, 9, mezcla('#FFF6D8', '#FFE39A', n));
+    const pts = SERIES_M.slice(-12);
+    for (let k = 0; k < Math.round(12 * q); k++) R(485 + k, G - 31 - Math.round(pts[k] / 4e6 * 7), 1, 1, C.violeta);
+  }
+}
+function brotes(n){
+  const a = av('red');
+  BROTES.forEach(([wx, h], k) => {
+    const t = suave(tramo(a, .06 + k * .05, .2 + k * .05)); if (t <= 0) return;
+    const alto = Math.round(h * t);
+    tronco(wx, Math.round(alto * .5), 3, n);
+    disco(wx, G - alto * .5 - 6 * t, Math.round(7 * t + 1), mezcla(V.hoja, '#23394A', n));
+    disco(wx - 2, G - alto * .5 - 8 * t, Math.round(3 * t), mezcla(V.hojaC, '#2D4556', n));
+    // su raíz baja y se une a la del árbol madre
+    const r = tramo(a, .35 + k * .03, .55 + k * .03);
+    if (r > 0){ const yb = G + 14 + (k % 3) * 5; linea(wx, G + 2, wx, G + 2 + (yb - G - 2) * Math.min(1, r * 2), mezcla(V.raiz, '#6E6070', n * .7)); if (r > .5) linea(wx, yb, wx + (488 - wx) * (r - .5) * 2, yb, mezcla(V.raiz, '#6E6070', n * .7)); }
+  });
+  if (a > .6){
+    for (let k = 0; k < 10; k++){ const u = ((T * .22 + k * .1) % 1), b = BROTES[k % BROTES.length], yb = G + 14 + ((k % BROTES.length) % 3) * 5; particula(b[0] + (488 - b[0]) * u, yb); }
+    txt('COSECHA', 370, G + 44, n > .5 ? '#E4D6C2' : '#F2E8D8', true);
+  }
+}
+function temas(n){
+  const a = av('temas'), vals = [485, 190, 188, 159, 103, 83, 74, 62];
+  vals.forEach((v, k) => {
+    const wx = 574 + k * 15, t = suave(tramo(a, .15 + k * .07, .35 + k * .07)); if (t <= 0) return;
+    const alto = Math.round(v / 485 * 84 * t);
+    R(wx, G - alto, 1, alto, mezcla(V.hojaO, '#2E4A45', n));
+    for (let y = G - 6; y > G - alto + 4; y -= 8){ R(wx - 3 + ((y / 8 | 0) % 2) * 4, y, 3, 2, mezcla(V.hoja, '#2E4A45', n)); }
+    disco(wx, G - alto - 2, 3, k ? mezcla('#F7F7F8', '#9AA0C8', n) : C.violeta); R(wx, G - alto - 2, 1, 1, '#FFE39A');
+    if (t > .95) txt(String(v), wx, G - alto - 13, n > .5 ? '#FFFFFF' : C.navy, true);
+  });
+}
+function araucaria(n){
+  const a4 = av('georef'), a5 = av('v2geo');
+  dibujarRaices(RAIZ_GEO, tramo(a4, .25, .75), n);
+  const crece = suave(tramo(a4, .05, .4)), extra = suave(tramo(a5, .1, .4));
+  if (crece <= 0) return;
+  const alto = Math.round(96 * crece + 24 * extra), top = G - alto;
+  tronco(822, alto, 5, n);
+  // pisos de ramas en paraguas, típicos de la araucaria
+  const pisos = 4 + (extra > .5 ? 1 : 0);
+  for (let k = 0; k < pisos; k++){
+    const y = top + 6 + k * 9, w = Math.round((14 + k * 6) * Math.min(1, crece * 1.4));
+    linea(822 - w, y + 3, 822, y, mezcla(V.hojaO, '#1C3040', n)); linea(822 + w, y + 3, 822, y, mezcla(V.hojaO, '#1C3040', n));
+    for (let s = -w; s <= w; s += 3) R(822 + s, y + 1 + Math.abs(s) / w * 2, 2, 3, mezcla(k % 2 ? V.hoja : V.hojaO, '#23394A', n));
+    R(822 - w - 1, y + 3, 2, 3, mezcla(V.hoja, '#23394A', n)); R(822 + w, y + 3, 2, 3, mezcla(V.hoja, '#23394A', n));
+  }
+  if (a5 > .4){ R(823, top - 12, 1, 12, V.tronco); R(824, top - 12, 12, 7, C.violeta); txt('2.1', 830, top - 11, '#FFFFFF', true); }
+  // pulsos por las raíces: cada punta es un lugar normalizado
+  if (a4 > .7){
+    RAIZ_GEO.filter(s => s[4] === 6).forEach((s, k) => { if (((T * 1.5 + k * .37) % 3) < .8) R(s[2] - 1, s[3] - 1, 3, 3, C.violeta); });
+    txt('GEOREF', 822, G + 58, n > .5 ? '#E4D6C2' : '#F2E8D8', true);
+  }
+  // estaca con la dirección
+  if (a4 > .5){
+    const norm = a4 > .72, s = norm ? 'AV DE MAYO 500' : 'AVDA DE MAYO 500 CABA', w = ancho(s) + 6;
+    R(746, G - 24, 2, 24, V.tronco);
+    R(747 - w / 2 - 1, G - 33, w + 2, 11, mezcla(V.tronco, '#3A2E30', n)); R(747 - w / 2, G - 32, w, 9, norm ? C.violeta : mezcla('#E9DCC8', '#5C5060', n));
+    txt(s, 747, G - 30, norm ? '#FFFFFF' : C.navy, true);
+    if (norm) txt('MONSERRAT CABA', 747, G - 42, n > .5 ? '#FFFFFF' : C.indigo, true);
+  }
+  // casitas de pájaros: establecimientos educativos cercanos
+  [[880, .45], [902, .6]].forEach(([wx, d], k) => {
+    const t = suave(tramo(a5, d, d + .12)); if (t <= 0) return;
+    const alto = Math.round((20 + k * 6) * t);
+    R(wx, G - alto, 1, alto, V.tronco);
+    if (t >= 1){ R(wx - 5, G - alto - 8, 11, 8, mezcla('#E9DCC8', '#5C5060', n)); for (let s = 0; s < 6; s++) R(wx - 6 + s, G - alto - 9 - s, 13 - 2 * s, 1, C.violeta); R(wx - 1, G - alto - 5, 3, 3, C.navy); }
+  });
+  if (a5 > .75) txt('ESCUELAS', 891, G - 44, n > .5 ? '#FFFFFF' : C.navy, true);
+}
+function hongos(n){
+  const a = av('herramientas'); if (a <= 0) return;
+  const H4 = [['QGIS', 944, C.violeta], ['R', 990, C.indigo], ['PYTHON', 1036, C.violeta], ['PLANILLA', 1084, C.indigo]];
+  H4.forEach(([nom, wx, col], k) => {
+    const t = tramo(a, .1 + k * .12, .32 + k * .12); if (t <= 0) return;
+    // micelio: desde las raíces de la araucaria hasta el hongo
+    const y0 = G + 24 + k * 4, pasos = 80;
+    for (let s = 0; s < pasos * t; s++){ const u = s / pasos, cx = 860 + (wx - 860) * u, cy = y0 + Math.sin(u * 9 + k) * 3; R(cx, cy, 1, 1, mezcla('#EDE3F5', '#8E7FA8', n)); }
+    if (t > .6) linea(wx, y0, wx, G + 1, mezcla('#EDE3F5', '#8E7FA8', n));
+    const q = suave(tramo(t, .6, 1)); if (q <= 0) return;
+    const h = Math.round(12 * q);
+    R(wx - 2, G - h, 5, h, mezcla('#F2EDE4', '#8C8698', n));
+    for (let dy = 0; dy < 7; dy++){ const w = Math.round((12 - Math.abs(dy - 3) * 2.2) * q); R(wx - w, G - h - 7 + dy, 2 * w + 1, 1, col); }
+    R(wx - 5, G - h - 5, 2, 2, '#FFFFFF'); R(wx + 3, G - h - 4, 2, 2, '#FFFFFF');
+    if (q >= 1){
+      txt(nom, wx, G - h - 16, n > .5 ? '#FFFFFF' : C.navy, true);
+      const u = ((T * .35 + k * .21) % 1); particula(860 + (wx - 860) * u, y0 + Math.sin(u * 9 + k) * 3);
+    }
+  });
+}
+function alamo(n){
+  const a = av('series'); if (a <= 0) return;
+  const crece = suave(tramo(a, .05, .35)), alto = Math.round(70 * crece);
+  tronco(1316, alto, 5, n);
+  for (let y = 0; y < alto * .85; y += 3){ const w = Math.round(9 * Math.sin(y / (alto * .85) * Math.PI) * crece) + 2; R(1316 - w, G - alto * .25 - y - 18, 2 * w, 3, mezcla(y % 6 ? V.hoja : V.hojaO, '#23394A', n)); }
+  // tablero de madera con las consultas mensuales
+  const q = tramo(a, .35, .9); if (q <= 0) return;
+  const X0 = 1170, Y0 = G - 92, w = 120, h = 62;
+  R(X0 + 18, Y0 + h, 3, G - Y0 - h, V.tronco); R(X0 + w - 21, Y0 + h, 3, G - Y0 - h, V.tronco);
+  R(X0 - 3, Y0 - 3, w + 6, h + 6, mezcla(V.tronco, '#3A2E30', n)); R(X0, Y0, w, h, mezcla('#F4ECDD', '#2A2A40', n));
+  txt('CONSULTAS POR MES', X0 + 6, Y0 + 4, n > .5 ? '#FFFFFF' : C.navy);
+  R(X0 + 6, Y0 + h - 8, w - 12, 1, mezcla('#C9BBA4', '#5A6190', n));
+  const N = Math.round(SERIES_M.length * q), px = m => X0 + 7 + m * (w - 16) / 38, py = v => Y0 + h - 9 - v / 4e6 * (h - 24);
+  for (let m = 1; m < N; m++) linea(px(m - 1), py(SERIES_M[m - 1]), px(m), py(SERIES_M[m]), C.violeta);
+  if (q >= 1){ txt('2023', X0 + 6, Y0 + h - 6, n > .5 ? '#C9CBD8' : C.navy); txt('2026', X0 + w - 21, Y0 + h - 6, n > .5 ? '#C9CBD8' : C.navy); }
+}
+function liana(n){
+  const a = av('buscador'); if (a <= 0 || av('v2') > .55) return;
+  // una enredadera lleva los datos del álamo al árbol madre
+  const x0 = 1316, y0 = G - 60, x1 = 500, y1 = G - 70, q = suave(tramo(a, .15, .5)), pasos = 640;
+  const punto = u => [x0 + (x1 - x0) * u, y0 + (y1 - y0) * u + Math.sin(u * Math.PI) * 30];
+  for (let s = 0; s < pasos * q; s++){ const [cx, cy] = punto(s / pasos); R(cx, cy, 1, 1, mezcla(V.hojaO, '#2E4A45', n)); if (s % 14 === 0) R(cx - 1, cy - 2, 2, 2, mezcla(V.hoja, '#23394A', n)); }
+  if (q >= 1) for (let k = 0; k < 5; k++){ const [cx, cy] = punto((T * .1 + k * .2) % 1); particula(cx, cy); }
+}
+// troncos cortados: cada anillo es un año
+function anillos(n){
+  const a = av('uso'); if (a <= 0) return;
+  const troncos = [['GEOREF', 1466, [63307302, 72454546, 105361207, 165720630], C.violeta], ['SERIES', 1610, [8495273, 17045193, 13920049, 26341470], C.indigo]];
+  troncos.forEach(([nom, cx, vals, col], c) => {
+    const tot = vals.reduce((s, v) => s + v, 0), cy = G - 30;
+    R(cx - 44, G - 4, 88, 5, mezcla(V.tronco, '#2E2630', n));
+    txt(nom, cx, G + 10, '#FFFFFF', true);
+    let r = 3;
+    disco(cx, cy, 3, mezcla(V.troncoC, '#5A4A48', n));
+    vals.forEach((v, k) => {
+      const t = suave(tramo(a, .25 + c * .06 + k * .09, .42 + c * .06 + k * .09)); if (t <= 0) return;
+      const ancho_ = Math.max(2, Math.round(v / tot * 34));
+      const r1 = r + Math.round(ancho_ * t);
+      for (let rr = r1; rr > r; rr--) for (let g = 0; g < 180; g++){ const an = g / 180 * Math.PI * 2; R(cx + Math.cos(an) * rr, cy + Math.sin(an) * rr * .92, 1, 1, rr === r1 ? (k === 3 ? col : '#8A6D57') : mezcla(k % 2 ? '#F1E2C6' : '#DEC7A2', '#B9A588', n * .3)); }
+      if (t < .3) for (let e = 0; e < 8; e++){ const an = e / 8 * Math.PI * 2; R(cx + 50 + Math.cos(an) * (2 + t * 18), G - 56 + k * 9 + Math.sin(an) * (2 + t * 18), 1, 1, C.violeta); }
+      txt(['23*', '24', '25', '26*'][k] + ' ' + mill(v * t), cx + 40, G - 58 + k * 9, k === 3 ? '#E3C2F7' : '#FFFFFF');
+      r = r1;
+    });
+  });
+}
+function luciernagas(n){
+  if (n < .3) return;
+  for (let k = 0; k < 60; k++){
+    const bx = (k * 131) % MUNDO, by = 40 + (k * 57) % 90;
+    const wx = bx + Math.sin(T * .7 + k) * 10, y = by + Math.cos(T * .9 + k * 1.3) * 6;
+    if (((T * 3 + k) | 0) % 4) R(wx, y, 1, 1, mezcla('#FFE39A', C.violeta, (k % 3) / 3));
+  }
+}
+
+// ---------- cámara y noche ----------
+function camara(){
+  const k = cap(), c = CAPS[k], prev = CAPS[Math.max(0, k - 1)];
+  const lp = (T - INICIO[k]) / c.dur;
+  let centro;
+  if (c.id === 'cierre') centro = 1500 + (c.cam - 1500) * suave(tramo(lp, .1, .9));   // paseo lento por todo el bosque
+  else centro = prev.cam + (c.cam - prev.cam) * suave(tramo(lp, 0, k ? .28 : 0));
+  camX = Math.round(Math.max(0, Math.min(MUNDO - W, centro - W / 2)));
+}
+function noche(){ return Math.min(1, av('uso') * 3.5); }
+
+function dibujar(){
+  camara();
+  const n = noche();
+  cielo(n); fondo(n); suelo(n);
+  brotes(n); temas(n); hongos(n); araucaria(n); madre(n); alamo(n); liana(n); anillos(n); luciernagas(n);
+}
+
+// ---------- tarjeta ----------
+const tarjeta = document.getElementById('tarjeta'), foto = document.getElementById('foto');
+let tarjetaDe = -1, contadores = [];
+function ponerTarjeta(k){
+  const c = CAPS[k];
+  tarjeta.classList.add('oculta');
+  setTimeout(() => {
+    tarjeta.className = 'tarjeta' + (c.tit ? ' titulo' : '');
+    tarjeta.innerHTML = `<p class="kicker"></p><h2></h2><p class="p"></p>` + (c.cifras ? `<div class="cifras">${c.cifras.map(() => '<div><b>0</b><small></small></div>').join('')}</div>` : '');
+    tarjeta.querySelector('.kicker').textContent = c.kicker; tarjeta.querySelector('h2').textContent = c.h; tarjeta.querySelector('.p').textContent = c.p;
+    contadores = (c.cifras || []).map(([v, l, fo = fmt, suf = ''], j) => {
+      const d = tarjeta.querySelectorAll('.cifras > div')[j]; d.querySelector('small').textContent = l;
+      return {b: d.querySelector('b'), v, fo, suf};
+    });
+  }, reduce ? 0 : 350);
+  foto.classList.toggle('oculta', !c.foto);
+}
+function actualizarContadores(){
+  const k = cap(), lp = tramo((T - INICIO[k]) / CAPS[k].dur, .3, .75), e = reduce ? 1 : 1 - Math.pow(1 - lp, 3);
+  contadores.forEach(c => c.b.textContent = c.fo(c.v * e) + c.suf);
+}
+
+// ---------- reproducción ----------
+const puntos = document.getElementById('puntos');
+CAPS.forEach(() => puntos.appendChild(document.createElement('i')));
+let pausado = false, ultimo = performance.now(), congelar = null;
+function tamano(){
+  const r = innerWidth / innerHeight;
+  W = Math.max(150, Math.min(560, Math.round(H * r)));
+  cv.width = W; cv.height = H;
+}
+addEventListener('resize', tamano); tamano();
+function cuadro(now){
+  const dt = Math.min(.1, (now - ultimo) / 1000); ultimo = now;
+  if (!pausado && congelar == null) T = (T + dt) % TOTAL;
+  const k = cap();
+  if (k !== tarjetaDe){ tarjetaDe = k; ponerTarjeta(k); [...puntos.children].forEach((p, j) => p.className = j < k ? 'ya' : j === k ? 'ahora' : ''); }
+  dibujar(); actualizarContadores();
+  requestAnimationFrame(cuadro);
+}
+const irA = k => { k = (k + CAPS.length) % CAPS.length; T = INICIO[k] + (reduce ? CAPS[k].dur * .95 : 0); };
+document.getElementById('sig').addEventListener('click', () => irA(cap() + 1));
+document.getElementById('ant').addEventListener('click', () => irA(cap() - 1));
+const pausaBtn = document.getElementById('pausa');
+const alternar = () => { pausado = !pausado; pausaBtn.textContent = pausado ? '▶' : '❚❚'; pausaBtn.setAttribute('aria-label', pausado ? 'Reanudar' : 'Pausar'); };
+pausaBtn.addEventListener('click', alternar);
+addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight'){ irA(cap() + 1); } else if (e.key === 'ArrowLeft'){ irA(cap() - 1); }
+  else if (e.key === ' '){ e.preventDefault(); alternar(); }
+});
+// el control se esconde solo si no se mueve el mouse
+const hud = document.getElementById('hud'); let hudT;
+const mostrarHud = () => { hud.classList.remove('quieto'); clearTimeout(hudT); hudT = setTimeout(() => hud.classList.add('quieto'), 3000); };
+addEventListener('pointermove', mostrarHud); addEventListener('keydown', mostrarHud); mostrarHud();
+// #c5 abre el capítulo 5; #c5-60 lo congela al 60 % (sirve para revisar)
+{ const m = location.hash.match(/^#c(\d+)(?:-(\d+))?$/);
+  if (m){ const k = Math.min(CAPS.length - 1, +m[1]); T = INICIO[k] + (m[2] ? CAPS[k].dur * +m[2] / 100 : 0); if (m[2]) congelar = T; } }
+if (reduce) irA(0);
+requestAnimationFrame(cuadro);
+</script>

@@ -1,0 +1,291 @@
+---
+// Portada: un pueblo en pixel art al pie de la cordillera. Cada edificio es una sección del hub; al pasar
+// el mouse se anima y muestra qué hay adentro, y al hacer clic lleva a la sección.
+import { secciones } from '../data/recursos.json';
+
+const edificios = ['guias', 'herramientas', 'andino', 'catalogo', 'vidriera'].map((id) => {
+  const s = secciones.find((x) => x.id === id);
+  return { id, titulo: s.titulo, bajada: s.bajada, items: s.recursos.map((r) => r.titulo) };
+});
+---
+<section class="portada">
+  <div class="texto">
+    <h1>Todo lo que hacemos con datos abiertos</h1>
+    <p>Guías, herramientas, la plataforma Portal Andino, lo que otros construyen y lo que vamos probando. Entrá a cualquier edificio.</p>
+  </div>
+  <div class="escena">
+    <canvas aria-hidden="true"></canvas>
+    <nav class="carteles" aria-label="Secciones">
+      {edificios.map((e) => <a href={`#${e.id}`} data-id={e.id}>{e.titulo}</a>)}
+    </nav>
+    <aside class="ficha" hidden aria-live="polite">
+      <h2></h2>
+      <p></p>
+      <ul></ul>
+    </aside>
+  </div>
+</section>
+<script type="application/json" id="edificios" set:html={JSON.stringify(edificios)} />
+
+<script>
+  const edificios = JSON.parse(document.getElementById('edificios').textContent);
+  const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const escena = document.querySelector('.escena');
+  const cv = escena.querySelector('canvas'), x = cv.getContext('2d');
+  const carteles = [...escena.querySelectorAll('.carteles a')];
+  const ficha = escena.querySelector('.ficha');
+
+  // Mundo de 150 px de alto; el ancho sale del tamaño en pantalla. El pueblo ocupa 440 px al centro.
+  const H = 150, G = 116, S = 440;
+  let W = S, ox = 0;
+  const C = {
+    navy: '#232D4F', indigo: '#393793', violeta: '#B369ED', tile: '#ECECEC', blanco: '#FFFFFF',
+    muro: '#E4E5EC', muroS: '#C9CBD8', vidrio: '#2B3566', luz: '#FFE39A', vereda: '#CFCBC2', veredaS: '#B7B2A7',
+    calle: '#6B6B78', pasto: '#A9C3A2', pastoS: '#8FAE8A', ladrillo: '#A0705E', ladrilloS: '#86594A', madera: '#8A6D57', humo: '#E9EBF2',
+  };
+  const R = (px, py, w, h, c) => { x.fillStyle = c; x.fillRect(Math.round(px), Math.round(py), w, h); };
+  const disco = (cx, cy, r, c) => { for (let dy = -r; dy <= r; dy++) { const w = Math.round(Math.sqrt(r * r - dy * dy)); R(cx - w, cy + dy, 2 * w + 1, 1, c); } };
+
+  // Fuente de 3x5 para los carteles pintados en las fachadas.
+  const F = { A: '010101111101101', C: '011100100100011', D: '110101101101110', E: '111100110100111', I: '111010010010111', R: '110101110101101', V: '101101101101010', ' ': '000000000000000' };
+  const txt = (s, px, py, c) => { for (const ch of s) { const g = F[ch]; for (let k = 0; k < 15; k++) if (g[k] === '1') R(px + k % 3, py + (k / 3 | 0), 1, 1, c); px += 4; } };
+
+  // Fondo: la cordillera y los cerros se calculan una vez para todo el ancho posible.
+  const cordillera = [], cerros = [];
+  for (let i = 0; i < 1400; i++) {
+    cordillera.push(Math.round(70 - Math.abs(Math.sin(i * .021) * 24 + Math.sin(i * .057 + 1) * 9 + Math.sin(i * .11) * 4)));
+    cerros.push(Math.round(100 - Math.abs(Math.sin(i * .013 + 2) * 11 + Math.sin(i * .041) * 5)));
+  }
+  const nubes = [[30, 18, 1], [180, 30, .7], [330, 12, 1.2], [520, 26, .8], [700, 16, 1]];
+
+  // Cada edificio: posición dentro del pueblo, ancho y cómo se dibuja. h va de 0 a 1 según el hover.
+  const B = {
+    guias: { x: 14, w: 66, dibujar: biblioteca },
+    herramientas: { x: 98, w: 74, dibujar: taller },
+    andino: { x: 192, w: 60, dibujar: torre },
+    catalogo: { x: 270, w: 82, dibujar: feria },
+    vidriera: { x: 368, w: 64, dibujar: local },
+  };
+  const hover = Object.fromEntries(edificios.map((e) => [e.id, 0]));
+  let activo = null, t = 0;
+
+  function biblioteca(bx, h) {
+    R(bx - 2, G - 4, 70, 4, C.muroS); R(bx, G - 6, 66, 2, C.muroS);
+    R(bx + 4, G - 42, 58, 36, C.muro);
+    // Ventanas: prendidas dejan ver los estantes con libros.
+    const lomos = [C.violeta, C.indigo, C.navy, C.blanco, C.violeta, C.indigo];
+    for (let i = 0; i < 4; i++) {
+      const prendida = h > i / 4;
+      R(bx + 13 + i * 12, G - 32, 6, 9, prendida ? C.luz : C.vidrio);
+      if (prendida) for (let e = 0; e < 2; e++) {
+        R(bx + 13 + i * 12, G - 28 + e * 4, 6, 1, C.madera);
+        for (let l = 0; l < 5; l++) if ((l + i + e) % 4) R(bx + 13 + i * 12 + l + (l > 2 ? 1 : 0), G - 31 + e * 4, 1, 3, lomos[(l + i * 2 + e) % 6]);
+      }
+    }
+    for (let i = 0; i < 5; i++) { R(bx + 7 + i * 12, G - 40, 4, 34, C.blanco); R(bx + 10 + i * 12, G - 40, 1, 34, C.muroS); }
+    // Puerta: se abre y sale luz.
+    R(bx + 29, G - 20, 8, 14, h > .3 ? C.luz : C.navy);
+    if (h > .3) R(bx + 29, G - 20, 2, 14, C.navy);
+    R(bx + 2, G - 46, 62, 4, C.muroS);
+    for (let k = 0; k < 12; k++) R(bx + 3 + k * 2.5, G - 47 - k, 60 - k * 5, 1, C.indigo);
+    // Las llaves { } del mosaico, dibujadas en el frontón.
+    R(bx + 28, G - 53, 1, 3, C.blanco); R(bx + 29, G - 54, 1, 1, C.blanco); R(bx + 29, G - 50, 1, 1, C.blanco); R(bx + 27, G - 52, 1, 1, C.blanco);
+    R(bx + 38, G - 53, 1, 3, C.blanco); R(bx + 37, G - 54, 1, 1, C.blanco); R(bx + 37, G - 50, 1, 1, C.blanco); R(bx + 39, G - 52, 1, 1, C.blanco);
+  }
+
+  function taller(bx, h) {
+    R(bx, G - 36, 74, 36, C.ladrillo);
+    for (let y = G - 33; y < G; y += 4) R(bx, y, 74, 1, C.ladrilloS);
+    // Techo en diente de sierra.
+    for (let d = 0; d < 3; d++) for (let k = 0; k < 8; k++) R(bx + d * 25, G - 44 + k, 25 - k * 3, 1, C.navy);
+    for (let d = 0; d < 3; d++) R(bx + d * 25 + 1, G - 43, 2, 7, C.muroS);
+    R(bx - 2, G - 37, 78, 2, C.navy);
+    // Chimenea con humo: más humo cuando se enciende.
+    R(bx + 60, G - 58, 7, 22, C.ladrilloS); R(bx + 59, G - 60, 9, 3, C.navy);
+    const bocanadas = 3 + Math.round(h * 5);
+    for (let i = 0; i < bocanadas; i++) {
+      const f = (t * (.25 + h * .35) + i / bocanadas) % 1;
+      x.globalAlpha = (1 - f) * (.55 + h * .4); disco(bx + 63 + f * 14 + Math.sin(t + i) * 2, G - 64 - f * 40, 2 + Math.round(f * 4), C.humo); x.globalAlpha = 1;
+    }
+    // Portón que se levanta y deja ver las herramientas.
+    R(bx + 8, G - 28, 34, 28, '#1E2440');
+    const herr = [[14, C.violeta], [22, C.tile], [30, C.violeta], [36, C.tile]];
+    for (const [dx, c] of herr) { R(bx + dx, G - 22, 2, 12, c); R(bx + dx - 1, G - 24, 4, 3, c); }
+    R(bx + 12, G - 8, 26, 3, C.madera);
+    const abierto = Math.round(h * 22);
+    for (let y = G - 28; y < G - abierto; y += 3) { R(bx + 8, y, 34, 3, C.muroS); R(bx + 8, y + 2, 34, 1, '#AEB1C2'); }
+    R(bx + 50, G - 26, 16, 12, h > .1 ? C.luz : C.vidrio); R(bx + 57, G - 26, 1, 12, C.ladrilloS);
+  }
+
+  function torre(bx, h) {
+    R(bx + 6, G - 88, 48, 88, C.navy);
+    R(bx + 4, G - 92, 52, 4, C.indigo);
+    // Ventanas: de noche algunas prendidas; con el hover se prenden todas, de abajo hacia arriba.
+    for (let f = 0; f < 9; f++) for (let c = 0; c < 5; c++) {
+      if (f >= 2 && f <= 3 && c >= 1 && c <= 3) continue; // lugar del cartel
+      const prendida = (1 - f / 9) < h || ((f * 7 + c * 3) % 5 === 0);
+      R(bx + 10 + c * 9, G - 84 + f * 9, 5, 5, prendida ? C.luz : C.vidrio);
+    }
+    // Cartel con los tres puntos de Datos Abiertos.
+    R(bx + 17, G - 67, 26, 11, C.blanco);
+    for (let i = 0; i < 3; i++) R(bx + 22 + i * 7, G - 63, 3, 3, C.violeta);
+    R(bx + 24, G - 12, 12, 12, h > .1 ? C.luz : C.vidrio); R(bx + 30, G - 12, 1, 12, C.navy);
+    // Antena: titila siempre y emite señal con el hover.
+    R(bx + 29, G - 112, 2, 20, C.muroS); R(bx + 26, G - 104, 8, 1, C.muroS);
+    if (Math.sin(t * 4) > 0 || h > 0) disco(bx + 30, G - 114, 1, C.violeta);
+    if (h > 0) for (let i = 0; i < 3; i++) {
+      const f = (t * .8 + i / 3) % 1, r = 4 + f * 18;
+      x.globalAlpha = h * (1 - f); x.fillStyle = C.violeta;
+      for (let a = -1.1; a <= 1.1; a += .12) { x.fillRect(Math.round(bx + 30 + Math.sin(a) * r), Math.round(G - 114 - Math.cos(a) * r), 1, 1); }
+      x.globalAlpha = 1;
+    }
+  }
+
+  function feria(bx, h) {
+    const colores = [C.violeta, C.tile, C.indigo, C.luz];
+    for (let p = 0; p < 3; p++) {
+      const px = bx + p * 28;
+      R(px, G - 30, 1, 30, C.madera); R(px + 25, G - 30, 1, 30, C.madera);
+      for (let s = 0; s < 7; s++) R(px + s * 4 - 1, G - 34, 4, 6, s % 2 ? C.blanco : [C.indigo, C.violeta, C.navy][p]);
+      for (let s = 0; s < 7; s++) R(px + s * 4, G - 28, 2, 1, s % 2 ? C.blanco : [C.indigo, C.violeta, C.navy][p]);
+      R(px + 1, G - 12, 24, 12, C.madera); R(px + 1, G - 12, 24, 2, '#A5876F');
+      // Productos: saltan con el hover.
+      for (let i = 0; i < 4; i++) {
+        const salto = h * Math.max(0, Math.sin(t * 6 + i + p * 2)) * 3;
+        R(px + 3 + i * 6, G - 17 - salto, 4, 5, colores[(i + p) % 4]);
+      }
+    }
+    // Banderines entre los puestos.
+    for (let i = 0; i < 20; i++) {
+      const px = bx + 2 + i * 4, cuelga = Math.sin(i / 19 * Math.PI) * 5, flameo = h * Math.sin(t * 7 + i) * 1.5;
+      R(px, G - 44 + cuelga + flameo, 3, 2, [C.violeta, C.indigo, C.blanco][i % 3]); R(px + 1, G - 42 + cuelga + flameo, 1, 1, [C.violeta, C.indigo, C.blanco][i % 3]);
+    }
+    R(bx, G - 45, 1, 15, C.madera); R(bx + 81, G - 45, 1, 15, C.madera);
+  }
+
+  function local(bx, h) {
+    R(bx, G - 52, 64, 52, C.tile);
+    R(bx - 2, G - 54, 68, 3, C.navy);
+    R(bx + 6, G - 50, 52, 9, C.navy); txt('VIDRIERA', bx + 17, G - 48, h > 0 ? C.violeta : C.blanco);
+    for (let s = 0; s < 17; s++) R(bx + s * 4 - 2, G - 40, 4, 5, s % 2 ? C.blanco : C.violeta);
+    for (let s = 0; s < 17; s++) R(bx + s * 4 - 1, G - 35, 2, 1, s % 2 ? C.blanco : C.violeta);
+    // Vidriera: con el hover se ilumina y los cuadros cambian, como una muestra.
+    R(bx + 4, G - 31, 40, 25, C.navy); R(bx + 5, G - 30, 38, 23, h > 0 ? C.luz : C.vidrio);
+    const cuadros = [C.violeta, C.indigo, C.tile, C.navy, C.violeta];
+    for (let i = 0; i < 3; i++) {
+      const c = cuadros[(i + (h > 0 ? Math.floor(t * 2) : 0)) % cuadros.length];
+      R(bx + 8 + i * 12, G - 26, 9, 7, C.blanco); R(bx + 9 + i * 12, G - 25, 7, 5, c);
+      R(bx + 12 + i * 12, G - 19, 1, 6, C.madera);
+    }
+    R(bx + 48, G - 31, 12, 31, C.indigo); R(bx + 57, G - 17, 1, 2, C.luz);
+    R(bx + 3, G - 6, 42, 2, C.muroS);
+  }
+
+  function dibujar() {
+    // Cielo en bandas.
+    const bandas = ['#C9DDF2', '#D3E2F3', '#DCE7F4', '#E4ECF5', '#EAEFF6', '#EEF1F7'];
+    bandas.forEach((c, k) => R(0, k * 12, W, 12, c)); R(0, 72, W, H, '#EEF1F7');
+    disco(W - 48, 26, 9, '#FFE7A8');
+    for (const [nx, ny, e] of nubes) {
+      const px = ((nx + t * 4 * e) % (W + 80)) - 40;
+      x.globalAlpha = .9; disco(px, ny, Math.round(5 * e), C.blanco); disco(px + 7 * e, ny - 2, Math.round(6 * e), C.blanco); disco(px + 14 * e, ny, Math.round(4 * e), C.blanco); x.globalAlpha = 1;
+    }
+    for (let sx = 0; sx < W; sx++) {
+      const h = cordillera[sx % cordillera.length]; R(sx, h, 1, G - h, '#AEB6D8');
+      if (h < 52) R(sx, h, 1, Math.min(4, 52 - h), C.blanco);
+      const c = cerros[sx % cerros.length]; R(sx, c, 1, G - c, '#8FA3B8');
+    }
+    R(0, G - 2, W, 2, C.pasto);
+    for (let sx = 0; sx < W; sx += 6) R(sx + (sx * 3) % 4, G - 4, 1, 2, C.pastoS);
+    for (const e of edificios) B[e.id].dibujar(ox + B[e.id].x, hover[e.id]);
+    // Vereda y calle.
+    R(0, G, W, 5, C.vereda); for (let sx = 0; sx < W; sx += 12) R(sx, G, 1, 5, C.veredaS);
+    R(0, G + 5, W, H - G - 5, C.calle);
+    for (let sx = 0; sx < W; sx += 16) R(sx, G + 19, 8, 1, C.muroS);
+  }
+
+  function medir() {
+    const r = cv.getBoundingClientRect();
+    W = Math.max(S, Math.round(H * r.width / r.height));
+    cv.width = W; cv.height = H;
+    ox = Math.round((W - S) / 2);
+    // Cada cartel va centrado bajo su edificio.
+    carteles.forEach((a) => { const b = B[a.dataset.id]; a.style.left = `${(ox + b.x + b.w / 2) / W * 100}%`; });
+  }
+
+  function encender(id) {
+    activo = id;
+    carteles.forEach((a) => a.classList.toggle('on', a.dataset.id === id));
+    if (!id) { ficha.hidden = true; return; }
+    const e = edificios.find((d) => d.id === id), b = B[id];
+    ficha.querySelector('h2').textContent = e.titulo;
+    ficha.querySelector('p').textContent = e.bajada;
+    ficha.querySelector('ul').replaceChildren(...e.items.slice(0, 4).map((i) => Object.assign(document.createElement('li'), { textContent: i })));
+    ficha.hidden = false;
+    // Al costado del edificio, del lado con más lugar, para no taparlo.
+    const k = escena.clientWidth / W, izq = (ox + b.x) * k, der = (ox + b.x + b.w) * k;
+    const aLaDerecha = izq + (der - izq) / 2 < escena.clientWidth / 2;
+    ficha.style.left = `${aLaDerecha ? der + 12 : Math.max(8, izq - ficha.offsetWidth - 12)}px`;
+  }
+
+  // El mouse sobre el canvas elige el edificio por su franja horizontal.
+  const bajo = (ev) => {
+    const r = cv.getBoundingClientRect(), px = (ev.clientX - r.left) / r.width * W, py = (ev.clientY - r.top) / r.height * H;
+    if (py < 20 || py > G + 6) return null;
+    return edificios.find((e) => px >= ox + B[e.id].x - 4 && px <= ox + B[e.id].x + B[e.id].w + 4)?.id ?? null;
+  };
+  cv.addEventListener('mousemove', (ev) => { const id = bajo(ev); if (id !== activo) encender(id); cv.style.cursor = id ? 'pointer' : ''; });
+  cv.addEventListener('mouseleave', () => encender(null));
+  cv.addEventListener('click', (ev) => { const id = bajo(ev); if (id) location.hash = id; });
+  carteles.forEach((a) => {
+    a.addEventListener('mouseenter', () => encender(a.dataset.id));
+    a.addEventListener('focus', () => encender(a.dataset.id));
+    a.addEventListener('blur', () => encender(null));
+  });
+
+  let antes = performance.now();
+  function cuadro(ahora) {
+    const dt = Math.min(.05, (ahora - antes) / 1000); antes = ahora;
+    if (!quieto) t += dt;
+    for (const e of edificios) {
+      const meta = e.id === activo ? 1 : 0;
+      hover[e.id] = quieto ? meta : hover[e.id] + (meta - hover[e.id]) * Math.min(1, dt * 6);
+      if (Math.abs(hover[e.id] - meta) < .01) hover[e.id] = meta;
+    }
+    dibujar();
+    requestAnimationFrame(cuadro);
+  }
+  addEventListener('resize', medir);
+  medir();
+  requestAnimationFrame(cuadro);
+</script>
+
+<style>
+  .portada { background: #C9DDF2; }
+  .texto { max-width: var(--ancho); margin: 0 auto; padding: clamp(2rem, 4vw, 3rem) var(--margen) 0; }
+  h1 { font-size: clamp(2rem, 4.2vw, 3.1rem); font-weight: 800; letter-spacing: -.03em; line-height: 1.04; max-width: 40rem; }
+  .texto p { font-size: clamp(1rem, 1.4vw, 1.15rem); color: #3A4466; max-width: 38rem; margin: .8rem 0 0; }
+
+  .escena { position: relative; margin-top: .5rem; }
+  canvas { display: block; width: 100%; height: clamp(17rem, 32vw, 27rem); image-rendering: pixelated; }
+  .carteles { position: absolute; left: 0; right: 0; bottom: 3%; }
+  .carteles a {
+    position: absolute; transform: translateX(-50%); white-space: nowrap;
+    font: 700 clamp(.75rem, 1.1vw, .95rem) var(--fuente); color: #fff; text-decoration: none;
+    background: var(--navy); padding: .3rem .6rem; border: 2px solid var(--navy);
+  }
+  .carteles a:hover, .carteles a.on { background: var(--violeta); border-color: var(--violeta); color: var(--navy); }
+  .ficha {
+    position: absolute; top: 12%; width: 19rem; pointer-events: none; z-index: 2;
+    background: #fff; border: 2px solid var(--navy); box-shadow: 4px 4px 0 var(--navy); padding: .8rem 1rem;
+  }
+  .ficha h2 { font-size: 1.15rem; font-weight: 800; }
+  .ficha p { margin: .3rem 0 0; font-size: .9rem; color: var(--texto-2); }
+  .ficha ul { margin: .5rem 0 0; padding-left: 1.1rem; font-size: .85rem; font-weight: 600; color: var(--navy); }
+
+  @media (max-width: 50rem) {
+    .escena { overflow-x: auto; }
+    canvas, .carteles { min-width: 46rem; }
+    .carteles { width: 46rem; }
+  }
+</style>

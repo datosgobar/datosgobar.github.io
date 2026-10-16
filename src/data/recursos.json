@@ -1,0 +1,278 @@
+{
+  "secciones": [
+    {
+      "id": "guias",
+      "titulo": "Guías",
+      "bajada": "Para leer de principio a fin, paso a paso.",
+      "tipo": "guia",
+      "recursos": [
+        {
+          "titulo": "Paquete de Apertura de Datos",
+          "descripcion": "Buenas prácticas para publicar datos en formatos abiertos, documentarlos con metadatos y usar entidades interoperables.",
+          "url": "https://datosgobar.github.io/paquete-apertura-datos/",
+          "repo": "https://github.com/datosgobar/paquete-apertura-datos",
+          "publico": [
+            "publicar"
+          ],
+          "etiquetas": [
+            "Guía"
+          ],
+          "logo": "/logos/paquete-apertura-color.png"
+        },
+        {
+          "titulo": "Instalar Portal Andino",
+          "descripcion": "Para que un organismo nacional, provincial o municipal instale y mantenga su propio portal de datos.",
+          "url": "https://datosgobar.github.io/guias-andino/",
+          "repo": "https://github.com/datosgobar/guias-andino",
+          "publico": [
+            "portal"
+          ],
+          "etiquetas": [
+            "Guía",
+            "Andino V2"
+          ],
+          "logo": "/logos/andino-color.png"
+        },
+        {
+          "titulo": "Usar Portal Andino",
+          "descripcion": "Cómo publicar, actualizar y organizar datasets una vez que el portal está funcionando.",
+          "url": "https://datosgobar.github.io/guias-andino/uso/",
+          "repo": "https://github.com/datosgobar/guias-andino",
+          "publico": [
+            "portal",
+            "publicar"
+          ],
+          "etiquetas": [
+            "Guía",
+            "Andino V2"
+          ],
+          "logo": "/logos/andino-color.png"
+        }
+      ]
+    },
+    {
+      "id": "apis",
+      "titulo": "Documentación de APIs",
+      "bajada": "Referencia completa, ejemplos y límites de uso de cada API.",
+      "tipo": "api",
+      "recursos": [
+        {
+          "titulo": "API Georef",
+          "descripcion": "Convierte direcciones y nombres de lugares en datos oficiales: provincia, departamento, localidad, calle y coordenadas.",
+          "url": "https://datosgobar.github.io/georef-ar-api/",
+          "repo": "https://github.com/datosgobar/georef-ar-api",
+          "publico": [
+            "usar"
+          ],
+          "etiquetas": [
+            "API"
+          ],
+          "logo": "/logos/georef-color.png"
+        },
+        {
+          "titulo": "API Series de Tiempo",
+          "descripcion": "Más de 33.000 series de indicadores oficiales que se consultan, cruzan y transforman desde una URL.",
+          "url": "https://datosgobar.github.io/series-tiempo-ar-api/",
+          "repo": "https://github.com/datosgobar/series-tiempo-ar-api",
+          "publico": [
+            "usar",
+            "publicar"
+          ],
+          "etiquetas": [
+            "API"
+          ],
+          "logo": "/logos/series-de-tiempo-color.png"
+        }
+      ]
+    },
+    {
+      "id": "herramientas",
+      "titulo": "Herramientas",
+      "bajada": "Para usar las APIs desde el navegador o desde tu código.",
+      "tipo": "herramienta",
+      "recursos": [
+        {
+          "titulo": "Explorador de Georef",
+          "descripcion": "Armá consultas, mirá los resultados en un mapa y normalizá un CSV completo de direcciones.",
+          "url": "https://datosgobar.github.io/georef-ux/",
+          "repo": "https://github.com/datosgobar/georef-ux",
+          "publico": [
+            "usar"
+          ],
+          "etiquetas": [
+            "En el navegador"
+          ],
+          "logo": "/logos/georef-color.png"
+        },
+        {
+          "titulo": "pygeorefar",
+          "descripcion": "Librería de Python para consultar Georef y procesar direcciones por lotes.",
+          "url": "https://pypi.org/project/pygeorefar/",
+          "repo": "https://github.com/AlenCarbajal/pygeorefar",
+          "publico": [
+            "usar"
+          ],
+          "etiquetas": [
+            "Python"
+          ],
+          "logo": "/logos/georef-color.png"
+        },
+        {
+          "titulo": "georefar",
+          "descripcion": "Paquete de R para consultar Georef. Está en CRAN.",
+          "url": "https://cran.r-project.org/package=georefar",
+          "publico": [
+            "usar"
+          ],
+          "etiquetas": [
+            "R"
+          ],
+          "logo": "/logos/georef-color.png"
+        },
+        {
+          "titulo": "Georef para QGIS",
+          "descripcion": "Capas de Georef listas para analizar en QGIS.",
+          "url": "https://www.argentina.gob.ar/georef",
+          "publico": [
+            "usar"
+          ],
+          "etiquetas": [
+            "QGIS"
+          ],
+          "logo": "/logos/georef-color.png"
+        }
+      ]
+    },
+    {
+      "id": "andino",
+      "titulo": "Portal Andino",
+      "bajada": "La plataforma sobre la que funciona datos.gob.ar, lista para que cualquier organismo la instale. Cada parte, vista en el portal nacional.",
+      "tipo": "andino",
+      "recursos": [
+        {
+          "titulo": "datos.gob.ar",
+          "descripcion": "El portal nacional de datos abiertos, funcionando sobre Portal Andino V2.",
+          "url": "https://datos.gob.ar/",
+          "repo": "https://github.com/datosgobar/portal-andino-v2",
+          "publico": [
+            "portal"
+          ],
+          "logo": "/logos/datos-gob-ar-blanco.png",
+          "logoFondo": "navy"
+        },
+        {
+          "titulo": "Buscador de series",
+          "descripcion": "Buscá, compará y graficá series de tiempo sin salir del portal.",
+          "url": "https://datos.gob.ar/series/",
+          "repo": "https://github.com/datosgobar/ckanext-series-explorer",
+          "publico": [
+            "portal",
+            "usar"
+          ],
+          "logo": "/logos/series-de-tiempo-color.png"
+        },
+        {
+          "titulo": "Perfil Nacional de Metadatos",
+          "descripcion": "Los campos que describen cada dataset: temas, frecuencia de actualización, cobertura y más.",
+          "url": "https://datos.gob.ar/dataset/cartera-de-proyectos-mineros-en-argentina-del-siacam",
+          "repo": "https://github.com/datosgobar/ckanext-scheming-gobar",
+          "publico": [
+            "portal",
+            "publicar"
+          ],
+          "logo": "/logos/andino-color.png"
+        }
+      ]
+    }
+  ],
+  "comunidad": [
+    {
+      "titulo": "Sumá lo que hiciste",
+      "descripcion": "¿Armaste un tablero, una app o una investigación con datos públicos? Sumala al catálogo de usos y desarrollos.",
+      "accion": "Ir al catálogo",
+      "url": "https://alencarbajal.github.io/catalogo-reutilizadores-datos-abiertos/",
+      "icono": "sumar"
+    },
+    {
+      "titulo": "Avisá un error",
+      "descripcion": "Si una guía está desactualizada o una API responde algo raro, abrí un issue en el repositorio de ese recurso.",
+      "accion": "Ver repositorios",
+      "url": "https://github.com/datosgobar",
+      "icono": "aviso"
+    },
+    {
+      "titulo": "Contribuí código",
+      "descripcion": "Todo el código es abierto. Cada repositorio explica cómo proponer cambios.",
+      "accion": "Ir a GitHub",
+      "url": "https://github.com/datosgobar",
+      "icono": "github"
+    }
+  ],
+  "contacto": "datosargentina@jefatura.gob.ar",
+  "novedades": [
+    {
+      "fecha": "2026-09-25",
+      "texto": "El Explorador de Georef pasa a la identidad de Datos Abiertos y se corrigen el mapa y la vista en celulares.",
+      "url": "https://datosgobar.github.io/georef-ux/"
+    },
+    {
+      "fecha": "2026-09-23",
+      "texto": "Se publican las guías de instalación y de uso de Portal Andino V2.",
+      "url": "https://datosgobar.github.io/guias-andino/"
+    },
+    {
+      "fecha": "2026-09-17",
+      "texto": "El catálogo de usos suma un formulario para cargar desarrollos nuevos.",
+      "url": "https://alencarbajal.github.io/catalogo-reutilizadores-datos-abiertos/"
+    }
+  ],
+  "lab": {
+    "id": "vidriera",
+    "titulo": "Lab",
+    "bajada": "Visualizaciones y desarrollos en curso del equipo.",
+    "recursos": [
+      {
+        "titulo": "El ecosistema de datos abiertos",
+        "descripcion": "Presentación animada: de Portal Andino a Georef y Series de Tiempo, con su uso año por año.",
+        "url": "/vidriera/ecosistema.html",
+        "imagen": "/vidriera/capturas/ecosistema.png"
+      },
+      {
+        "titulo": "Recorrido por Portal Andino",
+        "descripcion": "Un paseo por las partes del portal y lo que hace cada una.",
+        "url": "/vidriera/recorrido.html",
+        "imagen": "/vidriera/capturas/recorrido.png"
+      },
+      {
+        "titulo": "Andino Arcade",
+        "descripcion": "Caminá por el mundo de Portal Andino y tocá cada objeto para descubrir un hito.",
+        "url": "/vidriera/index.html",
+        "imagen": "/vidriera/capturas/index.png"
+      },
+      {
+        "titulo": "Bosque de datos",
+        "descripcion": "El ecosistema contado como un bosque: cada árbol es un producto y sus raíces muestran cómo se conectan los datos.",
+        "url": "/vidriera/ecosistema-bosque.html",
+        "imagen": "/vidriera/capturas/ecosistema-bosque.png"
+      },
+      {
+        "titulo": "Ecosistema en píxeles",
+        "descripcion": "La historia del ecosistema en capítulos, en pixel art.",
+        "url": "/vidriera/ecosistema-pixel.html",
+        "imagen": "/vidriera/capturas/ecosistema-pixel.png"
+      },
+      {
+        "titulo": "Andino en trazos",
+        "descripcion": "Los 1.287 datasets, los contenedores del portal y las 43 fuentes de cosecha, dibujados con una sola línea.",
+        "url": "/vidriera/trazos.html",
+        "imagen": "/vidriera/capturas/trazos.png"
+      },
+      {
+        "titulo": "Andino en crayones",
+        "descripcion": "El mundo de Portal Andino dibujado en una hoja de cuaderno, para recorrer con las flechas.",
+        "url": "/vidriera/crayon.html",
+        "imagen": "/vidriera/capturas/crayon.png"
+      }
+    ]
+  }
+}

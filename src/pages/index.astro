@@ -1,0 +1,165 @@
+---
+import Base from '../layouts/Base.astro';
+import Icono from '../components/Icono.astro';
+import { secciones, comunidad, contacto, novedades } from '../data/recursos.json';
+
+const grupos = secciones;
+const filtros = [
+  { id: '', texto: 'Todo' },
+  { id: 'usar', texto: 'Usar datos' },
+  { id: 'publicar', texto: 'Publicar datos' },
+  { id: 'portal', texto: 'Tener un portal' },
+];
+const fecha = (iso) => new Date(`${iso}T12:00:00`).toLocaleDateString('es-AR', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+<Base titulo="Datos Abiertos Hub" descripcion="Guías, documentación de APIs y herramientas para abrir y usar datos públicos del Estado argentino.">
+  <div class="intro interior">
+    <h1>Recursos para abrir y usar datos públicos</h1>
+    <p>Guías, documentación de las APIs y herramientas de la Dirección de Datos Abiertos. Cada recurso sigue en su propio sitio; acá están todos juntos.</p>
+    <label class="buscador">
+      <Icono nombre="lupa" />
+      <input id="buscar" type="search" placeholder="Buscar: direcciones, series, instalar un portal…" aria-label="Buscar recursos" />
+    </label>
+    <div class="filtros" role="group" aria-label="Filtrar por lo que querés hacer">
+      {filtros.map((f, i) => <button type="button" data-publico={f.id} aria-pressed={i === 0 ? 'true' : 'false'}>{f.texto}</button>)}
+    </div>
+  </div>
+
+  {grupos.map((s) => (
+    <section class="grupo interior" id={s.id}>
+      <h2>{s.titulo}</h2>
+      <p class="bajada">{s.bajada}</p>
+      <ul class="tarjetas">
+        {s.recursos.map((r) => (
+          <li class="tarjeta" data-publico={(r.publico ?? []).join(' ')}>
+            {r.logo && <span class:list={['logo', r.logoFondo]}><img src={r.logo} alt="" /></span>}
+            <h3><a href={r.url}>{r.titulo}</a></h3>
+            <p>{r.descripcion}</p>
+            {(r.etiquetas || r.repo) && (
+              <div class="meta">
+                {r.etiquetas?.map((e) => <span>{e}</span>)}
+                {r.repo && <a class="github" href={r.repo}><Icono nombre="github" />Código en GitHub</a>}
+              </div>
+            )}
+          </li>
+        ))}
+      </ul>
+    </section>
+  ))}
+  <p class="interior vacio" id="vacio" hidden>No hay recursos con esas palabras. Probá con otra búsqueda o elegí “Todo”.</p>
+
+  <section class="comunidad" id="comunidad">
+    <div class="interior">
+      <div class="participa">
+        <h2>Comunidad</h2>
+        <p class="bajada">Los recursos son abiertos y mejoran con lo que cuenta quien los usa. Para consultas generales, escribinos a <strong class="correo">{contacto}</strong>.</p>
+        <ul class="vias">
+          {comunidad.map((c) => (
+            <li>
+              <Icono nombre={c.icono} />
+              <h3>{c.titulo}</h3>
+              <p>{c.descripcion}</p>
+              <a href={c.url}>{c.accion}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div class="novedades">
+        <h2>Novedades</h2>
+        <ol>
+          {novedades.map((n) => (
+            <li><time datetime={n.fecha}>{fecha(n.fecha)}</time><a href={n.url}>{n.texto}</a></li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+</Base>
+
+<script>
+  // Filtro local por texto y por lo que la persona quiere hacer. Un grupo sin resultados se oculta.
+  const sinTildes = (t) => t.toLowerCase().normalize('NFD').replace(/\p{M}/gu, '');
+  const tarjetas = [...document.querySelectorAll('.tarjeta')];
+  const botones = [...document.querySelectorAll('.filtros button')];
+  const buscar = document.getElementById('buscar');
+  let publico = '';
+  function filtrar() {
+    const q = sinTildes(buscar.value);
+    let total = 0;
+    for (const t of tarjetas) {
+      const ok = sinTildes(t.textContent).includes(q) && (!publico || t.dataset.publico.split(' ').includes(publico));
+      t.hidden = !ok;
+      total += Number(ok);
+    }
+    for (const g of document.querySelectorAll('.grupo')) g.hidden = !g.querySelector('.tarjeta:not([hidden])');
+    document.getElementById('vacio').hidden = total > 0;
+  }
+  buscar.addEventListener('input', filtrar);
+  for (const b of botones) {
+    b.addEventListener('click', () => {
+      publico = b.dataset.publico;
+      for (const x of botones) x.setAttribute('aria-pressed', String(x === b));
+      filtrar();
+    });
+  }
+</script>
+
+<style>
+  .interior { max-width: var(--ancho); margin: 0 auto; padding-inline: var(--margen); }
+  .intro { padding-block: 3.5rem 2.5rem; border-bottom: 1px solid var(--borde); }
+  h1 { font-size: clamp(2rem, 4vw, 2.75rem); font-weight: 800; letter-spacing: -.02em; max-width: 20ch; text-wrap: balance; }
+  .intro > p { max-width: 58ch; margin: .75rem 0 1.75rem; font-size: 1.075rem; }
+  .buscador { display: flex; align-items: center; gap: .5rem; max-width: 36rem; border: 2px solid var(--navy); border-radius: 4px; padding: .1rem .75rem; color: var(--navy); }
+  .buscador input { border: 0; font: inherit; padding: .7rem 0; flex: 1; min-width: 0; color: var(--texto); background: transparent; }
+  .buscador input:focus { outline: none; }
+  .buscador:focus-within { outline: 3px solid var(--violeta); outline-offset: 2px; }
+  .filtros { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; }
+  .filtros button { font: inherit; font-size: .875rem; font-weight: 600; border: 1px solid var(--borde); background: #fff; color: var(--texto); padding: .4rem .85rem; border-radius: 99px; cursor: pointer; }
+  .filtros button[aria-pressed="true"] { background: var(--navy); border-color: var(--navy); color: #fff; }
+
+  h2 { font-size: 1.5rem; font-weight: 800; }
+  .bajada { margin: .25rem 0 1.25rem; color: var(--texto-2); max-width: 60ch; }
+  .grupo { padding-top: 3rem; }
+  .tarjetas { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); gap: 1rem; }
+  .tarjeta { position: relative; display: flex; flex-direction: column; gap: .4rem; padding: 1.25rem; border: 1px solid var(--borde); border-radius: 6px; background: #fff; }
+  .tarjeta:hover { border-color: var(--navy); }
+  .tarjeta:has(h3 a:focus-visible) { outline: 3px solid var(--violeta); outline-offset: 2px; }
+  /* Logo oficial del producto, sin recortar ni recolorear. */
+  .logo { display: flex; align-items: center; height: 3.25rem; margin-bottom: .5rem; }
+  .logo img { height: 100%; width: auto; max-width: 12rem; object-fit: contain; }
+  .logo.navy { background: var(--navy); border-radius: 4px; padding: .7rem .9rem; align-self: flex-start; }
+  .tarjeta h3 { font-size: 1.05rem; line-height: 1.3; }
+  .tarjeta h3 a { color: var(--navy); text-decoration: none; }
+  .tarjeta h3 a:focus-visible { outline: none; }
+  /* Toda la tarjeta es clickeable; el foco y el lector de pantalla siguen en el título. */
+  .tarjeta h3 a::after { content: ""; position: absolute; inset: 0; }
+  .tarjeta p { margin: 0; font-size: .925rem; }
+  .meta { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; margin-top: auto; padding-top: .6rem; font-size: .8rem; }
+  .meta span { background: var(--gris-fondo); padding: .15rem .5rem; border-radius: 3px; font-weight: 600; }
+  .github { position: relative; z-index: 1; margin-left: auto; display: inline-flex; align-items: center; gap: .4rem; padding: .3rem .6rem; border: 1px solid var(--borde); border-radius: 4px; color: var(--navy); font-weight: 700; text-decoration: none; background: #fff; }
+  .github:hover { border-color: var(--navy); background: var(--gris-fondo); }
+  .github :global(.icono) { width: 16px; height: 16px; }
+  .vacio { padding-top: 2rem; }
+
+  /* Fondo claro: la banda oscura se confundía con el pie de página. */
+  .comunidad { background: var(--lavanda); border-block: 1px solid var(--borde); margin-top: 4.5rem; padding-block: 3.5rem; }
+  .comunidad .interior { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 3rem; }
+  .correo { user-select: all; color: var(--navy); }
+  .vias { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: 1rem; }
+  .vias li { display: grid; gap: .4rem; align-content: start; background: #fff; border: 1px solid var(--borde); border-radius: 6px; padding: 1.25rem; }
+  .vias :global(.icono) { color: var(--indigo); width: 2.75rem; height: 2.75rem; justify-self: center; margin-bottom: .5rem; }
+  .vias h3 { font-size: 1.05rem; }
+  .vias p { margin: 0; font-size: .9rem; }
+  .vias a { font-weight: 700; }
+  .novedades ol { list-style: none; margin: 1rem 0 0; padding: 0; display: grid; gap: 1.1rem; }
+  .novedades li { display: grid; gap: .1rem; border-left: 3px solid var(--violeta); padding-left: 1rem; }
+  .novedades time { font-size: .8rem; font-weight: 700; color: var(--texto-2); }
+  .novedades a { color: var(--navy); font-weight: 600; font-size: .95rem; text-decoration: none; }
+  .novedades a:hover { text-decoration: underline; }
+
+
+  @media (max-width: 50rem) {
+    .comunidad .interior { grid-template-columns: 1fr; }
+  }
+</style>

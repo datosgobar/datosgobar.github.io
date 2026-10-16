@@ -1,0 +1,447 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Andino en Crayones</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@700&family=Patrick+Hand&display=swap">
+<style>
+/* ponytail: hoja de cuaderno, un solo tema claro a propósito */
+:root{
+  color-scheme:light;
+  --paper:#ffffff; --ink:#34343f; --dim:#6a6a78; --renglon:#d3e2f4; --margen:#ef9a9a;
+  --celeste:#3d7fc0; --sol:#f2b632; --rosa:#d9453b; --pasto:#5aa650;
+  --sketch:"Cabin Sketch","Comic Sans MS",cursive;
+  --hand:"Patrick Hand","Comic Sans MS",cursive;
+}
+*{box-sizing:border-box}
+body{margin:0;color:var(--ink);font:21px/32px var(--hand);padding-inline:16px;padding-block:24px 48px;
+  background:var(--paper) repeating-linear-gradient(180deg,transparent 0 31px,var(--renglon) 31px 32px)}
+@media (min-width:1100px){body{background-image:linear-gradient(90deg,transparent 56px,var(--margen) 56px 58px,transparent 58px),repeating-linear-gradient(180deg,transparent 0 31px,var(--renglon) 31px 32px)}}
+.wrap{max-width:960px;margin:0 auto;display:grid;gap:18px}
+header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:12px}
+h1{margin:0;font:700 clamp(30px,6vw,52px)/1 var(--sketch);color:var(--ink)}
+h1 em{font-style:normal;color:var(--rosa)}
+.hud{display:flex;gap:10px;font:20px/1 var(--hand)}
+.hud span{position:relative;padding:6px 12px}
+#hudDemo{background:linear-gradient(transparent 50%,#f2b63299 50%)}
+
+/* bordes a mano: un pseudo-elemento con filtro de desplazamiento que "hierve" */
+.rough{position:relative}
+.rough::before{content:"";position:absolute;inset:-3px;border:2.5px solid var(--ink);border-radius:6px 10px 5px 12px;filter:url(#rough);pointer-events:none}
+.screen{background:var(--paper)}
+#game{display:block;width:100%;height:auto;aspect-ratio:200/112;touch-action:manipulation}
+#game:focus-visible,button:focus-visible{outline:3px dashed var(--rosa);outline-offset:5px}
+
+.pad{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.pad .keys{display:flex;gap:12px}
+.pad button{font:22px/1 var(--sketch);background:var(--paper);color:var(--ink);border:0;width:54px;height:46px;cursor:pointer;
+  user-select:none;-webkit-user-select:none;touch-action:none}
+.pad button:active{transform:rotate(-4deg) scale(.94)}
+.pad p{margin:0;color:var(--dim);font-size:20px}
+kbd{font:18px var(--hand);border:1.5px solid var(--dim);border-radius:4px 7px 5px 6px;padding:0 5px;background:var(--paper)}
+
+.dialog{background:var(--paper);padding:18px 22px;min-height:170px}
+.dialog .when{margin:0;font:22px var(--hand);color:var(--rosa)}
+.dialog h2{margin:2px 0 8px;font:700 clamp(24px,3.6vw,32px)/1.15 var(--sketch);text-wrap:balance}
+.dialog p{margin:0 0 8px;max-width:65ch}
+.dialog code{font:inherit;color:var(--celeste);word-break:break-all}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px;margin:10px 0 14px}
+.stat{display:grid;gap:0;padding:8px 12px}
+.stat b{font:700 clamp(24px,3.4vw,32px)/1.1 var(--sketch);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.stat small{font-size:19px;color:var(--dim)}
+.bars{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;height:150px;align-items:end;border-bottom:2.5px solid var(--ink);margin:6px 0 34px;padding-inline:4px}
+.yr{height:100%;display:flex;gap:4px;align-items:end;justify-content:center;position:relative}
+.yr i{width:min(40%,34px);height:var(--h);border:2px solid var(--ink);border-radius:3px 5px 2px 4px;filter:url(#rough);
+  background:repeating-linear-gradient(45deg,var(--c) 0 3px,transparent 3px 6px)}
+.yr span{position:absolute;bottom:-32px;font-size:19px;color:var(--dim)}
+.legend{display:flex;gap:16px;font-size:20px}
+.legend b{display:inline-block;width:14px;height:14px;margin-right:6px;border-radius:40%}
+
+.travel{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center}
+.travel strong{font:700 20px var(--sketch);color:var(--dim)}
+.travel button{font:21px/1.2 var(--hand);background:none;color:var(--ink);border:0;padding:2px 4px;cursor:pointer;text-decoration:underline wavy var(--renglon)}
+.travel button.seen{background:linear-gradient(transparent 55%,#8fd3a066 55%)}
+.travel button[aria-current="true"]{background:linear-gradient(transparent 45%,#f2b632aa 45%);text-decoration:none}
+footer{color:var(--dim);font-size:18px;line-height:26px}
+footer a{color:var(--celeste)}
+#status{font:18px var(--hand)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="rough">
+    <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="1">
+      <animate id="boil" attributeName="seed" values="1;4;7" dur="0.45s" repeatCount="indefinite" calcMode="discrete"/>
+    </feTurbulence>
+    <feDisplacementMap in="SourceGraphic" scale="4"/>
+  </filter>
+</svg>
+
+<div class="wrap">
+  <header>
+    <h1>Andino <em>en crayones</em></h1>
+    <div class="hud" aria-live="polite">
+      <span id="hudHitos" class="rough">Hitos 0/10</span>
+      <span id="hudDemo" hidden>paseando solita…</span>
+    </div>
+  </header>
+
+  <div class="screen rough">
+    <canvas id="game" width="1000" height="560" tabindex="0"
+      aria-label="Dibujo del Portal Andino. Usá las flechas para caminar y tocá los objetos para ver cada hito."></canvas>
+  </div>
+
+  <div class="pad">
+    <div class="keys">
+      <button type="button" class="rough" data-k="L" aria-label="Caminar a la izquierda">←</button>
+      <button type="button" class="rough" data-k="R" aria-label="Caminar a la derecha">→</button>
+      <button type="button" class="rough" data-k="J" aria-label="Saltar">↑</button>
+    </div>
+    <p><kbd>←</kbd> <kbd>→</kbd> caminar · <kbd>↑</kbd> saltar · tocá cualquier dibujo</p>
+  </div>
+
+  <section class="dialog rough" id="panel" aria-live="polite"></section>
+
+  <nav class="travel" id="travel" aria-label="Ir a un hito"><strong>ir a:</strong></nav>
+
+  <footer>
+    <span id="status">valores guardados · consultados el 23/09/2026</span><br>
+    Uso de las APIs: series <code>apis_georef_*</code> y <code>apis_series_*</code> de
+    <a href="https://apis.datos.gob.ar/series/api/" target="_blank" rel="noopener">apis.datos.gob.ar</a> (publicadas hasta agosto de 2024).
+    Hitos tomados del historial de los repositorios.
+  </footer>
+</div>
+
+<script>
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const fmt = n => Math.round(n).toLocaleString('es-AR');
+
+// valores guardados (23/09/2026); se pisan con la API si responde (abriendo el archivo local)
+const D = {
+  geoTotal: 264037620, geoDate: '27/08/2024', serTotal: 47618528, serDate: '04/08/2024',
+  serCount: 33154, deps: 529, mun: 2082, loc: 4037, orgs: 45,
+  years: [['2019',10784848,7188897],['2020',25515474,6128263],['2021',44536302,7358547],['2022',64416323,3603430],['2023',72847789,9229218]],
+};
+const stat = (v, l, c) => `<div class="stat"><b style="color:${c || 'var(--celeste)'}">${v}</b><small>${l}</small></div>`;
+const bars = d => {
+  const max = 80e6;
+  return `<div class="legend"><span><b style="background:var(--sol)"></b>Georef</span><span><b style="background:var(--celeste)"></b>Series</span></div>
+  <div class="bars">${d.years.map(([y, g, s]) =>
+    `<div class="yr"><i style="--h:${g/max*100}%;--c:var(--sol)" title="Georef ${y}: ${fmt(g)}"></i><i style="--h:${s/max*100}%;--c:var(--celeste)" title="Series ${y}: ${fmt(s)}"></i><span>${y}</span></div>`).join('')}</div>
+  <p>Millones de consultas por año completo (escala 0–80 M).</p>`;
+};
+
+// el mundo: cada hito es un objeto que se puede tocar
+const OBJ = [
+  {x: 20, w: 16, h: 20, kind: 'sign', label: 'INICIO', when: 'PRESS START', title: '¡Hola, les damos la bienvenida al Portal Andino!',
+    body: () => `<p>Caminá con las flechas (o los botones), saltá con ↑ y tocá cualquier cosa del paisaje para ver su historia. Si no tocás nada, la exploradora pasea sola.</p><p>Cada parada es un hito real del portal y de sus APIs de datos abiertos.</p>`},
+  {x: 110, w: 28, h: 28, kind: 'house', label: '2014', when: 'OCT 2014', title: 'Nace el repo de despliegue',
+    body: () => `<p>Primer commit de lo que hoy es <code>portal-andino-v2</code>: el stack dockerizado que levanta un Andino con CKAN, Solr, PostgreSQL, Redis y nginx.</p>`},
+  {x: 220, w: 16, h: 30, kind: 'machine', c: '#2f8fc4', label: 'API SERIES', when: 'ENE 2018', title: 'La API de Series de Tiempo empieza a contar',
+    body: d => `<p>Desde el 08/01/2018 cada consulta queda registrada como una serie diaria más.</p><div class="stats">${stat(fmt(d.serTotal), 'consultas acumuladas al ' + d.serDate)}${stat(fmt(d.serCount), 'series publicadas en el buscador', 'var(--rosa)')}</div><p><code>apis.datos.gob.ar/series/api/</code></p>`},
+  {x: 320, w: 30, h: 30, kind: 'board', c: '#2f8fc4', label: 'EXPLORADOR', when: 'MAY 2018', title: 'Explorador de Series',
+    body: () => `<p>Arranca <code>series-tiempo-ar-explorer</code>: gráficos interactivos y embebibles construidos sobre la API de Series.</p>`},
+  {x: 430, w: 16, h: 30, kind: 'machine', c: '#f6b40e', label: 'API GEOREF', when: 'JUL 2018', title: 'Georef entra al juego',
+    body: d => `<p>Desde el 17/07/2018 se miden las consultas a la API que normaliza y geocodifica direcciones de todo el país.</p><div class="stats">${stat(fmt(d.geoTotal), 'consultas acumuladas al ' + d.geoDate, '#b07d00')}${stat(`${d.deps} · ${d.mun} · ${fmt(d.loc)}`, 'departamentos · municipios · localidades')}</div><p><code>apis.datos.gob.ar/georef/api/</code></p>`},
+  {x: 540, w: 24, h: 26, kind: 'trophy', label: 'RÉCORD', when: '2023', title: 'Récord: 72,8 M consultas a Georef en un año',
+    body: d => `<p>El año completo con más consultas registradas. Series de Tiempo sumó 9,2 M ese mismo año.</p>${bars(d)}`},
+  {x: 640, w: 30, h: 26, kind: 'stand', label: 'PONCHO', when: 'DIC 2025', title: 'Tema gob.ar con Poncho',
+    body: () => `<p><code>ckanext-gobar-theme</code> suma la identidad oficial con Poncho, y <code>ckanext-spatial-widget-ar</code> pone mapas en los datasets.</p>`},
+  {x: 750, w: 26, h: 44, kind: 'tower', label: 'CKAN 2.11', when: 'JUN 2026', title: 'Andino V2 sobre CKAN 2.11',
+    body: d => `<p>Todo en extensiones y cuatro perfiles (genérico, APN, nacional, central) que se eligen con una sola variable. Suman <code>georef-ux</code> y <code>pygeorefar</code> sobre Georef v2.1.</p><div class="stats">${stat(d.orgs, 'organismos publicando en datos.gob.ar', 'var(--rosa)')}</div><p><code>datos.gob.ar/api/3/action/</code></p>`},
+  {x: 860, w: 30, h: 30, kind: 'board', c: '#e23b6f', label: 'SERIES', when: 'JUL 2026', title: 'Series dentro del portal',
+    body: () => `<p><code>ckanext-series-explorer</code>: buscador, comparador y detalle de series de tiempo como extensión de CKAN.</p>`},
+  {x: 980, w: 40, h: 46, kind: 'castle', label: 'LANZAMIENTO', when: 'SEP 2026', title: 'Rama de lanzamiento',
+    body: () => `<p>El 02/09/2026 el tema entra a la rama de lanzamiento. Próximo nivel: producción.</p>`},
+];
+
+const VW = 200, VH = 112, GY = 92, WORLD = 1060;
+const cv = document.getElementById('game'), x = cv.getContext('2d');
+const panel = document.getElementById('panel'), travel = document.getElementById('travel');
+const hudHitos = document.getElementById('hudHitos'), hudDemo = document.getElementById('hudDemo');
+
+const p = {x: 30, y: 0, vy: 0, dir: 1};
+const llama = {x: 14};
+const keys = {}, visited = new Set();
+let cam = 0, t = 0, cur = -1, target = null, idle = 0, demo = false, demoI = 1, pause = 0, hover = -1;
+
+// --- capa de dibujo a crayón: trazos con temblor que "hierve" y rellenos rayados ---
+const SC = 5, INK = '#34343f';
+let boil = 0, seedN = 0;
+function rnd(){
+  seedN = (seedN + 0x6D2B79F5) | 0;
+  let z = seedN; z = Math.imul(z ^ z >>> 15, z | 1); z ^= z + Math.imul(z ^ z >>> 7, z | 61);
+  return ((z ^ z >>> 14) >>> 0) / 4294967296;
+}
+const j = a => (rnd() - 0.5) * a;
+const rect = (a, b, w, h) => [[a, b], [a+w, b], [a+w, b+h], [a, b+h]];
+const circ = (cx, cy, r, n = 14) => Array.from({length: n}, (_, i) => [cx + Math.cos(i/n*6.283)*r, cy + Math.sin(i/n*6.283)*r]);
+function path(pts, close){ x.beginPath(); pts.forEach(([a, b], i) => i ? x.lineTo(a, b) : x.moveTo(a, b)); if (close) x.closePath(); }
+
+// contorno: dos pasadas de lápiz que no coinciden
+function stroke(pts, color = INK, w = 0.45, close = true){
+  x.strokeStyle = color; x.lineWidth = w; x.lineCap = x.lineJoin = 'round';
+  for (let pass = 0; pass < 2; pass++){
+    path(pts.map(([a, b]) => [a + j(0.7), b + j(0.7)]), close);
+    x.globalAlpha = pass ? 0.5 : 0.9; x.stroke();
+  }
+  x.globalAlpha = 1;
+}
+// relleno: base suave + rayado diagonal de crayón
+function hatch(pts, color, gap = 1.1){
+  x.save(); path(pts, true); x.clip();
+  x.globalAlpha = 0.28; x.fillStyle = color; x.fill();
+  const xs = pts.map(q => q[0]), ys = pts.map(q => q[1]);
+  const x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys), h = y1 - y0;
+  x.beginPath();
+  for (let d = x0 - h; d < x1; d += gap){ x.moveTo(d + j(0.6), y1 + 1); x.lineTo(d + h + j(0.6), y0 - 1); }
+  x.globalAlpha = 0.8; x.strokeStyle = color; x.lineWidth = 0.75; x.stroke();
+  x.restore();
+}
+const shape = (pts, color, line = INK) => { hatch(pts, color); stroke(pts, line); };
+const line = (a, b, c, d, color = INK, w = 0.5) => stroke([[a, b], [c, d]], color, w, false);
+
+// grano de papel/crayón: motas blancas que se corren en cada "hervor"
+const grain = (() => {
+  const g = document.createElement('canvas'); g.width = g.height = 128;
+  const gx = g.getContext('2d');
+  for (let i = 0; i < 1400; i++){ gx.fillStyle = `rgba(255,255,255,${0.35 + Math.random()*0.5})`; gx.fillRect(Math.random()*128, Math.random()*128, 1 + Math.random()*2, 1); }
+  return x.createPattern(g, 'repeat');
+})();
+
+const DRAW = {
+  sign(a){ shape(rect(a+7, GY-12, 2, 12), '#9a6a3e'); shape(rect(a, GY-20, 16, 10), '#e0a864'); line(a+3, GY-17, a+13, GY-17); line(a+3, GY-14, a+10, GY-14); },
+  house(a){
+    shape(rect(a+19, GY-30, 3, 8), '#9a6a3e');
+    shape(rect(a+2, GY-16, 24, 16), '#f3e3c3');
+    shape([[a, GY-16], [a+28, GY-16], [a+14, GY-29]], '#d9453b');
+    shape(rect(a+11, GY-9, 6, 9), '#3d6fb6'); shape(rect(a+4, GY-13, 5, 5), '#6fb7e0'); shape(rect(a+19, GY-13, 5, 5), '#6fb7e0');
+  },
+  machine(a, o){
+    shape(rect(a, GY-30, 16, 30), o.c);
+    shape(rect(a+2, GY-28, 12, 4), '#ffffff'); shape(rect(a+2, GY-22, 12, 9), '#3a3a44');
+    for (let k = 0; k < 5; k++) if (((t/12 + k*5) | 0) % 3) hatch(circ(a+4+(k*3)%9, GY-20+(k*2)%6, 0.8, 6), '#7bd67f');
+    shape(circ(a+5, GY-9, 1.2, 8), '#d9453b'); shape(circ(a+10, GY-9, 1.2, 8), '#ffffff');
+  },
+  board(a, o){
+    shape(rect(a+4, GY-13, 2, 13), '#9a6a3e'); shape(rect(a+24, GY-13, 2, 13), '#9a6a3e');
+    shape(rect(a, GY-30, 30, 18), '#ffffff');
+    const pts = []; let yy = GY-19;
+    for (let i = 0; i <= 8; i++){ pts.push([a+3+i*3, yy]); yy = Math.max(GY-27, Math.min(GY-15, yy + ((i*7 + (t/40|0)) % 5) - 2)); }
+    stroke(pts, o.c, 0.9, false);
+  },
+  trophy(a){
+    shape(rect(a+2, GY-8, 20, 8), '#6a6a78'); shape(rect(a+10, GY-17, 4, 9), '#f2b632');
+    shape([[a+6, GY-27], [a+18, GY-27], [a+16, GY-18], [a+8, GY-18]], '#f2b632');
+    stroke([[a+6, GY-26], [a+3, GY-25], [a+4, GY-21], [a+7, GY-20]], INK, 0.5, false);
+    stroke([[a+18, GY-26], [a+21, GY-25], [a+20, GY-21], [a+17, GY-20]], INK, 0.5, false);
+    if ((t/20|0) % 2){ line(a+19, GY-32, a+19, GY-29, '#f2b632'); line(a+17.5, GY-30.5, a+20.5, GY-30.5, '#f2b632'); }
+  },
+  stand(a){
+    shape(rect(a+2, GY-20, 2, 20), '#9a6a3e'); shape(rect(a+26, GY-20, 2, 20), '#9a6a3e');
+    for (let k = 0; k < 6; k++) shape(rect(a+k*5, GY-26, 5, 7), k % 2 ? '#ffffff' : '#6fb7e0');
+    shape([[a+10, GY-18], [a+20, GY-18], [a+18, GY-9], [a+12, GY-9]], '#d9453b'); line(a+11, GY-14, a+19, GY-14, '#f2b632', 0.8);
+    shape(rect(a+1, GY-7, 28, 7), '#c98b4f');
+  },
+  tower(a){
+    line(a+13, GY-44, a+13, GY-52); hatch(circ(a+13, GY-53, 1, 6), '#d9453b');
+    shape(rect(a, GY-44, 26, 44), '#5a6fb0');
+    for (let r = 0; r < 7; r++) for (let q = 0; q < 3; q++)
+      if ((r*3 + q + (t/90|0)) % 4) hatch(rect(a+3+q*8, GY-40+r*5, 4, 3), '#f2d23a');
+    shape(rect(a+10, GY-6, 6, 6), '#3a3a44');
+  },
+  castle(a){
+    shape(rect(a, GY-30, 10, 30), '#aab1d6'); shape(rect(a+30, GY-30, 10, 30), '#aab1d6'); shape(rect(a+6, GY-22, 28, 22), '#cfd3ea');
+    for (let k = 0; k < 3; k++){ shape(rect(a+k*4, GY-33, 2, 3), '#aab1d6'); shape(rect(a+30+k*4, GY-33, 2, 3), '#aab1d6'); }
+    shape([[a+16, GY], [a+16, GY-10], [a+20, GY-14], [a+24, GY-10], [a+24, GY]], '#3a3a44');
+    line(a+19, GY-22, a+19, GY-48, INK, 0.6);
+    const wv = Math.sin(t/12) * 1.2;
+    const flag = (y0, c) => shape([[a+19, y0], [a+31, y0 + wv], [a+31, y0 + 3 + wv], [a+19, y0 + 3]], c);
+    flag(GY-48, '#6fb7e0'); flag(GY-45, '#ffffff'); flag(GY-42, '#6fb7e0'); hatch(circ(a+25, GY-43.5 + wv/2, 1, 6), '#f2b632');
+  },
+};
+
+const clouds = [[10,12,22],[80,24,16],[150,9,26],[230,20,18],[300,7,22]];
+function drawWorld(){
+  x.fillStyle = '#ffffff'; x.fillRect(0, 0, VW, VH);
+  // cielo: garabatos horizontales de crayón celeste
+  x.strokeStyle = '#8cc8ee'; x.lineWidth = 0.9; x.globalAlpha = 0.45; x.beginPath();
+  for (let yy = 1; yy < 62; yy += 2.2){ x.moveTo(-2, yy + j(1)); x.lineTo(VW + 2, yy + j(1.5)); }
+  x.stroke(); x.globalAlpha = 1;
+  const cx = 170, cy = 18;
+  shape(circ(cx, cy, 6.5, 16), '#f2b632', '#d99a1c');
+  for (let a = 0; a < 12; a++){
+    const ang = a*Math.PI/6 + (reduce ? 0 : t/300);
+    line(cx + Math.cos(ang)*8.5, cy + Math.sin(ang)*8.5, cx + Math.cos(ang)*12, cy + Math.sin(ang)*12, '#f2b632', 0.9);
+  }
+  clouds.forEach(([cx0, cy0, w]) => {
+    const sx = ((cx0 - cam*0.2 + t*0.03) % 320 + 320) % 320 - 40;
+    x.fillStyle = '#ffffff'; path(circ(sx + w*0.3, cy0, w*0.22, 10), true); x.fill(); path(circ(sx + w*0.7, cy0 - 1, w*0.28, 10), true); x.fill();
+    stroke(circ(sx + w*0.3, cy0, w*0.22, 10), '#8cc8ee', 0.5); stroke(circ(sx + w*0.7, cy0 - 1, w*0.28, 10), '#8cc8ee', 0.5);
+  });
+  const ridge = (par, base, f) => { const pts = [[-2, GY]]; for (let i = -2; i <= VW + 2; i += 4) pts.push([i, f(i + cam*par, base)]); pts.push([VW + 2, GY]); return pts; };
+  const far = ridge(0.3, 64, (w, b) => b - Math.abs(Math.sin(w*0.045)*18 + Math.sin(w*0.13)*6));
+  shape(far, '#8ea4d8', '#6a7fb8');
+  // nieve en los picos más altos
+  for (let k = 1; k < far.length - 2; k++){
+    const [a, b] = far[k];
+    if (b < 50 && b <= far[k-1][1] && b <= far[k+1][1]) shape([[a-5, b+4], [a, b], [a+5, b+4], [a+2, b+3], [a-1, b+5]], '#ffffff', '#6a7fb8');
+  }
+  shape(ridge(0.6, 82, (w, b) => b - Math.abs(Math.sin(w*0.03 + 2)*9 + Math.sin(w*0.09)*3)), '#8fd18a', '#5aa650');
+  shape(rect(-2, GY, VW + 4, VH - GY + 2), '#c98b4f', '#9a6a3e');
+  hatch(rect(-2, GY - 0.5, VW + 4, 3.5), '#5aa650');
+  const off = cam % 12;
+  for (let k = -12; k < VW + 12; k += 12){ line(k - off + 2, GY, k - off + 1, GY - 2.5, '#5aa650', 0.5); line(k - off + 3, GY, k - off + 4, GY - 3, '#5aa650', 0.5); }
+}
+
+function bubble(text, cxs, top){
+  x.font = '7px "Patrick Hand", cursive';
+  const w = x.measureText(text).width + 6, bx = Math.max(1, Math.min(VW - w - 1, cxs - w/2));
+  const pts = rect(bx, top - 1, w, 10);
+  x.fillStyle = '#ffffff'; path(pts, true); x.fill(); stroke(pts, INK, 0.45);
+  x.fillStyle = INK; x.textBaseline = 'top'; x.fillText(text, bx + 3, top + 1);
+}
+
+function drawHero(){
+  const f = p.moving && p.y === 0 ? Math.sin(t/5) * 1.8 : 0, d = p.dir;
+  const hx = p.x - cam, feet = GY - p.y;
+  line(hx - 1, feet - 5, hx - 1 + f, feet, '#6b3e26', 0.9); line(hx + 1, feet - 5, hx + 1 - f, feet, '#6b3e26', 0.9);
+  shape([[hx - 4, feet - 4.5], [hx + 4, feet - 4.5], [hx + 2.4, feet - 10], [hx - 2.4, feet - 10]], '#3d6fb6');
+  line(hx - 3.4, feet - 6.5, hx + 3.4, feet - 6.5, '#ffffff', 0.7);
+  shape(circ(hx, feet - 12.5, 2.6, 10), '#f1b58a');
+  shape([[hx - 3, feet - 13], [hx + 3, feet - 13], [hx, feet - 18]], '#d9453b');
+  line(hx - 2.6, feet - 13, hx - 2.8, feet - 10.5, '#d9453b', 0.8); line(hx + 2.6, feet - 13, hx + 2.8, feet - 10.5, '#d9453b', 0.8);
+  hatch(circ(hx, feet - 18.5, 1, 6), '#f2b632');
+  x.fillStyle = INK; x.fillRect(hx + d*1.2 - 0.4, feet - 12.8, 0.8, 0.8);
+}
+function drawLlama(){
+  const moving = p.moving || Math.abs(llama.x - p.x) > 18, f = moving ? Math.sin(t/6) * 1.5 : 0;
+  const d = p.x < llama.x ? -1 : 1, lx = llama.x - cam;
+  [-3.5, -1.5, 1.5, 3.5].forEach((o, i) => line(lx + o, GY - 4, lx + o + (i % 2 ? f : -f), GY, INK, 0.6));
+  shape(circ(lx, GY - 6, 4.5, 12).map(([a, b]) => [a, GY - 6 + (b - GY + 6) * 0.55]), '#f4efe6');
+  hatch(rect(lx - 2.5, GY - 8.5, 5, 2.5), '#d9453b');
+  shape([[lx + d*3, GY - 7], [lx + d*4.5, GY - 7], [lx + d*4.5, GY - 13], [lx + d*3, GY - 13]], '#f4efe6');
+  shape([[lx + d*2.5, GY - 13], [lx + d*6.5, GY - 13], [lx + d*6.5, GY - 15], [lx + d*2.5, GY - 15]], '#f4efe6');
+  line(lx + d*3, GY - 15, lx + d*3, GY - 17); line(lx + d*4.5, GY - 15, lx + d*4.5, GY - 17);
+  x.fillStyle = INK; x.fillRect(lx + d*4.5 - 0.4, GY - 14.5, 0.8, 0.8);
+}
+
+function near(){
+  let best = -1, bd = 1e9;
+  OBJ.forEach((o, i) => { const d = Math.abs(p.x - (o.x + o.w/2)); if (d < o.w/2 + 6 && d < bd){ bd = d; best = i; } });
+  return best;
+}
+
+function open(i){
+  if (i === cur) return;
+  cur = i;
+  const o = OBJ[i];
+  panel.innerHTML = `<p class="when">${o.when}</p><h2>${o.title}</h2>${o.body(D)}`;
+  visited.add(i);
+  hudHitos.textContent = visited.size === OBJ.length ? '¡Completaste el dibujo! 10/10' : `Hitos ${visited.size}/${OBJ.length}`;
+  [...travel.querySelectorAll('button')].forEach((b, j) => { b.classList.toggle('seen', visited.has(j)); b.setAttribute('aria-current', j === i); });
+}
+
+function goTo(i){ target = OBJ[i].x + OBJ[i].w/2; }
+function wake(){ idle = 0; demo = false; hudDemo.hidden = true; }
+
+function update(){
+  let mv = (keys.R ? 1 : 0) - (keys.L ? 1 : 0);
+  if (mv) target = null;
+  if (!mv && target !== null){
+    const d = target - p.x;
+    if (Math.abs(d) < 1.2){ p.x = target; target = null; pause = 150; } else mv = Math.sign(d);
+  }
+  if (!reduce && ++idle > 240 && target === null){
+    if (!demo){ demo = true; hudDemo.hidden = false; }
+    if (--pause <= 0){ goTo(demoI); demoI = (demoI + 1) % OBJ.length; }
+  }
+  p.x = Math.max(4, Math.min(WORLD-4, p.x + mv*1.1));
+  if (mv) p.dir = mv;
+  p.moving = mv !== 0;
+  if (keys.J && p.y === 0) p.vy = 3.2;
+  p.y += p.vy; p.vy -= 0.2;
+  if (p.y <= 0){ p.y = 0; p.vy = 0; }
+  llama.x += (p.x - 16*p.dir - llama.x) * 0.04;
+  const n = near();
+  if (n >= 0) open(n);
+  cam = Math.max(0, Math.min(WORLD-VW, p.x - VW/2));
+}
+
+function draw(){
+  if (!reduce && t % 8 === 0) boil++;
+  seedN = boil * 9973;
+  x.setTransform(SC, 0, 0, SC, 0, 0);
+  drawWorld();
+  const n = near();
+  OBJ.forEach((o, i) => {
+    const sx = o.x - cam;
+    if (sx < -60 || sx > VW + 10) return;
+    DRAW[o.kind](sx, o);
+    const top = GY - o.h - 12 - (reduce ? 0 : Math.abs(Math.sin(t/12)) * 2);
+    if (i === n || i === hover) bubble(o.label, sx + o.w/2, top - 4);
+    else if (!visited.has(i)){ x.font = '700 10px "Cabin Sketch", cursive'; x.fillStyle = '#d9453b'; x.fillText('!', sx + o.w/2 - 1.5, top - 2); }
+  });
+  drawLlama();
+  drawHero();
+  // textura de crayón que se corre con cada hervor
+  x.setTransform(1, 0, 0, 1, (boil * 37) % 128, (boil * 53) % 128);
+  x.fillStyle = grain; x.fillRect(-128, -128, VW*SC + 256, VH*SC + 256);
+  x.setTransform(1, 0, 0, 1, 0, 0);
+}
+
+function loop(){ t++; update(); draw(); requestAnimationFrame(loop); }
+
+// controles
+const KEYMAP = {ArrowLeft: 'L', a: 'L', A: 'L', ArrowRight: 'R', d: 'R', D: 'R', ArrowUp: 'J', w: 'J', W: 'J', ' ': 'J'};
+addEventListener('keydown', e => {
+  const k = KEYMAP[e.key]; if (!k || e.target.closest('button,a')) return;
+  e.preventDefault(); keys[k] = true; wake();
+});
+addEventListener('keyup', e => { const k = KEYMAP[e.key]; if (k) keys[k] = false; });
+addEventListener('blur', () => { keys.L = keys.R = keys.J = false; });
+document.querySelectorAll('.pad button').forEach(b => {
+  const k = b.dataset.k;
+  b.addEventListener('pointerdown', e => { e.preventDefault(); keys[k] = true; wake(); });
+  ['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => b.addEventListener(ev, () => { keys[k] = false; }));
+});
+function hit(e){
+  const r = cv.getBoundingClientRect();
+  const wx = (e.clientX - r.left) / r.width * VW + cam, wy = (e.clientY - r.top) / r.height * VH;
+  return {wx, i: OBJ.findIndex(o => wx >= o.x - 2 && wx <= o.x + o.w + 2 && wy >= GY - o.h - 16 && wy <= GY + 2)};
+}
+cv.addEventListener('click', e => { const {wx, i} = hit(e); wake(); target = i >= 0 ? OBJ[i].x + OBJ[i].w/2 : Math.max(4, Math.min(WORLD-4, wx)); });
+cv.addEventListener('pointermove', e => { hover = hit(e).i; cv.style.cursor = hover >= 0 ? 'pointer' : 'default'; });
+cv.addEventListener('pointerleave', () => { hover = -1; });
+
+OBJ.forEach((o, i) => {
+  const b = document.createElement('button');
+  b.type = 'button'; b.textContent = o.label;
+  b.addEventListener('click', () => { wake(); goTo(i); });
+  travel.appendChild(b);
+});
+
+// datos en vivo (el sandbox del artifact los bloquea; abierto local, responden)
+const API = 'https://apis.datos.gob.ar';
+const get = q => fetch(API + q).then(r => r.ok ? r.json() : Promise.reject(r.status));
+const dmy = s => s.split('-').reverse().join('/');
+Promise.all([
+  get('/series/api/series/?ids=apis_georef_005&last=1'),
+  get('/series/api/series/?ids=apis_series_005&last=1'),
+  get('/series/api/series/?ids=apis_georef_001,apis_series_001&collapse=year&collapse_aggregation=sum'),
+  get('/series/api/search/?limit=1'),
+  get('/georef/api/departamentos?max=1'), get('/georef/api/municipios?max=1'), get('/georef/api/localidades?max=1'),
+]).then(([g, s, yr, se, de, mu, lo]) => {
+  Object.assign(D, {
+    geoTotal: g.data[0][1], geoDate: dmy(g.data[0][0]), serTotal: s.data[0][1], serDate: dmy(s.data[0][0]),
+    serCount: se.count, deps: de.total, mun: mu.total, loc: lo.total,
+    years: yr.data.filter(r => r[1] && r[2]).map(r => [String(parseInt(r[0])), r[1], r[2]]),
+  });
+  document.getElementById('status').textContent = '● en vivo · apis.datos.gob.ar';
+  const c = cur; cur = -1; if (c >= 0) open(c);
+}).catch(() => {});
+
+open(0);
+if (reduce) document.getElementById('boil')?.remove();
+document.fonts.load('10px "Patrick Hand"').finally(loop);
+</script>
